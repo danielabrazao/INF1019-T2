@@ -4,7 +4,7 @@ Segundo Trabalho de Sistemas de Computação (INF1019)
 Segundo trabalho de implementação da disciplina de Sistemas de Computação (`INF1019`) da Pontifícia Universidade Católica do Rio de Janeiro.
 
 ## Objetivo do Projeto ##
-Este trabalho tem como objetivo desenvolver códigos para os seguintes algoritmos de alocação de memória: 
+Este trabalho tem como objetivo desenvolver códigos para implementar os seguintes algoritmos de alocação de memória: 
 - **First fit (ajuste rápido)**
 - **Next fit (próximo ajuste)**
 - **Best fit (melhor ajuste)**
