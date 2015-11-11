@@ -5,10 +5,10 @@ Segundo trabalho de implementação da disciplina de Sistemas de Computação (`
 
 ## Objetivo do Projeto ##
 Este trabalho tem como objetivo desenvolver códigos para os seguintes algoritmos de alocação de memória: 
-- **First fit (ajuste rápido)**;
-- **Next fit (próximo ajuste)**;
-- **Best fit (melhor ajuste)**;
-- **Worst fit (pior ajuste)**.
+- **First fit (ajuste rápido)**
+- **Next fit (próximo ajuste)**
+- **Best fit (melhor ajuste)**
+- **Worst fit (pior ajuste)**
 
 ## Descrição do Projeto ##
 Este trabalho consiste da codificação e dos testes das funções do programa principal (`main.c`).
