@@ -1,0 +1,33 @@
+
+--------------------------------------------------------------------
+
+	PONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO
+	Segundo Trabalho de Sistemas de Computação
+	Autores: Daniela Brazão e Thaíssa Falbo
+	Professor: Luiz Fernando Bessa Seibel
+	Disciplina: Sistemas de Computação (INF1019)
+
+--------------------------------------------------------------------
+
+Quantidade de processos: 3
+
+Número do processo: #1
+Tamanho do processo: 5Mb
+Tempo de execução 1: 20s
+Tempo de espera 1: 5s
+Tempo de execução 2: 50s
+
+
+Número do processo: #2
+Tamanho do processo: 7Mb
+Tempo de execução 1: 100s
+
+
+Número do processo: #3
+Tamanho do processo: 8Mb
+Tempo de execução 1: 50s
+Tempo de espera 1: 50s
+Tempo de execução 2: 50s
+Tempo de espera 2: 5s
+
+
