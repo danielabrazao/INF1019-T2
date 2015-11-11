@@ -27,7 +27,14 @@ $ ./main
 ```
 
 ## Referências ##
-* [.markdown, .mdown, .mkdn, .md](http://daringfireball.net/projects/markdown/) -- `gem install redcarpet` (https://github.com/vmg/redcarpet)
+ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS – ABNT. NBR 10719: apresentação de relatórios técnico-científicos. Rio de Janeiro, 1989. 9 p.
+
+TANENBAUM, A; WOODHULL, A. Sistemas Operacionais: Projeto e Implementação. Tradução João Tortello. 3. ed. Porto Alegre: Bookman, 2008.
+
+Wikipedia. Programar em C. Disponível em <https://pt.wikibooks.org/wiki/Programar_em_C>. Acesso em: 11 de novembro 2015.
+
+* []()
+* [Programar em C](https://pt.wikibooks.org/wiki/Programar_em_C) -- `Wikipedia` (https://github.com/vmg/redcarpet)
 
 ## Copyright e Licença ##
 O código em linguagem ANSI C é licenciado sob a [GPLv3] (http://www.gnu.org/licenses/gpl-3.0.html).
