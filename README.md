@@ -1,7 +1,7 @@
 Segundo Trabalho de Sistemas de Computação (INF1019)
 =============
 # T2 #
-Segundoo trabalho de implementação da disciplina de Sistemas de Computação (`INF1019`) da Pontifícia Universidade Católica do Rio de Janeiro.
+Segundo trabalho de implementação da disciplina de Sistemas de Computação (`INF1019`) da Pontifícia Universidade Católica do Rio de Janeiro.
 
 ## Objetivo do Projeto ##
 Este trabalho tem como objetivo desenvolver códigos para diferentes algoritmos de alocação de memória (First fit (ajuste rápido), Next fit (próximo ajuste), Best fit (melhor ajuste) e Worst fit (pior ajuste)).
