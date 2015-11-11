@@ -17,7 +17,7 @@ Este trabalho consiste da codificação e dos testes das funções do programa p
 Para compilar o programa principal, execute o seguinte comando no terminal: 
 
 ```
-$ gcc -Wall -m32 -o 6 main.c
+$ gcc -Wall -m32 -o main main.c
 ```
 
 Para executar o programa compilado, utilize:
