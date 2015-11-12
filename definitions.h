@@ -37,42 +37,42 @@
 
 /* Tamanhos fixos */
 
-#define TAM_STR 100	/* Tamanho da string */
-#define TAM_VET 100     /* Tamanho do vetor */
+#define TAM_STR     100     /* Tamanho da string máxima */
+#define TAM_VET     100     /* Tamanho do vetor máximo */
+#define TAM_MEM     16      /* Tamanho da memória em Mb */
+#define FATIA_TEMPO 10      /* Time slice dos processos */
 
-/* Erros */
 
-#define ERR_FOPEN       1       /* Erro na abertura de um arquivo */
-#define ERR_DUP         2       /* Erro na duplicação de uma entrada ou saída */
-#define ERR_DUP2        3       /* Erro na duplicação de uma entrada ou saída */
-#define ERR_INPUT	4	/* Entrada inválida */
+/* Erros tratados */
+
+#define ERR_FOPEN   1   /* Erro na abertura de um arquivo */
+#define ERR_DUP     2   /* Erro na duplicação de uma entrada ou saída com dup */
+#define ERR_DUP2    3   /* Erro na duplicação de uma entrada ou saída com dup2 */
+#define ERR_INPUT   4   /* Arquivo de entrada inválido */
 
 /* ESTRUTURAS */
+
+/* Estrutura de uma informação sobre um processo */
+
+struct estrutura_info {
+	char nome[5];   /* Nome da informação (exec ou io) */
+	int tempo;      /* Tempo de execução para exec ou de espera para io */
+};
 
 /* Estrutura de um processo */
 
 struct estrutura_processo {
-    int numero; /* Número identificador do processo */
-    int tamanho; /* Tamanho do processo em Mb */
-    int qtd_info; /* Quantidade de informações do processo */
+    int numero;             /* Número identificador do processo */
+    int tamanho;            /* Tamanho do processo em Mb */
+    int qtd_info;           /* Quantidade de informações do processo */
     time_t inicio_execucao; /* Horário do início da execução do processo em segundos */
-    time_t fim_execucao; /* Horário do fim da execução do processo em segundos */
+    time_t fim_execucao;    /* Horário do fim da execução do processo em segundos */
+    estrutura_info *info;   /* Vetor de informações do processo */
 };
 
 /* Vetor de estruturas de processos */
 
 struct estrutura_processo processo[TAM_VET];
-
-/* Estrutura de uma informação sobre um processo */
-
-struct estrutura_info {
-    int numero_processo;    /* Número identificador do processo */
-    int info[TAM_VET];      /* Tempo de execução ou de espera do processo */
-};
-
-/* Vetor de estruturas de informações dos processos */
-
-struct estrutura_info info[TAM_VET];
 
 /* Estrutura de blocos (partições fixas) de memória */
 

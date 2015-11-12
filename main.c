@@ -1,5 +1,5 @@
 /*
- * *=*= PROGRAMA PRINCIPAL DO SIMULADOR DE GERENCIADOR DE MEMÓRIA =*=*=
+ * =*=*= PROGRAMA PRINCIPAL DO SIMULADOR DE GERENCIADOR DE MEMÓRIA =*=*=
  * Arquivo: main.c criado em 5 de Novembro de 2015, às 12:00.
  * Autoras:
  * ----------------------------------
