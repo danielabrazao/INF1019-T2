@@ -138,7 +138,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                     } else {
                         printf("- Bloco de memória vazio.\n");
                         printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
-                        printf("-----------------------------------\n");
+                        printf("-----------------------------------\n\n");
                     }
                 }
 
@@ -151,6 +151,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                     if (strcmp(proc_v[i].infos->nome, "exec") == 0 && dif < 10) {
                         while (proc_v[i].infos[k].tempo > 0) {
                             sleep(1);
+                            printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
                             proc_v[i].infos[k].tempo--;
                             time(&proc_v[i].fim_execucao);
                             dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;

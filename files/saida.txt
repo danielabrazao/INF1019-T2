@@ -36,3 +36,95 @@ LEITURA DO ARQUIVO DE ENTRADA:
 
 - Número total de processos: 3
 
+-----------------------------------
+PROCESSO #1
+-----------------------------------
+- Número do processo: 1
+- Tamanho do processo: 5Mb
+-----------------------------------
+- Nome da 1a informação: exec
+- Tempo de execução 1: 20s
+-----------------------------------
+- Nome da 2a informação: io
+- Tempo de espera 1: 5s
+-----------------------------------
+- Nome da 3a informação: exec
+- Tempo de execução 2: 50s
+-----------------------------------
+
+-----------------------------------
+PROCESSO #2
+-----------------------------------
+- Número do processo: 2
+- Tamanho do processo: 7Mb
+-----------------------------------
+- Nome da 1a informação: exec
+- Tempo de execução 1: 100s
+-----------------------------------
+
+-----------------------------------
+PROCESSO #3
+-----------------------------------
+- Número do processo: 3
+- Tamanho do processo: 8Mb
+-----------------------------------
+- Nome da 1a informação: exec
+- Tempo de execução 1: 50s
+-----------------------------------
+- Nome da 2a informação: io
+- Tempo de espera 1: 50s
+-----------------------------------
+- Nome da 3a informação: exec
+- Tempo de execução 2: 50s
+-----------------------------------
+- Nome da 4a informação: io
+- Tempo de espera 2: 5s
+-----------------------------------
+
+-----------------------------------------------------------------------------------
+
+MAPA DE MEMÓRIA:
+
+-----------------------------------------------------------------------------------
+
+-----------------------------------
+- Bloco #1
+-----------------------------------
+- Número do processo: 1
+- Tamanho do processo: 5Mb
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+Countdown: 20s
+Countdown: 19s
+Countdown: 18s
+Countdown: 17s
+Countdown: 16s
+Countdown: 15s
+Countdown: 14s
+Countdown: 13s
+Countdown: 12s
+Countdown: 11s
