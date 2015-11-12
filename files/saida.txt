@@ -42,16 +42,15 @@ PROCESSO #1
 - Número do processo: 1
 - Tamanho do processo: 5Mb
 --------------------------------
-- Nome da informação: exec
-- Tempo de execução: 20s
+- Nome da 1a informação: exec
+- Tempo de execução 1: 20s
 --------------------------------
-- Nome da informação: io
-- Tempo de espera: 5s
+- Nome da 2a informação: io
+- Tempo de espera 1: 5s
 --------------------------------
-- Nome da informação: exec
-- Tempo de execução: 50s
+- Nome da 3a informação: exec
+- Tempo de execução 2: 50s
 --------------------------------
-
 
 --------------------------------
 PROCESSO #2
@@ -59,10 +58,9 @@ PROCESSO #2
 - Número do processo: 2
 - Tamanho do processo: 7Mb
 --------------------------------
-- Nome da informação: exec
-- Tempo de execução: 100s
+- Nome da 1a informação: exec
+- Tempo de execução 1: 100s
 --------------------------------
-
 
 --------------------------------
 PROCESSO #3
@@ -70,17 +68,16 @@ PROCESSO #3
 - Número do processo: 3
 - Tamanho do processo: 8Mb
 --------------------------------
-- Nome da informação: exec
-- Tempo de execução: 50s
+- Nome da 1a informação: exec
+- Tempo de execução 1: 50s
 --------------------------------
-- Nome da informação: io
-- Tempo de espera: 50s
+- Nome da 2a informação: io
+- Tempo de espera 1: 50s
 --------------------------------
-- Nome da informação: exec
-- Tempo de execução: 50s
+- Nome da 3a informação: exec
+- Tempo de execução 2: 50s
 --------------------------------
-- Nome da informação: io
-- Tempo de espera: 5s
+- Nome da 4a informação: io
+- Tempo de espera 2: 5s
 --------------------------------
-
 

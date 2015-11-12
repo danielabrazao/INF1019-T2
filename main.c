@@ -56,7 +56,7 @@ int main(void) {
     int outputfd; /* Descritor de arquivos abertos = Retorno de open */
     int retorno; /* Valor de retorno de dup */
     int retorno2; /* Valor de retorno de dup2 */
-    int i = 0, j = 0, w = 0, l = 0, m; /* Contadores auxiliares */
+    int i = 0, j = 0, m = 1, l = 1, n = 1; /* Contadores auxiliares */
     int numero_processo; /* Número do processo */
     int tamanho_processo; /* Memória requerida pelo processo */
     int qtd_info_processo; /* Total de entradas que descrevem a execução do processo */
@@ -154,18 +154,23 @@ int main(void) {
             scanf("%s %d [^\n]", s, &tempo);
             strcpy(proc_v[i].infos[j].nome, s);
             proc_v[i].infos[j].tempo = tempo;
-            printf("- Nome da informação: %s\n", proc_v[i].infos[j].nome);
+            printf("- Nome da %da informação: %s\n", l, proc_v[i].infos[j].nome);
             if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
-                printf("- Tempo de espera: %ds\n", proc_v[i].infos[j].tempo);
+                printf("- Tempo de espera %d: %ds\n", n, proc_v[i].infos[j].tempo);
                 printf("--------------------------------\n");
+                n++;
+                l++;
             } else {
-                printf("- Tempo de execução: %ds\n", proc_v[i].infos[j].tempo);
+                printf("- Tempo de execução %d: %ds\n", m, proc_v[i].infos[j].tempo);
                 printf("--------------------------------\n");
+                m++;
+                l++;
             }
         }
-        printf("\n\n");
-        l = 0;
-        m = 0;
+        printf("\n");
+        l = 1;
+        m = 1;
+        n = 1;
     }
 
     return 0; /* Sucesso */
