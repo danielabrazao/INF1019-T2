@@ -63,6 +63,7 @@ int main(void) {
     char s[5]; /* Nome da informação do processo (exec ou io) */
     mem *M; /* Memória */
     int qtd_processos; /* Quantidade de processos */
+    int tempo_total; /* Tempo total de todos os processos */
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -163,6 +164,7 @@ int main(void) {
             strcpy(proc_v[i].infos[j].nome, s);
             proc_v[i].infos[j].tempo = tempo;
             proc_v[i].tempo_total = proc_v[i].tempo_total + tempo;
+            tempo_total = tempo_total + tempo;
             printf("- Nome da %da informação: %s\n", l, proc_v[i].infos[j].nome);
             fflush(stdout); // Flush do buffer.
             if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
