@@ -93,7 +93,7 @@ int main(void) {
     /* ------------------------------------------------- */
 
     /* Tratamento de erro para abertura do arquivo 'saida_lp.txt' */
-    if ((outputfd = open("files/saida_ff.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1) {
+    if ((outputfd = open("files/saida.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1) {
         showError("Falha na abertura do arquivo 'saida.txt'.\n", ERR_FOPEN);
         fflush(stdout); // Flush do buffer.
     }
