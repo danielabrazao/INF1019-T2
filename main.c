@@ -53,7 +53,7 @@ int main(void) {
     int outputfd; /* Descritor de arquivos abertos = Retorno de open */
     int retorno; /* Valor de retorno de dup */
     int retorno2; /* Valor de retorno de dup2 */
-    int i = 0, j = 0, m = 1, l = 1, n = 1; /* Contadores auxiliares */
+    int i = 0, j = 0, m = 1, l = 1, n = 1, q; /* Contadores auxiliares */
     int numero_processo; /* Número do processo */
     int tamanho_processo; /* Memória requerida pelo processo */
     int qtd_info_processo; /* Total de entradas que descrevem a execução do processo */
@@ -131,6 +131,10 @@ int main(void) {
     /* Aloca memória para um vetor de processos */
     proc_v = (processo*) malloc(qtd_processos * sizeof (processo));
 
+    for (q = 0; q < qtd_processos; q++) {
+        proc_v[q].tempo_total = 0;
+    }
+
     for (i = 0; i < qtd_processos; i++) {
         scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo); /* Lê o número identificador do processo e o seu tamanho em Mb */
         proc_v[i].numero = numero_processo;
@@ -153,11 +157,12 @@ int main(void) {
 
         printf("-----------------------------------\n");
         fflush(stdout); // Flush do buffer.
-        
+
         for (j = 0; j < proc_v[i].qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo); /* Lê o nome da informação (exec ou io) e o tempo de execução ou de espera */
             strcpy(proc_v[i].infos[j].nome, s);
             proc_v[i].infos[j].tempo = tempo;
+            proc_v[i].tempo_total = proc_v[i].tempo_total + tempo;
             printf("- Nome da %da informação: %s\n", l, proc_v[i].infos[j].nome);
             fflush(stdout); // Flush do buffer.
             if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
@@ -165,7 +170,6 @@ int main(void) {
                 fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
                 fflush(stdout); // Flush do buffer.
-                proc_v[i].tempo_total = proc_v[i].tempo_total + proc_v[i].infos[j].tempo;
                 n++;
                 l++;
             } else {
@@ -173,7 +177,6 @@ int main(void) {
                 fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
                 fflush(stdout); // Flush do buffer.
-                proc_v[i].tempo_total = proc_v[i].tempo_total + proc_v[i].infos[j].tempo;
                 m++;
                 l++;
             }
@@ -183,35 +186,35 @@ int main(void) {
         m = 1;
         n = 1;
     }
-    
+
     scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executado */
-    
+
     /* ------------------------------------------------- */
     /* PARTE 8: Inicialização da memória                 */
     /* ------------------------------------------------- */
-    
+
     inicializar_memoria(M);
-    
+
     /* ------------------------------------------------- */
     /* PARTE 9: Execução do algoritmo de alocação        */
     /* ------------------------------------------------- */
-    
+
     switch (id) {
-        /* First Fit */
+            /* First Fit */
         case 1:
             first_fit(proc_v, M, qtd_processos);
-            
-        /* Next Fit */
-        //case 2:
+
+            /* Next Fit */
+            //case 2:
             //next_fit();
-            
-        /* Worst Fit */
-        //case 3:
+
+            /* Worst Fit */
+            //case 3:
             //worst_fit();
-            
-            
-        /* Best Fit */
-        //case 4:
+
+
+            /* Best Fit */
+            //case 4:
             //best_fit();  
     }
 
