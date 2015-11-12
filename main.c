@@ -145,7 +145,7 @@ int main(void) {
         fflush(stdout); // Flush do buffer.
         printf("- Tamanho do processo: %dMb\n", proc_v[i].tamanho);
         fflush(stdout); // Flush do buffer.
-        scanf("%d [^\n]", &qtd_info_processo);
+        scanf("%d [^\n]", &qtd_info_processo); /* Lê a quantidade de informações do processo */
         proc_v[i].qtd_info = qtd_info_processo;
 
         /* Aloca memória para um vetor de informações do processo */
