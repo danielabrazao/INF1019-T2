@@ -103,18 +103,17 @@ void inicializar_memoria(mem *M) {
 
 void first_fit(processo *proc_v, mem *M, int qtd_proc) {
 
-    int i, j, k = 0, w;
+    int i, j, k = 0, w, l, p = qtd_proc;
     time_t dif = 0; /* Diferença entre os tempos final e inicial de execução do algoritmo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
     printf("MAPA DE MEMÓRIA:\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
     printf("-----------------------------------\n");
-    
+
+
     /* Percorre os processos */
     for (i = 0; i < qtd_proc; i++) {
-
-        printf("");
 
         /* Percorre as partições de memória */
         for (j = 0; j < QTD_BLOC; j++) {
@@ -125,9 +124,14 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                 /* Percorre todos os blocos de memória */
                 for (w = 0; w < QTD_BLOC; w++) {
                     printf("- Bloco #%d\n", w + 1);
+                    printf("-----------------------------------\n");
                     if (M->bloco[w].isAlocado > 0) {
                         printf("- Número do processo: %d\n", M->bloco[w].isAlocado);
-                        //printf("Tamanho do processo: %d\n", M->bloco[w].isAlocado);
+                        for (l = 0; l < qtd_proc; l++) {
+                            if (M->bloco[w].isAlocado == proc_v[l].numero) {
+                                printf("- Tamanho do processo: %dMb\n", proc_v[l].tamanho);
+                            }
+                        }
                         printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
                         printf("-----------------------------------\n");
 
@@ -169,10 +173,9 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                         }
                     }
                 }
-                break;
             }
         }
     }
+    
 }
-
 #endif	/* UTILITIES_H */

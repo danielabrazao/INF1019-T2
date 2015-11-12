@@ -148,6 +148,8 @@ int main(void) {
 
         for (j = 0; j < proc_v[i].qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo);
+            proc_v[i].tempo_total = 0;
+            proc_v[i].tempo_total = proc_v[i].tempo_total + tempo;
             strcpy(proc_v[i].infos[j].nome, s);
             proc_v[i].infos[j].tempo = tempo;
             printf("- Nome da %da informação: %s\n", l, proc_v[i].infos[j].nome);
