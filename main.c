@@ -1,19 +1,19 @@
 /*
- * *=*= PROGRAMA PRINCIPAL DO SIMULADOR DE SISTEMA COM GERENTE DE MEMÓRIA =*=*=
- *Arquivo : prog_ff.c criado em 5 de Novembro de 2015, às 12 : 00.
- * Autoras :
+ * *=*= PROGRAMA PRINCIPAL DO SIMULADOR DE GERENCIADOR DE MEMÓRIA =*=*=
+ * Arquivo: main.c criado em 5 de Novembro de 2015, às 12:00.
+ * Autoras:
  * ----------------------------------
  * -> Daniela Brazão Maksoud
- * -> Curso : Ciência da Computação
- * -> Matrícula : 1321873
+ * -> Curso: Ciência da Computação
+ * -> Matrícula: 1321873
  * ----------------------------------
  * -> Thaíssa Falbo
- * -> Curso : Engenharia da Computação
- * -> Matrícula : 1421110
+ * -> Curso: Engenharia da Computação
+ * -> Matrícula: 1421110
  * ----------------------------------
- * Professor : Luiz Fernando Bessa Seibel
- * Instituição : Pontifícia Universidade Católica do Rio de Janeiro
- * Disciplina : Sistemas de Computação(INF1019)
+ * Professor: Luiz Fernando Bessa Seibel
+ * Instituição: Pontifícia Universidade Católica do Rio de Janeiro
+ * Disciplina: Sistemas de Computação(INF1019)
  */
 
 /* Pré-processamento */
@@ -105,7 +105,7 @@ int main(void) {
     fflush(stdout); // Flush do buffer.
 
     for (i = 0; i < qtd_processos_; i++) {
-        scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo);
+        scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo); /* Lê o número identificador do processo e o seu tamanho em Mb */
         processo[i].numero = numero_processo;
         processo[i].tamanho = tamanho_processo;
         printf("Número do processo: #%d\n", processo[i].numero);

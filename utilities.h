@@ -22,7 +22,8 @@
 
 #include "definitions.h" /* Arquivo de cabeçalho com definições (includes e defines) */
 
-/* Função que exibe mensagem inicial do interpretador */
+/* Função que exibe mensagem inicial do gerenciador de memória */
+
 void cabecalho() {
     printf("\n--------------------------------------------------------------------\n\n");
     fflush(stdout); // Flush do buffer.
@@ -40,10 +41,17 @@ void cabecalho() {
 }
 
 /* Função que exibe mensagem de erro */
+
 void showError(char str[TAM_STR + 1], int n) {
     printf("Erro %d: %s\n", n, str);
     fflush(stdout); // Flush do buffer.
     exit(n);
+}
+
+/* Função do algoritmo de alocação de ajuste rápido */
+int firstFit()
+{
+    return 0; /* Sucesso */
 }
 
 #endif	/* UTILITIES_H */

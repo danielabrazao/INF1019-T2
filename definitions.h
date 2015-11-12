@@ -21,6 +21,7 @@
 #define	DEFINITIONS_H
 
 /* BIBLIOTECAS */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -34,11 +35,13 @@
 
 /* MACROS */
 
-/* Tamanhos */
-#define TAM_STR 100	/* Tamanho da string da mensagem de erro */
+/* Tamanhos fixos */
+
+#define TAM_STR 100	/* Tamanho da string */
 #define TAM_VET 100     /* Tamanho do vetor */
 
 /* Erros */
+
 #define ERR_FOPEN       1       /* Erro na abertura de um arquivo */
 #define ERR_DUP         2       /* Erro na duplicação de uma entrada ou saída */
 #define ERR_DUP2        3       /* Erro na duplicação de uma entrada ou saída */
@@ -47,25 +50,39 @@
 /* ESTRUTURAS */
 
 /* Estrutura de um processo */
+
 struct estrutura_processo {
     int numero; /* Número identificador do processo */
-    int tamanho; /* Tamanho do processo */
+    int tamanho; /* Tamanho do processo em Mb */
     int qtd_info; /* Quantidade de informações do processo */
-    time_t inicio_execucao; /* Dia, mês, ano e horário do início da execução do processo. */
-    time_t fim_execucao; /* Dia, mês, ano e horário do fim da execução do processo. */
+    time_t inicio_execucao; /* Horário do início da execução do processo em segundos */
+    time_t fim_execucao; /* Horário do fim da execução do processo em segundos */
 };
 
 /* Vetor de estruturas de processos */
+
 struct estrutura_processo processo[TAM_VET];
 
-/* Estrutura de processo pronto para execução */
+/* Estrutura de uma informação sobre um processo */
+
 struct estrutura_info {
     int numero_processo;    /* Número identificador do processo */
-    int tempo_espera;       /* Tempo de espera do processo */
-    int tempo_execucao;     /* Tempo de execução do processo */
+    int info[TAM_VET];      /* Tempo de execução ou de espera do processo */
 };
 
-/* Vetor de estruturas de processos prontos para execução */
+/* Vetor de estruturas de informações dos processos */
+
 struct estrutura_info info[TAM_VET];
+
+/* Estrutura de blocos (partições fixas) de memória */
+
+struct estrutura_bloco_memoria {
+    int numero_processo;    /* Número identificador do processo */
+    int tamanho;            /* Tamanho do bloco de memória em Mb */
+};
+
+/* Vetor de estruturas de blocos (partições fixas) de memória */
+
+struct estrutura_bloco_memoria memoria[TAM_VET];
 
 #endif	/* DEFINITIONS_H */
