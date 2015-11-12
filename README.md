@@ -31,6 +31,9 @@ $ ./main
 * [Programar em C](https://pt.wikibooks.org/wiki/Programar_em_C) -- `Wikipedia` (https://pt.wikipedia.org/)
 * [Sistemas Operacionais: Projeto e Implementação](http://www.asfernandes.com/files/SistemasOperacionais_-_Tanenbaum_-_2Ed.pdf) -- `Anilton Fernandes` (http://www.asfernandes.com/)
 
+## Sugestões ##
+* André Parente
+
 ## Copyright e Licença ##
 O código em linguagem ANSI C é licenciado sob a [GPLv3] (http://www.gnu.org/licenses/gpl-3.0.html).
 
