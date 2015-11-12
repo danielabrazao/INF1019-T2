@@ -117,17 +117,17 @@ int main(void) {
             switch (id) {
                 case 'e':
                     scanf("xec %d [^\n]", &tempo_execucao);
-                    info[i + 3 * w].numero_processo = numero_processo;
+                    /*info[i + 3 * w].numero_processo = numero_processo;
                     info[i + 3 * w].tempo_execucao = tempo_execucao;
-                    printf("Tempo de execução %d: %ds\n", l + 1, info[i + 3 * w].tempo_execucao);
+                    printf("Tempo de execução %d: %ds\n", l + 1, info[i + 3 * w].tempo_execucao);*/
                     l++;
                     break;
 
                 case'i':
                     scanf("o %d [^\n]", &tempo_espera);
-                    info[i + 3 * w].numero_processo = numero_processo;
+                    /*info[i + 3 * w].numero_processo = numero_processo;
                     info[i + 3 * w].tempo_espera = tempo_espera;
-                    printf("Tempo de espera %d: %ds\n", m + 1, info[i + 3 * w].tempo_espera);
+                    printf("Tempo de espera %d: %ds\n", m + 1, info[i + 3 * w].tempo_espera);*/
                     m++;
                     break;
 

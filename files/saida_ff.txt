@@ -1,5 +1,5 @@
 
---------------------------------------------------------------------
+-----------------------------------------------------------------------------------
 
 	PONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO
 	Segundo Trabalho de Sistemas de Computação
@@ -7,27 +7,40 @@
 	Professor: Luiz Fernando Bessa Seibel
 	Disciplina: Sistemas de Computação (INF1019)
 
---------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+
+	Simulador de Gerenciador de Memória
+	Copyright (C) 2015
+	Daniela Brazão & Thaíssa Falbo
+
+-----------------------------------------------------------------------------------
+
+	Este programa é um software livre; você pode redistribuí-lo e/ou 
+	modificá-lo dentro dos termos da Licença Pública Geral GNU como 
+	publicada pela Fundação do Software Livre (FSF); na versão 3 da 
+	Licença.
+
+	Este programa é distribuído na esperança de que possa ser útil, 
+	mas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO 
+	a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença 
+	Pública Geral GNU para maiores detalhes.
+
+	Você deve ter recebido uma cópia da Licença Pública Geral GNU junto 
+	com este programa. Se não, veja <http://www.gnu.org/licenses/>.
+
+-----------------------------------------------------------------------------------
 
 Quantidade de processos: 3
 
 Número do processo: #1
 Tamanho do processo: 5Mb
-Tempo de execução 1: 20s
-Tempo de espera 1: 5s
-Tempo de execução 2: 50s
 
 
 Número do processo: #2
 Tamanho do processo: 7Mb
-Tempo de execução 1: 100s
 
 
 Número do processo: #3
 Tamanho do processo: 8Mb
-Tempo de execução 1: 50s
-Tempo de espera 1: 50s
-Tempo de execução 2: 50s
-Tempo de espera 2: 5s
 
 
