@@ -58,20 +58,33 @@ void cabecalho() {
     printf("\tDisciplina: Sistemas de Computação (INF1019)\n\n");
     fflush(stdout); // Flush do buffer.
     printf("-----------------------------------------------------------------------------------\n\n");
+    fflush(stdout); // Flush do buffer.
     printf("\tSimulador de Gerenciador de Memória\n");
+    fflush(stdout); // Flush do buffer.
     printf("\tCopyright (C) 2015\n\tDaniela Brazão & Thaíssa Falbo\n\n");
-    printf("-----------------------------------------------------------------------------------\n\n");
+    fflush(stdout); // Flush do buffer.printf("-----------------------------------------------------------------------------------\n\n");
     printf("\tEste programa é um software livre; você pode redistribuí-lo e/ou \n");
+    fflush(stdout); // Flush do buffer.
     printf("\tmodificá-lo dentro dos termos da Licença Pública Geral GNU como \n");
+    fflush(stdout); // Flush do buffer.
     printf("\tpublicada pela Fundação do Software Livre (FSF); na versão 3 da \n");
+    fflush(stdout); // Flush do buffer.
     printf("\tLicença.\n\n");
+    fflush(stdout); // Flush do buffer.
     printf("\tEste programa é distribuído na esperança de que possa ser útil, \n");
+    fflush(stdout); // Flush do buffer.
     printf("\tmas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO \n");
+    fflush(stdout); // Flush do buffer.
     printf("\ta qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença \n");
+    fflush(stdout); // Flush do buffer.
     printf("\tPública Geral GNU para maiores detalhes.\n\n");
+    fflush(stdout); // Flush do buffer.
     printf("\tVocê deve ter recebido uma cópia da Licença Pública Geral GNU junto \n");
+    fflush(stdout); // Flush do buffer.
     printf("\tcom este programa. Se não, veja <http://www.gnu.org/licenses/>.\n\n");
+    fflush(stdout); // Flush do buffer.
     printf("-----------------------------------------------------------------------------------\n\n");
+    fflush(stdout); // Flush do buffer.
 }
 
 /* Função que exibe mensagem de erro */
@@ -107,10 +120,13 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
     time_t dif = 0; /* Diferença entre os tempos final e inicial de execução do algoritmo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
+    fflush(stdout); // Flush do buffer.
     printf("MAPA DE MEMÓRIA:\n\n");
+    fflush(stdout); // Flush do buffer.
     printf("-----------------------------------------------------------------------------------\n\n");
+    fflush(stdout); // Flush do buffer.
     printf("-----------------------------------\n");
-
+    fflush(stdout); // Flush do buffer.
 
     /* Percorre os processos */
     for (i = 0; i < qtd_proc; i++) {
@@ -124,29 +140,41 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                 /* Percorre todos os blocos de memória */
                 for (w = 0; w < QTD_BLOC; w++) {
                     printf("- Bloco #%d\n", w + 1);
+                    fflush(stdout); // Flush do buffer.
                     printf("-----------------------------------\n");
+                    fflush(stdout); // Flush do buffer.
                     if (M->bloco[w].isAlocado > 0) {
                         printf("- Número do processo: %d\n", M->bloco[w].isAlocado);
+                        fflush(stdout); // Flush do buffer.
                         for (l = 0; l < qtd_proc; l++) {
                             if (M->bloco[w].isAlocado == proc_v[l].numero) {
                                 printf("- Tamanho do processo: %dMb\n", proc_v[l].tamanho);
+                                fflush(stdout); // Flush do buffer.
                             }
                         }
                         printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
+                        fflush(stdout); // Flush do buffer.
                         printf("-----------------------------------\n");
-
+                        fflush(stdout); // Flush do buffer.
                     } else {
                         printf("- Bloco de memória vazio.\n");
+                        fflush(stdout); // Flush do buffer.
                         printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
+                        fflush(stdout); // Flush do buffer.
                         printf("-----------------------------------\n");
+                        fflush(stdout); // Flush do buffer.
                     }
                 }
                 
                 printf("\n");
+                fflush(stdout); // Flush do buffer.
                 time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início de execução do algoritmo */
                 printf("-----------------------------------\n");
+                fflush(stdout); // Flush do buffer.
                 printf("PROCESSO #%d\n", proc_v[i].numero);
+                fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
+                fflush(stdout); // Flush do buffer.
                 
                 /* Percorre as informações sobre o processo */
                 for (k = 0; k < proc_v[i].qtd_info && dif < FATIA_TEMPO; k++) {
@@ -156,6 +184,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                         while (proc_v[i].infos[k].tempo > 0 && dif < FATIA_TEMPO) {
                             sleep(1);
                             printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
+                            fflush(stdout); // Flush do buffer.
                             proc_v[i].infos[k].tempo--;
                             time(&proc_v[i].fim_execucao);
                             dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;

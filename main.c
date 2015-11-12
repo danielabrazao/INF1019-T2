@@ -121,7 +121,9 @@ int main(void) {
     /* ------------------------------------------------- */
 
     printf("LEITURA DO ARQUIVO DE ENTRADA:\n\n");
+    fflush(stdout); // Flush do buffer.
     printf("-----------------------------------------------------------------------------------\n\n");
+    fflush(stdout); // Flush do buffer.
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
     printf("- Número total de processos: %d\n\n", qtd_processos);
     fflush(stdout); // Flush do buffer.
@@ -134,10 +136,15 @@ int main(void) {
         proc_v[i].numero = numero_processo;
         proc_v[i].tamanho = tamanho_processo;
         printf("-----------------------------------\n");
+        fflush(stdout); // Flush do buffer.
         printf("PROCESSO #%d\n", proc_v[i].numero);
+        fflush(stdout); // Flush do buffer.
         printf("-----------------------------------\n");
+        fflush(stdout); // Flush do buffer.
         printf("- Número do processo: %d\n", proc_v[i].numero);
+        fflush(stdout); // Flush do buffer.
         printf("- Tamanho do processo: %dMb\n", proc_v[i].tamanho);
+        fflush(stdout); // Flush do buffer.
         scanf("%d [^\n]", &qtd_info_processo);
         proc_v[i].qtd_info = qtd_info_processo;
 
@@ -153,14 +160,19 @@ int main(void) {
             strcpy(proc_v[i].infos[j].nome, s);
             proc_v[i].infos[j].tempo = tempo;
             printf("- Nome da %da informação: %s\n", l, proc_v[i].infos[j].nome);
+            fflush(stdout); // Flush do buffer.
             if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
                 printf("- Tempo de espera %d: %ds\n", n, proc_v[i].infos[j].tempo);
+                fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
+                fflush(stdout); // Flush do buffer.
                 n++;
                 l++;
             } else {
                 printf("- Tempo de execução %d: %ds\n", m, proc_v[i].infos[j].tempo);
+                fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
+                fflush(stdout); // Flush do buffer.
                 m++;
                 l++;
             }
