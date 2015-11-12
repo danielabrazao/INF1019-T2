@@ -30,17 +30,21 @@
 
 -----------------------------------------------------------------------------------
 
-Quantidade de processos: 3
+LEITURA DO ARQUIVO DE ENTRADA:
 
-Número do processo: #1
-Tamanho do processo: 5Mb
+-----------------------------------------------------------------------------------
+
+- Número total de processos: 3
+
+- Número do processo: #1
+- Tamanho do processo: 5Mb
 
 
-Número do processo: #2
-Tamanho do processo: 7Mb
+- Número do processo: #2
+- Tamanho do processo: 7Mb
 
 
-Número do processo: #3
-Tamanho do processo: 8Mb
+- Número do processo: #3
+- Tamanho do processo: 8Mb
 
 

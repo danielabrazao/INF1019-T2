@@ -121,16 +121,18 @@ int main(void) {
     /* PARTE 7: Leitura do arquivo de entrada            */
     /* ------------------------------------------------- */
 
+    printf("LEITURA DO ARQUIVO DE ENTRADA:\n\n");
+    printf("-----------------------------------------------------------------------------------\n\n");
     scanf("%d [^\n]", &qtd_processos_); /* Lê a quantidade de processos */
-    printf("Quantidade de processos: %d\n\n", qtd_processos_);
+    printf("- Número total de processos: %d\n\n", qtd_processos_);
     fflush(stdout); // Flush do buffer.
 
     for (i = 0; i < qtd_processos_; i++) {
         scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo); /* Lê o número identificador do processo e o seu tamanho em Mb */
         processo[i].numero = numero_processo;
         processo[i].tamanho = tamanho_processo;
-        printf("Número do processo: #%d\n", processo[i].numero);
-        printf("Tamanho do processo: %dMb\n", processo[i].tamanho);
+        printf("- Número do processo: #%d\n", processo[i].numero);
+        printf("- Tamanho do processo: %dMb\n", processo[i].tamanho);
         scanf("%d [^\n]", &qtd_info_processo);
         processo[i].qtd_info = qtd_info_processo;
         for (j = 0; j < processo[i].qtd_info; j++) {
