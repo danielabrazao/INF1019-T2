@@ -50,9 +50,6 @@ int main(void) {
     /* PARTE 1: Declaração de variáveis locais da main   */
     /* ------------------------------------------------- */
 
-    int fd[2]; /* Descritores de arquivos dos pipes.
-                                        * fd[0] = Leitura
-                                        * fd[1] = Escrita */
     int outputfd; /* Descritor de arquivos abertos = Retorno de open */
     int retorno; /* Valor de retorno de dup */
     int retorno2; /* Valor de retorno de dup2 */
@@ -60,9 +57,7 @@ int main(void) {
     int numero_processo; /* Número do processo */
     int tamanho_processo; /* Memória requerida pelo processo */
     int qtd_info_processo; /* Total de entradas que descrevem a execução do processo */
-    int tempo_execucao; /* Tempo de execução do processo */
-    int tempo_espera; /* Tempo de operação de entrada e saída 1 do processo */
-    char id; /* Identificador para leitura do arquivo de entrada */
+    char id; /* Identificador do algoritmo de alocação escolhido */
     int qtd_processos_; /* Quantidade de processos */
     processo *proc_v; /* Vetor de processos */
     int tempo; /* Tempo de execução ou de espera */
@@ -171,6 +166,11 @@ int main(void) {
         l = 1;
         m = 1;
         n = 1;
+    }
+    
+    switch(id)
+    {
+        
     }
 
     return 0; /* Sucesso */
