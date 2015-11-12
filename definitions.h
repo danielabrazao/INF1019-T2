@@ -62,12 +62,12 @@ struct estrutura_info {
 /* Estrutura de um processo */
 
 struct estrutura_processo {
-    int numero;             /* Número identificador do processo */
-    int tamanho;            /* Tamanho do processo em Mb */
-    int qtd_info;           /* Quantidade de informações do processo */
-    time_t inicio_execucao; /* Horário do início da execução do processo em segundos */
-    time_t fim_execucao;    /* Horário do fim da execução do processo em segundos */
-    estrutura_info *info;   /* Vetor de informações do processo */
+    int numero;                    /* Número identificador do processo */
+    int tamanho;                   /* Tamanho do processo em Mb */
+    int qtd_info;                  /* Quantidade de informações do processo */
+    time_t inicio_execucao;        /* Horário do início da execução do processo em segundos */
+    time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
+    struct estrutura_info *info;   /* Vetor de informações do processo */
 };
 
 /* Vetor de estruturas de processos */
