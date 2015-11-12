@@ -194,7 +194,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                             }
                         }
                     } else {
-                        
+
                         /* IO 
                          * Esvazia o bloco de memória ocupado;
                          * Decrementa o tempo do IO.
@@ -209,6 +209,8 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                         }
                     }
                 }
+                printf("\n");
+                fflush(stdout); // Flush do buffer.
             }
             dif = 0;
         }
