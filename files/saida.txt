@@ -90,6 +90,7 @@ MAPA DE MEMÓRIA:
 -----------------------------------
 - Número do processo: 1
 - Tamanho do processo: 5Mb
+- Tempo restante do processo: 50s
 - Tamanho do bloco de memória: 8Mb
 -----------------------------------
 - Bloco #2
@@ -126,3 +127,85 @@ Countdown: 14s
 Countdown: 13s
 Countdown: 12s
 Countdown: 11s
+- Bloco #1
+-----------------------------------
+- Número do processo: 2
+- Tamanho do processo: 7Mb
+- Tempo restante do processo: 100s
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+-----------------------------------
+PROCESSO #2
+-----------------------------------
+Countdown: 100s
+Countdown: 99s
+Countdown: 98s
+Countdown: 97s
+Countdown: 96s
+Countdown: 95s
+Countdown: 94s
+Countdown: 93s
+Countdown: 92s
+Countdown: 91s
+- Bloco #1
+-----------------------------------
+- Número do processo: 3
+- Tamanho do processo: 8Mb
+- Tempo restante do processo: 5s
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+-----------------------------------
+PROCESSO #3
+-----------------------------------
+Countdown: 50s
+Countdown: 49s
+Countdown: 48s
+Countdown: 47s
+Countdown: 46s
+Countdown: 45s
+Countdown: 44s
+Countdown: 43s
+Countdown: 42s
+Countdown: 41s

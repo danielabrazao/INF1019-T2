@@ -149,6 +149,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                         for (l = 0; l < qtd_proc; l++) {
                             if (M->bloco[w].isAlocado == proc_v[l].numero) {
                                 printf("- Tamanho do processo: %dMb\n", proc_v[l].tamanho);
+                                printf("- Tempo restante do processo: %ds\n", proc_v[l].tempo_total);
                                 fflush(stdout); // Flush do buffer.
                             }
                         }
@@ -165,7 +166,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                         fflush(stdout); // Flush do buffer.
                     }
                 }
-                
+
                 printf("\n");
                 fflush(stdout); // Flush do buffer.
                 time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início de execução do algoritmo */
@@ -175,7 +176,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                 fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
                 fflush(stdout); // Flush do buffer.
-                
+
                 /* Percorre as informações sobre o processo */
                 for (k = 0; k < proc_v[i].qtd_info && dif < FATIA_TEMPO; k++) {
 
@@ -188,11 +189,16 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                             proc_v[i].infos[k].tempo--;
                             time(&proc_v[i].fim_execucao);
                             dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
+                            if (dif == 10) {
+                                M->bloco[j].isAlocado = 0;
+                            }
                         }
-                    } else /* IO 
-                          * Esvazia o bloco de memória ocupado;
-                          * Decrementa o tempo do IO.
-                          */ {
+                    } else {
+                        
+                        /* IO 
+                         * Esvazia o bloco de memória ocupado;
+                         * Decrementa o tempo do IO.
+                         */
 
                         M->bloco[j].isAlocado = 0;
                         while (proc_v[i].infos[k].tempo > 0) {
@@ -207,6 +213,6 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
             dif = 0;
         }
     }
-    
+
 }
 #endif	/* UTILITIES_H */
