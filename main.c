@@ -60,9 +60,9 @@ int main(void) {
     int id; /* Identificador do algoritmo de alocação escolhido */
     processo *proc_v; /* Vetor de processos */
     int tempo; /* Tempo de execução ou de espera */
-    char s[5]; /* Nome da informação do processo */
+    char s[5]; /* Nome da informação do processo (exec ou io) */
     mem *M; /* Memória */
-    int qtd_processos_; /* Quantidade de processos */
+    int qtd_processos; /* Quantidade de processos */
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -122,14 +122,14 @@ int main(void) {
 
     printf("LEITURA DO ARQUIVO DE ENTRADA:\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
-    scanf("%d [^\n]", &qtd_processos_); /* Lê a quantidade de processos */
-    printf("- Número total de processos: %d\n\n", qtd_processos_);
+    scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
+    printf("- Número total de processos: %d\n\n", qtd_processos);
     fflush(stdout); // Flush do buffer.
 
     /* Aloca memória para um vetor de processos */
-    proc_v = (processo*) malloc(qtd_processos_ * sizeof (processo));
+    proc_v = (processo*) malloc(qtd_processos * sizeof (processo));
 
-    for (i = 0; i < qtd_processos_; i++) {
+    for (i = 0; i < qtd_processos; i++) {
         scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo); /* Lê o número identificador do processo e o seu tamanho em Mb */
         proc_v[i].numero = numero_processo;
         proc_v[i].tamanho = tamanho_processo;
@@ -171,7 +171,7 @@ int main(void) {
         n = 1;
     }
     
-    scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executada */
+    scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executadO */
     
     /* ------------------------------------------------- */
     /* PARTE 8: Inicialização da memória                 */
@@ -186,7 +186,7 @@ int main(void) {
     switch (id) {
         /* First Fit */
         case 1:
-            first_fit(proc_v, M, qtd_processos_);
+            first_fit(proc_v, M, qtd_processos);
             
         /* Next Fit */
         //case 2:

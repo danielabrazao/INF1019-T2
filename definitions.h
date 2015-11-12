@@ -112,7 +112,7 @@ typedef struct estrutura_bloco_memoria bloco_mem;
 
 struct estrutura_memoria {
 
-	int tamanho;            /* Tamanho da memória em Mb */
+	int tamanho;                   /* Tamanho da memória em Mb */
 	bloco_mem bloco[QTD_BLOC];     /* Vetor de partições da memória */
 	
 };

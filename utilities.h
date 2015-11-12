@@ -138,25 +138,27 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                     } else {
                         printf("- Bloco de memória vazio.\n");
                         printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
-                        printf("-----------------------------------\n\n");
+                        printf("-----------------------------------\n");
                     }
                 }
-
+                
+                printf("\n");
                 time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início de execução do algoritmo */
-
+                printf("-----------------------------------\n");
+                printf("PROCESSO #%d\n", proc_v[i].numero);
+                printf("-----------------------------------\n");
+                
                 /* Percorre as informações sobre o processo */
                 for (k = 0; k < proc_v[i].qtd_info && dif < FATIA_TEMPO; k++) {
 
                     /* EXEC */
                     if (strcmp(proc_v[i].infos->nome, "exec") == 0 && dif < 10) {
-                        while (proc_v[i].infos[k].tempo > 0) {
+                        while (proc_v[i].infos[k].tempo > 0 && dif < FATIA_TEMPO) {
                             sleep(1);
                             printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
                             proc_v[i].infos[k].tempo--;
                             time(&proc_v[i].fim_execucao);
                             dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
-                            if (dif == FATIA_TEMPO)
-                                break;
                         }
                     } else /* IO 
                           * Esvazia o bloco de memória ocupado;
@@ -169,12 +171,11 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                             proc_v[i].infos[k].tempo--;
                             time(&proc_v[i].fim_execucao);
                             dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
-                            if (dif == FATIA_TEMPO)
-                                break;
                         }
                     }
                 }
             }
+            dif = 0;
         }
     }
     
