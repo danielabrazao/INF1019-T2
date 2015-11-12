@@ -20,7 +20,8 @@
  *  -> Matrícula: 1421110
  * - - - - - - - - - - - - - - - - - - - - - - - - -
  * 
- *  Este arquivo é parte do programa principal do Simulador de Gerenciador de Memória.
+ *  Este arquivo é parte do programa principal do Simulador de Gerenciador 
+ *  de Memória.
  *
  *  O Simulador de Gerenciador de Memória é um software livre; você 
  *  pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença 
