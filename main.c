@@ -152,7 +152,8 @@ int main(void) {
         proc_v[i].infos = (info*) malloc(sizeof (info) * qtd_info_processo);
 
         printf("-----------------------------------\n");
-
+        fflush(stdout); // Flush do buffer.
+        
         for (j = 0; j < proc_v[i].qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo);
             proc_v[i].tempo_total = 0;
