@@ -133,9 +133,9 @@ int main(void) {
         scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo); /* Lê o número identificador do processo e o seu tamanho em Mb */
         proc_v[i].numero = numero_processo;
         proc_v[i].tamanho = tamanho_processo;
-        printf("--------------------------------\n");
+        printf("-----------------------------------\n");
         printf("PROCESSO #%d\n", proc_v[i].numero);
-        printf("--------------------------------\n");
+        printf("-----------------------------------\n");
         printf("- Número do processo: %d\n", proc_v[i].numero);
         printf("- Tamanho do processo: %dMb\n", proc_v[i].tamanho);
         scanf("%d [^\n]", &qtd_info_processo);
@@ -144,7 +144,7 @@ int main(void) {
         /* Aloca memória para um vetor de informações do processo */
         proc_v[i].infos = (info*) malloc(sizeof (info) * qtd_info_processo);
 
-        printf("--------------------------------\n");
+        printf("-----------------------------------\n");
 
         for (j = 0; j < proc_v[i].qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo);
@@ -153,12 +153,12 @@ int main(void) {
             printf("- Nome da %da informação: %s\n", l, proc_v[i].infos[j].nome);
             if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
                 printf("- Tempo de espera %d: %ds\n", n, proc_v[i].infos[j].tempo);
-                printf("--------------------------------\n");
+                printf("-----------------------------------\n");
                 n++;
                 l++;
             } else {
                 printf("- Tempo de execução %d: %ds\n", m, proc_v[i].infos[j].tempo);
-                printf("--------------------------------\n");
+                printf("-----------------------------------\n");
                 m++;
                 l++;
             }
