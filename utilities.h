@@ -102,40 +102,59 @@ void inicializar_memoria(mem *M) {
 /* Função que executa algoritmo de alocação de ajuste rápido */
 
 void first_fit(processo *proc_v, mem *M, int qtd_proc) {
-    
-    int i, j, k = 0, retorno;
-    time_t tempoCorrente = 0;
-    time_t dif = 0;
 
-    for (i = 0; i < qtd_processos_; i++) {
+    int i, j, k = 0, w;
+    time_t dif = 0; /* Diferença entre os tempos final e inicial de execução do algoritmo */
 
+    /* Percorre os processos */
+    for (i = 0; i < qtd_proc; i++) {
+
+        printf("");
+        
+        /* Percorre as 5 partições de memória */
         for (j = 0; j < 5; j++) {
-            if (M->particao[j].isAlocado == NULL && M->particao[j].tamPart >= vProc[i].tam) {
+            if (M->bloco[j].isAlocado == 0 && M->bloco[j].tamanho >= proc_v[i].tamanho) {
 
-                M->particao[j].isAlocado = vProc[i].numero;
-                time(&vProc[i].inicio);
+                M->bloco[j].isAlocado = proc_v[i].numero;
 
-                for (k = 0; k < vProc[i].qtdInfo && dif < 10; k++) {
+                /* Percorre todos os blocos de memória */
+                for (w = 0; w < QTD_BLOC; w++) {
+                    printf("Bloco #%d\n", w);
+                    if (M->bloco[w].isAlocado > 0) {
+                        printf("Número do processo: %d\n", M->bloco[w].isAlocado);
+                    } else {
+                        printf("Bloco de memória vazio.\n");
+                    }
+                }
 
-                    if (strcmp(vProc[i].infos->nome, "exec") == 0 && dif < 10) //caso for EXEC
-                    {
+                time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início de execução do algoritmo */
 
+                /* Percorre as informações sobre o processo */
+                for (k = 0; k < proc_v[i].qtd_info && dif < FATIA_TEMPO; k++) {
 
-                        while (vProc[i].infos[k].tempo > 0) {
+                    /* EXEC */
+                    if (strcmp(proc_v[i].infos->nome, "exec") == 0 && dif < 10) {
+                        while (proc_v[i].infos[k].tempo > 0) {
                             sleep(1);
-                            vProc[i].infos[k].tempo--;
-                            time(&vProc[i].fim);
-                            dif = vProc[i].fim - vProc[i].inicio;
-                            if (dif == 10)
+                            proc_v[i].infos[k].tempo--;
+                            time(&proc_v[i].fim_execucao);
+                            dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
+                            if (dif == FATIA_TEMPO)
                                 break;
                         }
-                    } else // caso for IO - Esvazia a PartiÁ„o que ta sendo ocupada e continua decrementando o tempo do IO
-                    {
+                    } else /* IO 
+                          * Esvazia o bloco de memória ocupado;
+                          * Decrementa o tempo do IO.
+                          */ {
 
-                        M->particao[j].isAlocado = NULL;
-                        while (vProc[i].infos[k].tempo > 0) {
+                        M->bloco[j].isAlocado = 0;
+                        while (proc_v[i].infos[k].tempo > 0) {
                             sleep(1);
-                            vProc[i].infos[k].tempo--;
+                            proc_v[i].infos[k].tempo--;
+                            time(&proc_v[i].fim_execucao);
+                            dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
+                            if (dif == FATIA_TEMPO)
+                                break;
                         }
                     }
                 }

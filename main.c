@@ -58,11 +58,11 @@ int main(void) {
     int tamanho_processo; /* Memória requerida pelo processo */
     int qtd_info_processo; /* Total de entradas que descrevem a execução do processo */
     int id; /* Identificador do algoritmo de alocação escolhido */
-    int qtd_processos_; /* Quantidade de processos */
     processo *proc_v; /* Vetor de processos */
     int tempo; /* Tempo de execução ou de espera */
     char s[5]; /* Nome da informação do processo */
     mem *M; /* Memória */
+    int qtd_processos_; /* Quantidade de processos */
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -168,9 +168,8 @@ int main(void) {
         m = 1;
         n = 1;
     }
-
-    scanf("%d [^\n]", &id);
     
+    scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executada */
     
     /* ------------------------------------------------- */
     /* PARTE 8: Inicialização da memória                 */
@@ -181,23 +180,24 @@ int main(void) {
     /* ------------------------------------------------- */
     /* PARTE 9: Execução do algoritmo de alocação        */
     /* ------------------------------------------------- */
-
+    
     switch (id) {
         /* First Fit */
         case 1:
             first_fit(proc_v, M, qtd_processos_);
             
         /* Next Fit */
-        case 2:
-            next_fit();
+        //case 2:
+            //next_fit();
             
         /* Worst Fit */
-        case 3:
-            worst_fit();
+        //case 3:
+            //worst_fit();
+            
             
         /* Best Fit */
-        case 4:
-            best_fit();  
+        //case 4:
+            //best_fit();  
     }
 
     return 0; /* Sucesso */

@@ -60,6 +60,7 @@
 #define TAM_STR     100     /* Tamanho da string máxima */
 #define TAM_VET     100     /* Tamanho do vetor máximo */
 #define TAM_MEM     16      /* Tamanho da memória em Mb */
+#define QTD_BLOC    5       /* Quantidade de blocos de memória */
 #define FATIA_TEMPO 10      /* Time slice dos processos */
 
 
@@ -111,7 +112,7 @@ typedef struct estrutura_bloco_memoria bloco_mem;
 struct estrutura_memoria {
 
 	int tamanho;            /* Tamanho da memória em Mb */
-	bloco_mem bloco[5];     /* Vetor de partições da memória */
+	bloco_mem bloco[QTD_BLOC];     /* Vetor de partições da memória */
 	
 };
 
