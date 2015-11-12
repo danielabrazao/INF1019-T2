@@ -74,15 +74,27 @@ struct estrutura_processo {
 
 struct estrutura_processo processo[TAM_VET];
 
-/* Estrutura de blocos (partições fixas) de memória */
+/* Estrutura de um bloco (partição fixa) de memória */
 
 struct estrutura_bloco_memoria {
-    int numero_processo;    /* Número identificador do processo */
-    int tamanho;            /* Tamanho do bloco de memória em Mb */
+	int tamanho;    /* Tamanho do bloco de memória em Mb */
+	int isAlocado;  /* Equivale:
+                         * - a NULL, caso o bloco de memória não esteja alocado.
+                         * - ao número identificador do processo alocado no bloco de memória.
+                         */
 };
 
-/* Vetor de estruturas de blocos (partições fixas) de memória */
+typedef struct estrutura_bloco_memoria bloco_mem;
 
-struct estrutura_bloco_memoria memoria[TAM_VET];
+/* Estrutura da memória */
+
+struct estrutura_memoria {
+
+	int tamanho;            /* Tamanho da memória em Mb */
+	bloco_mem bloco[5];     /* Vetor de partições da memória */
+	
+};
+
+typedef struct estrutura_memoria mem;
 
 #endif	/* DEFINITIONS_H */
