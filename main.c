@@ -171,14 +171,21 @@ int main(void) {
 
     scanf("%d [^\n]", &id);
     
+    
     /* ------------------------------------------------- */
-    /* PARTE 8: Algoritmo de alocação                    */
+    /* PARTE 8: Inicialização da memória                 */
+    /* ------------------------------------------------- */
+    
+    inicializar_memoria(M);
+    
+    /* ------------------------------------------------- */
+    /* PARTE 9: Execução do algoritmo de alocação        */
     /* ------------------------------------------------- */
 
     switch (id) {
         /* First Fit */
         case 1:
-            printf("oi");
+            first_fit(proc_v, M, qtd_processos_);
 
     }
 

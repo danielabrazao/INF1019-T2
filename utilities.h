@@ -84,24 +84,65 @@ void showError(char str[TAM_STR + 1], int n) {
 
 /* Função que inicializa a memória com partições fixas */
 
-void inicializarMemoria(mem *M) {
-	
-	int i;
-        int v[5] = {8, 4, 2, 1, 1};
+void inicializar_memoria(mem *M) {
 
-	M->tamanho = TAM_MEM;
+    int i;
+    int v[5] = {8, 4, 2, 1, 1};
 
-	for(i = 0; i < 5; i++) {
+    M->tamanho = TAM_MEM;
 
-		M->bloco[i].isAlocado = 0;
-		M->bloco[i].tamanho = v[i];
-	}
+    for (i = 0; i < 5; i++) {
+
+        M->bloco[i].isAlocado = 0;
+        M->bloco[i].tamanho = v[i];
+    }
 
 }
-/* Função do algoritmo de alocação de ajuste rápido */
-int first_fit(processo *proc_v, mem *M, int qtd_proc)
-{
-    return 0; /* Sucesso */
+
+/* Função que executa algoritmo de alocação de ajuste rápido */
+
+void first_fit(processo *proc_v, mem *M, int qtd_proc) {
+    
+    int i, j, k = 0, retorno;
+    time_t tempoCorrente = 0;
+    time_t dif = 0;
+
+    for (i = 0; i < qtd_processos_; i++) {
+
+        for (j = 0; j < 5; j++) {
+            if (M->particao[j].isAlocado == NULL && M->particao[j].tamPart >= vProc[i].tam) {
+
+                M->particao[j].isAlocado = vProc[i].numero;
+                time(&vProc[i].inicio);
+
+                for (k = 0; k < vProc[i].qtdInfo && dif < 10; k++) {
+
+                    if (strcmp(vProc[i].infos->nome, "exec") == 0 && dif < 10) //caso for EXEC
+                    {
+
+
+                        while (vProc[i].infos[k].tempo > 0) {
+                            sleep(1);
+                            vProc[i].infos[k].tempo--;
+                            time(&vProc[i].fim);
+                            dif = vProc[i].fim - vProc[i].inicio;
+                            if (dif == 10)
+                                break;
+                        }
+                    } else // caso for IO - Esvazia a PartiÁ„o que ta sendo ocupada e continua decrementando o tempo do IO
+                    {
+
+                        M->particao[j].isAlocado = NULL;
+                        while (vProc[i].infos[k].tempo > 0) {
+                            sleep(1);
+                            vProc[i].infos[k].tempo--;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
 }
 
 #endif	/* UTILITIES_H */
