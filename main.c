@@ -78,7 +78,7 @@ int main(void) {
     /* PARTE 3: Redirecionamento da entrada padrão       */
     /* ------------------------------------------------- */
 
-    close(0); /* Fechamento da entrada stdin (teclado). */
+    close(0); /* Fechamento da entrada stdin (teclado) */
 
     /* Tratamento de erro para duplicação de stdin */
     if ((retorno = dup(outputfd)) == -1) {
@@ -101,7 +101,7 @@ int main(void) {
     /* PARTE 5: Redirecionamento da saída padrão         */
     /* ------------------------------------------------- */
 
-    close(1); /* Fechamento da saída stdout (monitor). */
+    close(1); /* Fechamento da saída stdout (monitor) */
 
     /* Tratamento de erro para duplicação de stdout */
     if ((retorno2 = dup2(outputfd, 1)) == -1) {
@@ -155,7 +155,7 @@ int main(void) {
         fflush(stdout); // Flush do buffer.
         
         for (j = 0; j < proc_v[i].qtd_info; j++) {
-            scanf("%s %d [^\n]", s, &tempo);
+            scanf("%s %d [^\n]", s, &tempo); /* Lê o nome da informação (exec ou io) e o tempo de execução ou de espera */
             proc_v[i].tempo_total = 0;
             proc_v[i].tempo_total = proc_v[i].tempo_total + tempo;
             strcpy(proc_v[i].infos[j].nome, s);
@@ -184,7 +184,7 @@ int main(void) {
         n = 1;
     }
     
-    scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executadO */
+    scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executado */
     
     /* ------------------------------------------------- */
     /* PARTE 8: Inicialização da memória                 */

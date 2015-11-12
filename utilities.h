@@ -117,7 +117,7 @@ void inicializar_memoria(mem *M) {
 void first_fit(processo *proc_v, mem *M, int qtd_proc) {
 
     int i, j, k = 0, w, l, p = qtd_proc;
-    time_t dif = 0; /* Diferença entre os tempos final e inicial de execução do algoritmo */
+    time_t dif = 0; /* Diferença entre os tempos final e inicial da execução do algoritmo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
     fflush(stdout); // Flush do buffer.
