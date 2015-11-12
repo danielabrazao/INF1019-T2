@@ -82,8 +82,24 @@ void showError(char str[TAM_STR + 1], int n) {
     exit(n);
 }
 
+/* Função que inicializa a memória com partições fixas */
+
+void inicializarMemoria(mem *M) {
+	
+	int i;
+        int v[5] = {8, 4, 2, 1, 1};
+
+	M->tamanho = TAM_MEM;
+
+	for(i = 0; i < 5; i++) {
+
+		M->bloco[i].isAlocado = 0;
+		M->bloco[i].tamanho = v[i];
+	}
+
+}
 /* Função do algoritmo de alocação de ajuste rápido */
-int firstFit()
+int first_fit(processo *proc_v, mem *M, int qtd_proc)
 {
     return 0; /* Sucesso */
 }

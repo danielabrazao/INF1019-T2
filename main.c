@@ -57,11 +57,12 @@ int main(void) {
     int numero_processo; /* Número do processo */
     int tamanho_processo; /* Memória requerida pelo processo */
     int qtd_info_processo; /* Total de entradas que descrevem a execução do processo */
-    char id; /* Identificador do algoritmo de alocação escolhido */
+    int id; /* Identificador do algoritmo de alocação escolhido */
     int qtd_processos_; /* Quantidade de processos */
     processo *proc_v; /* Vetor de processos */
     int tempo; /* Tempo de execução ou de espera */
     char s[5]; /* Nome da informação do processo */
+    mem *M; /* Memória */
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -142,9 +143,9 @@ int main(void) {
 
         /* Aloca memória para um vetor de informações do processo */
         proc_v[i].infos = (info*) malloc(sizeof (info) * qtd_info_processo);
-        
+
         printf("--------------------------------\n");
-        
+
         for (j = 0; j < proc_v[i].qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo);
             strcpy(proc_v[i].infos[j].nome, s);
@@ -167,10 +168,18 @@ int main(void) {
         m = 1;
         n = 1;
     }
+
+    scanf("%d [^\n]", &id);
     
-    switch(id)
-    {
-        
+    /* ------------------------------------------------- */
+    /* PARTE 8: Algoritmo de alocação                    */
+    /* ------------------------------------------------- */
+
+    switch (id) {
+        /* First Fit */
+        case 1:
+            printf("oi");
+
     }
 
     return 0; /* Sucesso */

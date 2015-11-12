@@ -99,7 +99,7 @@ typedef struct estrutura_processo processo;
 struct estrutura_bloco_memoria {
 	int tamanho;    /* Tamanho do bloco de memória em Mb */
 	int isAlocado;  /* Equivale:
-                         * - a NULL, caso o bloco de memória não esteja alocado.
+                         * - a 0, caso o bloco de memória não esteja alocado.
                          * - ao número identificador do processo alocado no bloco de memória.
                          */
 };
