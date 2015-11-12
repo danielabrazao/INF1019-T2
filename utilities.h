@@ -5,7 +5,6 @@
  * 
  *  Descrição: Arquivo de cabeçalho contendo funções auxiliares.
  *  Arquivo: utilities.h criado em 5 de Novembro de 2015, às 12:03.
- * 
  *  Professor: Luiz Fernando Bessa Seibel
  *  Instituição: Pontifícia Universidade Católica do Rio de Janeiro
  *  Disciplina: Sistemas de Computação (INF1019)
