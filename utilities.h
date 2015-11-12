@@ -172,7 +172,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                 time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início de execução do algoritmo */
                 printf("-----------------------------------\n");
                 fflush(stdout); // Flush do buffer.
-                printf("PROCESSO #%d\n", proc_v[i].numero);
+                printf("PROCESSO #%d - RELÓGIO\n", proc_v[i].numero);
                 fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
                 fflush(stdout); // Flush do buffer.
@@ -209,8 +209,9 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                         }
                     }
                 }
-                printf("\n");
-                fflush(stdout); // Flush do buffer.
+                printf("-----------------------------------");
+                printf("\n\n-----------------------------------\n");
+                fflush(stdout); // Flush do buffer
             }
             dif = 0;
         }
