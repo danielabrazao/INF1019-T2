@@ -79,6 +79,8 @@ struct estrutura_info {
 	int tempo;      /* Tempo de execução para exec ou de espera para io */
 };
 
+typedef struct estrutura_info info;
+
 /* Estrutura de um processo */
 
 struct estrutura_processo {
@@ -87,12 +89,10 @@ struct estrutura_processo {
     int qtd_info;                  /* Quantidade de informações do processo */
     time_t inicio_execucao;        /* Horário do início da execução do processo em segundos */
     time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
-    struct estrutura_info *info;   /* Vetor de informações do processo */
+    info *infos;                   /* Vetor de informações do processo */
 };
 
-/* Vetor de estruturas de processos */
-
-struct estrutura_processo processo[TAM_VET];
+typedef struct estrutura_processo processo;
 
 /* Estrutura de um bloco (partição fixa) de memória */
 

@@ -51,8 +51,8 @@ int main(void) {
     /* ------------------------------------------------- */
 
     int fd[2]; /* Descritores de arquivos dos pipes.
-                * fd[0] = Leitura
-                * fd[1] = Escrita */
+                                        * fd[0] = Leitura
+                                        * fd[1] = Escrita */
     int outputfd; /* Descritor de arquivos abertos = Retorno de open */
     int retorno; /* Valor de retorno de dup */
     int retorno2; /* Valor de retorno de dup2 */
@@ -64,6 +64,9 @@ int main(void) {
     int tempo_espera; /* Tempo de operação de entrada e saída 1 do processo */
     char id; /* Identificador para leitura do arquivo de entrada */
     int qtd_processos_; /* Quantidade de processos */
+    processo *proc_v; /* Vetor de processos */
+    int tempo; /* Tempo de execução ou de espera */
+    char s[5]; /* Nome da informação do processo */
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -127,35 +130,37 @@ int main(void) {
     printf("- Número total de processos: %d\n\n", qtd_processos_);
     fflush(stdout); // Flush do buffer.
 
+    /* Aloca memória para um vetor de processos */
+    proc_v = (processo*) malloc(qtd_processos_ * sizeof (processo));
+
     for (i = 0; i < qtd_processos_; i++) {
         scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo); /* Lê o número identificador do processo e o seu tamanho em Mb */
-        processo[i].numero = numero_processo;
-        processo[i].tamanho = tamanho_processo;
-        printf("- Número do processo: #%d\n", processo[i].numero);
-        printf("- Tamanho do processo: %dMb\n", processo[i].tamanho);
+        proc_v[i].numero = numero_processo;
+        proc_v[i].tamanho = tamanho_processo;
+        printf("--------------------------------\n");
+        printf("PROCESSO #%d\n", proc_v[i].numero);
+        printf("--------------------------------\n");
+        printf("- Número do processo: %d\n", proc_v[i].numero);
+        printf("- Tamanho do processo: %dMb\n", proc_v[i].tamanho);
         scanf("%d [^\n]", &qtd_info_processo);
-        processo[i].qtd_info = qtd_info_processo;
-        for (j = 0; j < processo[i].qtd_info; j++) {
-            scanf("%1c", &id);
-            switch (id) {
-                case 'e':
-                    scanf("xec %d [^\n]", &tempo_execucao);
-                    /*info[i + 3 * w].numero_processo = numero_processo;
-                    info[i + 3 * w].tempo_execucao = tempo_execucao;
-                    printf("Tempo de execução %d: %ds\n", l + 1, info[i + 3 * w].tempo_execucao);*/
-                    l++;
-                    break;
+        proc_v[i].qtd_info = qtd_info_processo;
 
-                case'i':
-                    scanf("o %d [^\n]", &tempo_espera);
-                    /*info[i + 3 * w].numero_processo = numero_processo;
-                    info[i + 3 * w].tempo_espera = tempo_espera;
-                    printf("Tempo de espera %d: %ds\n", m + 1, info[i + 3 * w].tempo_espera);*/
-                    m++;
-                    break;
-
-                default:
-                    showError("Entrada inválida.", ERR_INPUT);
+        /* Aloca memória para um vetor de informações do processo */
+        proc_v[i].infos = (info*) malloc(sizeof (info) * qtd_info_processo);
+        
+        printf("--------------------------------\n");
+        
+        for (j = 0; j < proc_v[i].qtd_info; j++) {
+            scanf("%s %d [^\n]", s, &tempo);
+            strcpy(proc_v[i].infos[j].nome, s);
+            proc_v[i].infos[j].tempo = tempo;
+            printf("- Nome da informação: %s\n", proc_v[i].infos[j].nome);
+            if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
+                printf("- Tempo de espera: %ds\n", proc_v[i].infos[j].tempo);
+                printf("--------------------------------\n");
+            } else {
+                printf("- Tempo de execução: %ds\n", proc_v[i].infos[j].tempo);
+                printf("--------------------------------\n");
             }
         }
         printf("\n\n");

@@ -36,15 +36,51 @@ LEITURA DO ARQUIVO DE ENTRADA:
 
 - Número total de processos: 3
 
-- Número do processo: #1
+--------------------------------
+PROCESSO #1
+--------------------------------
+- Número do processo: 1
 - Tamanho do processo: 5Mb
+--------------------------------
+- Nome da informação: exec
+- Tempo de execução: 20s
+--------------------------------
+- Nome da informação: io
+- Tempo de espera: 5s
+--------------------------------
+- Nome da informação: exec
+- Tempo de execução: 50s
+--------------------------------
 
 
-- Número do processo: #2
+--------------------------------
+PROCESSO #2
+--------------------------------
+- Número do processo: 2
 - Tamanho do processo: 7Mb
+--------------------------------
+- Nome da informação: exec
+- Tempo de execução: 100s
+--------------------------------
 
 
-- Número do processo: #3
+--------------------------------
+PROCESSO #3
+--------------------------------
+- Número do processo: 3
 - Tamanho do processo: 8Mb
+--------------------------------
+- Nome da informação: exec
+- Tempo de execução: 50s
+--------------------------------
+- Nome da informação: io
+- Tempo de espera: 50s
+--------------------------------
+- Nome da informação: exec
+- Tempo de execução: 50s
+--------------------------------
+- Nome da informação: io
+- Tempo de espera: 5s
+--------------------------------
 
 
