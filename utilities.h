@@ -125,8 +125,6 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
     fflush(stdout); // Flush do buffer.
     printf("-----------------------------------------------------------------------------------\n\n");
     fflush(stdout); // Flush do buffer.
-    printf("-----------------------------------\n");
-    fflush(stdout); // Flush do buffer.
 
     /* Percorre os processos */
     for (i = 0; i < qtd_proc; i++) {
@@ -137,6 +135,8 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
 
                 M->bloco[j].isAlocado = proc_v[i].numero;
 
+                printf("-----------------------------------\n");
+                fflush(stdout); // Flush do buffer.
                 /* Percorre todos os blocos de memória */
                 for (w = 0; w < QTD_BLOC; w++) {
                     printf("- Bloco #%d\n", w + 1);
@@ -167,10 +167,8 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                     }
                 }
 
-                printf("\n");
-                fflush(stdout); // Flush do buffer.
                 time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início de execução do algoritmo */
-                printf("-----------------------------------\n");
+                printf("\n-----------------------------------\n");
                 fflush(stdout); // Flush do buffer.
                 printf("PROCESSO #%d - RELÓGIO\n", proc_v[i].numero);
                 fflush(stdout); // Flush do buffer.
@@ -193,8 +191,45 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                         }
                         printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
                         printf("-----------------------------------\n\n");
+
+                        /* Percorre todos os blocos de memória */
+                        for (w = 0; w < QTD_BLOC; w++) {
+                            printf("-----------------------------------\n");
+                            fflush(stdout); // Flush do buffer.
+                            printf("- Bloco #%d\n", w + 1);
+                            fflush(stdout); // Flush do buffer.
+                            printf("-----------------------------------\n");
+                            fflush(stdout); // Flush do buffer.
+                            if (M->bloco[w].isAlocado > 0) {
+                                printf("- Número do processo: %d\n", M->bloco[w].isAlocado);
+                                fflush(stdout); // Flush do buffer.
+                                for (l = 0; l < qtd_proc; l++) {
+                                    if (M->bloco[w].isAlocado == proc_v[l].numero) {
+                                        printf("- Tamanho do processo: %dMb\n", proc_v[l].tamanho);
+                                        printf("- Tempo restante do processo: %ds\n", proc_v[l].tempo_total);
+                                        fflush(stdout); // Flush do buffer.
+                                    }
+                                }
+                                printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
+                                fflush(stdout); // Flush do buffer.
+                            } else {
+                                printf("- Bloco de memória vazio.\n");
+                                fflush(stdout); // Flush do buffer.
+                                printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
+                                fflush(stdout); // Flush do buffer.
+                            }
+                        }
+
                         printf("-----------------------------------\n");
-                        
+                        fflush(stdout); // Flush do buffer.
+                        printf("\n-----------------------------------\n");
+                        fflush(stdout); // Flush do buffer.
+
+                        /* Libera bloco de memória caso tenha estourado o tempo máximo de execução de um processo */
+                        if (dif == 10) {
+                            M->bloco[j].isAlocado = 0;
+                        }
+
                         /* Percorre todos os blocos de memória */
                         for (w = 0; w < QTD_BLOC; w++) {
                             printf("- Bloco #%d\n", w + 1);
@@ -224,11 +259,6 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                                 fflush(stdout); // Flush do buffer.
                             }
                         }
-
-                        /* Libera bloco de memória caso tenha estourado o tempo máximo de execução de um processo */
-                        if (dif == 10) {
-                            M->bloco[j].isAlocado = 0;
-                        }
                     } else {
 
                         /* IO 
@@ -246,6 +276,8 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                         }
                     }
                 }
+                printf("\n");
+                fflush(stdout); // Flush do buffer.
             }
             dif = 0;
         }
