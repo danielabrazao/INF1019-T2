@@ -186,7 +186,18 @@ int main(void) {
         /* First Fit */
         case 1:
             first_fit(proc_v, M, qtd_processos_);
-
+            
+        /* Next Fit */
+        case 2:
+            next_fit();
+            
+        /* Worst Fit */
+        case 3:
+            worst_fit();
+            
+        /* Best Fit */
+        case 4:
+            best_fit();  
     }
 
     return 0; /* Sucesso */
