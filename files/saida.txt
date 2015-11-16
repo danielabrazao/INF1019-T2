@@ -64,7 +64,7 @@ PROCESSO #2
 PROCESSO #3
 -----------------------------------
 - Número do processo: 3
-- Tamanho do processo: 8Mb
+- Tamanho do processo: 18Mb
 -----------------------------------
 - Nome da 1a informação: exec
 - Tempo de execução 1: 50s
@@ -126,3 +126,165 @@ Countdown: 15s
 Countdown: 14s
 Countdown: 13s
 Countdown: 12s
+Countdown: 11s
+Countdown: 10s
+-----------------------------------
+
+-----------------------------------
+- Bloco #1
+-----------------------------------
+- Número do processo: 1
+- Tamanho do processo: 5Mb
+- Tempo restante do processo: 65s
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+-----------------------------------
+- Bloco #1
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+-----------------------------------
+- Bloco #1
+-----------------------------------
+- Número do processo: 2
+- Tamanho do processo: 7Mb
+- Tempo restante do processo: 100s
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+-----------------------------------
+PROCESSO #2 - RELÓGIO
+-----------------------------------
+Countdown: 100s
+Countdown: 99s
+Countdown: 98s
+Countdown: 97s
+Countdown: 96s
+Countdown: 95s
+Countdown: 94s
+Countdown: 93s
+Countdown: 92s
+Countdown: 91s
+Countdown: 90s
+-----------------------------------
+
+-----------------------------------
+- Bloco #1
+-----------------------------------
+- Número do processo: 2
+- Tamanho do processo: 7Mb
+- Tempo restante do processo: 90s
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+-----------------------------------
+- Bloco #1
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+Bloco de memória compatível com o tamanho de 18Mb do processo de número 3 inexiste.

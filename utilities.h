@@ -230,9 +230,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                             }
                         }
 
-                        printf("-----------------------------------\n");
-                        fflush(stdout); // Flush do buffer.
-                        printf("\n-----------------------------------\n");
+                        printf("-----------------------------------\n\n");
                         fflush(stdout); // Flush do buffer.
 
                         /* Libera bloco de memória caso tenha estourado o tempo máximo de execução de um processo */
@@ -269,6 +267,8 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
                                 fflush(stdout); // Flush do buffer.
                             }
                         }
+                        printf("-----------------------------------\n");
+                        fflush(stdout); // Flush do buffer.
                     } else {
 
                         /* IO 

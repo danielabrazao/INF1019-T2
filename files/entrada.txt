@@ -7,7 +7,7 @@ exec 50
 Processo #2 – 7Mb
 1
 exec 100
-Processo #3 – 8Mb
+Processo #3 – 18Mb
 4
 exec 50
 io 50
