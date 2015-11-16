@@ -114,7 +114,7 @@ void inicializar_memoria(mem *M) {
 
 /* Função que executa algoritmo de alocação de ajuste rápido */
 
-void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo) {
+void first_fit(processo *proc_v, mem *M, int qtd_proc) {
 
     int i, j, k = 0, w, l, p = qtd_proc;
     time_t dif = 0; /* Diferença entre os tempos final e inicial da execução do algoritmo */
@@ -186,7 +186,6 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo) {
                             fflush(stdout); // Flush do buffer.
                             proc_v[i].infos[k].tempo--;
                             proc_v[i].tempo_total--;
-                            tempo--;
                             time(&proc_v[i].fim_execucao);
                             dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
                         }
@@ -272,7 +271,6 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo) {
                             sleep(1);
                             proc_v[i].infos[k].tempo--;
                             proc_v[i].tempo_total--;
-                            tempo--;
                             time(&proc_v[i].fim_execucao);
                             dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
                         }
