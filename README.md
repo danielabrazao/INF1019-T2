@@ -30,6 +30,7 @@ $ ./main
 
 * [Programar em C](https://pt.wikibooks.org/wiki/Programar_em_C) -- `Wikipedia` (https://pt.wikipedia.org/)
 * [Sistemas Operacionais: Projeto e Implementação](http://www.asfernandes.com/files/SistemasOperacionais_-_Tanenbaum_-_2Ed.pdf) -- `Anilton Fernandes` (http://www.asfernandes.com/)
+* [Simulation of Memory allocation algorithms (First Fit, Best Fit , Next Fit)] (https://cprogrammingguide.wordpress.com/2012/07/10/simulation-of-memory-allocation-algorithms-first-fit-best-fit-next-fit/) -- `C – Programming Guide` (https://cprogrammingguide.wordpress.com/) 
 
 ## Sugestões ##
 * André Parente
