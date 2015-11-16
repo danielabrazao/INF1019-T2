@@ -1,16 +1,16 @@
 3
 Processo #1 – 5Mb
 3
-exec 20
+exec 2
 io 5
-exec 50
+exec 5
 Processo #2 – 7Mb
 1
-exec 100
+exec 1
 Processo #3 – 8Mb
 4
-exec 50
-io 50
-exec 50
+exec 5
+io 5
+exec 5
 io 5
 1

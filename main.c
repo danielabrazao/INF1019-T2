@@ -204,7 +204,7 @@ int main(void) {
     switch (id) {
             /* First Fit */
         case 1:
-            first_fit(proc_v, M, qtd_processos);
+            first_fit(proc_v, M, qtd_processos, tempo_total);
 
             /* Next Fit */
             //case 2:
