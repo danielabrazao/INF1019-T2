@@ -70,7 +70,6 @@
 #define ERR_DUP         2   /* Erro na duplicação de uma entrada ou saída com dup */
 #define ERR_DUP2        3   /* Erro na duplicação de uma entrada ou saída com dup2 */
 #define ERR_INPUT       4   /* Arquivo de entrada inválido */
-#define ERR_TAM_BLOC    5  /* Bloco de memória compatível com tamanho do processo inexiste */
 
 /* ESTRUTURAS */
 

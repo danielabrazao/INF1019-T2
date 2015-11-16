@@ -63,7 +63,7 @@ int main(void) {
     char s[5]; /* Nome da informação do processo (exec ou io) */
     mem *M; /* Memória */
     int qtd_processos; /* Quantidade de processos */
-    int tempo_total; /* Tempo total de todos os processos */
+    int tempo_total = 0; /* Tempo total de todos os processos */
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -164,7 +164,7 @@ int main(void) {
             strcpy(proc_v[i].infos[j].nome, s);
             proc_v[i].infos[j].tempo = tempo;
             proc_v[i].tempo_total = proc_v[i].tempo_total + tempo;
-            tempo_total = tempo_total + tempo;
+            tempo_total = tempo_total + tempo; /* Tempo total de todos os processos juntos */
             printf("- Nome da %da informação: %s\n", l, proc_v[i].infos[j].nome);
             fflush(stdout); // Flush do buffer.
             if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
@@ -200,11 +200,13 @@ int main(void) {
     /* ------------------------------------------------- */
     /* PARTE 9: Execução do algoritmo de alocação        */
     /* ------------------------------------------------- */
-
+    
+    printf("Tempo total dos processos = %d\n\n", tempo_total);
+    
     switch (id) {
             /* First Fit */
         case 1:
-            first_fit(proc_v, M, qtd_processos);
+            first_fit(proc_v, M, qtd_processos, tempo_total);
 
             /* Next Fit */
             //case 2:
