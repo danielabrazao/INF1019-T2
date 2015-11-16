@@ -295,7 +295,8 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc) {
         
         if (flag == 0)
         {
-            showError("Bloco de memória compatível com o tamanho de %dMb do processo de número %d inexiste.",proc_v[i].tamanho, proc_v[i].numero, ERR_TAM_BLOC);
+            printf("Bloco de memória compatível com o tamanho de %dMb do processo de número %d inexiste.", proc_v[i].tamanho, proc_v[i].numero);
+            exit(ERR_TAM_BLOC);
         }
     }
 
