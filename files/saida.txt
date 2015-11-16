@@ -127,7 +127,6 @@ Countdown: 14s
 Countdown: 13s
 Countdown: 12s
 Countdown: 11s
-Countdown: 10s
 -----------------------------------
 
 -----------------------------------
@@ -135,7 +134,7 @@ Countdown: 10s
 -----------------------------------
 - Número do processo: 1
 - Tamanho do processo: 5Mb
-- Tempo restante do processo: 65s
+- Tempo restante do processo: 66s
 - Tamanho do bloco de memória: 8Mb
 -----------------------------------
 - Bloco #2
@@ -159,6 +158,7 @@ Countdown: 10s
 - Tamanho do bloco de memória: 1Mb
 -----------------------------------
 
+-----------------------------------
 -----------------------------------
 - Bloco #1
 -----------------------------------
@@ -184,7 +184,6 @@ Countdown: 10s
 -----------------------------------
 - Bloco de memória vazio.
 - Tamanho do bloco de memória: 1Mb
------------------------------------
 
 -----------------------------------
 - Bloco #1
@@ -261,6 +260,7 @@ Countdown: 90s
 -----------------------------------
 
 -----------------------------------
+-----------------------------------
 - Bloco #1
 -----------------------------------
 - Bloco de memória vazio.
@@ -285,7 +285,6 @@ Countdown: 90s
 -----------------------------------
 - Bloco de memória vazio.
 - Tamanho do bloco de memória: 1Mb
------------------------------------
 
 -----------------------------------
 - Bloco #1
@@ -323,3 +322,68 @@ Countdown: 50s
 Countdown: 49s
 Countdown: 48s
 Countdown: 47s
+Countdown: 46s
+Countdown: 45s
+Countdown: 44s
+Countdown: 43s
+Countdown: 42s
+Countdown: 41s
+Countdown: 40s
+-----------------------------------
+
+-----------------------------------
+- Bloco #1
+-----------------------------------
+- Número do processo: 3
+- Tamanho do processo: 8Mb
+- Tempo restante do processo: 145s
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+
+-----------------------------------
+-----------------------------------
+- Bloco #1
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 8Mb
+-----------------------------------
+- Bloco #2
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 4Mb
+-----------------------------------
+- Bloco #3
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 2Mb
+-----------------------------------
+- Bloco #4
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+-----------------------------------
+- Bloco #5
+-----------------------------------
+- Bloco de memória vazio.
+- Tamanho do bloco de memória: 1Mb
+
