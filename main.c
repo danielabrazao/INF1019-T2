@@ -97,7 +97,7 @@ int main(void) {
     /* ------------------------------------------------- */
 
     printf("-----------------------------------------------------------------------------------\n\n");
-    printf("LEITURA DO ARQUIVO DE ENTRADA:\n\n");
+    printf(ANSI_COLOR_MAGENTA "LEITURA DO ARQUIVO DE ENTRADA:" ANSI_COLOR_RESET "\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
     sleep(2);
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
@@ -181,7 +181,7 @@ int main(void) {
             /* First Fit */
         case 1:
             printf("-----------------------------------------------------------------------------------\n\n");
-            printf("F I R S T  F I T\n\n");
+            printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
             sleep(2);
             first_fit(proc_v, M, qtd_processos, tempo_total);

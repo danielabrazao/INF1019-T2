@@ -46,14 +46,19 @@
 
 void cabecalho() {
     printf("\n-----------------------------------------------------------------------------------\n\n");
-    printf("\tPONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO\n");
-    printf("\tSegundo Trabalho de Sistemas de Computação\n");
-    printf("\tAutores: Daniela Brazão e Thaíssa Falbo\n");
-    printf("\tProfessor: Luiz Fernando Bessa Seibel\n");
-    printf("\tDisciplina: Sistemas de Computação (INF1019)\n\n");
+    printf(ANSI_COLOR_CYAN "\tPONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO" ANSI_COLOR_RESET "\n");
+    printf(ANSI_COLOR_MAGENTA "\tSegundo Trabalho de Sistemas de Computação" ANSI_COLOR_RESET "\n");
+    printf(ANSI_COLOR_CYAN "\tAlunas" ANSI_COLOR_RESET "");
+    printf(": Daniela Brazão e Thaíssa Falbo\n");
+    printf(ANSI_COLOR_CYAN "\tProfessor" ANSI_COLOR_RESET "");
+    printf(": Luiz Fernando Bessa Seibel\n");
+    printf(ANSI_COLOR_CYAN "\tDisciplina" ANSI_COLOR_RESET "");
+    printf(": Sistemas de Computação (INF1019)\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
-    printf("\tSimulador de Gerenciador de Memória\n");
+    printf(ANSI_COLOR_MAGENTA "\tSimulador de Gerenciador de Memória" ANSI_COLOR_RESET "\n");
     printf("\tCopyright (C) 2015\n\tDaniela Brazão & Thaíssa Falbo\n\n");
+    printf("-----------------------------------------------------------------------------------\n\n");
+    printf(ANSI_COLOR_MAGENTA "LICENÇA:" ANSI_COLOR_RESET "\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
     printf("\tEste programa é um software livre; você pode redistribuí-lo e/ou \n");
     printf("\tmodificá-lo dentro dos termos da Licença Pública Geral GNU como \n");
@@ -96,14 +101,18 @@ void inicializar_memoria(mem *M) {
 
 void espera_enter() {
 
-    int tecla = 0;
+    char tecla = 'a';
 
-    printf("Pressione a tecla Enter para continuar...\n");
-    tecla = getchar();
+    printf("Pressione a tecla ");
+    printf(ANSI_COLOR_MAGENTA "Enter" ANSI_COLOR_RESET "");
+    printf(" para continuar...\n");
+    scanf("%1c", &tecla);
 
-    while (tecla != 10) {
-        printf("Pressione a tecla Enter para continuar...\n");
-        tecla = getchar();
+    while (tecla != '\n') {
+        printf("Pressione a tecla ");
+        printf(ANSI_COLOR_MAGENTA "Enter" ANSI_COLOR_RESET "");
+        printf(" para continuar...\n");
+        scanf("%*1c%c",&tecla);
     }
 }
 
@@ -114,13 +123,13 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
     int i, j, k = 0, w, l, d, flag, z, tempo = 0;
     time_t dif = 0; /* Diferença entre os tempos final e inicial da execução do algoritmo */
 
-    printf("MAPA DE MEMÓRIA:\n\n");
+    printf(ANSI_COLOR_MAGENTA "MAPA DE MEMÓRIA:" ANSI_COLOR_RESET "\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
     sleep(2);
 
     /* Tempo total de todos os processos dividido pela fatia de tempo */
-    if (tempo_total >= qtd_proc) {
-        tempo = tempo_total / FATIA_TEMPO;
+    if (tempo_total >= FATIA_TEMPO) {
+        tempo = qtd_proc;
     }
 
     printf("Tempo total = %d\n\n", tempo);
@@ -184,7 +193,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                                 sleep(2);
                                 d = 1;
                             }
-                            
+
                             time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início da execução do algoritmo */
 
                             while (proc_v[i].infos[k].tempo > 0 && dif <= FATIA_TEMPO) {

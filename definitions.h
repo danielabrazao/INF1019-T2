@@ -55,6 +55,16 @@
 
 /* MACROS */
 
+/* Cores */
+
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 /* Tamanhos fixos */
 
 #define TAM_STR     100     /* Tamanho da string máxima */
@@ -95,6 +105,38 @@ struct estrutura_processo {
 };
 
 typedef struct estrutura_processo processo;
+
+/* Estrutura de um processo pronto para execução */
+
+struct estrutura_fila_pronto {
+    int numero;                    /* Número identificador do processo */
+    int tamanho;                   /* Tamanho do processo em Mb */
+    int qtd_info;                  /* Quantidade de informações do processo */
+    time_t inicio_execucao;        /* Horário do início da execução do processo em segundos */
+    time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
+    info *infos;                   /* Vetor de informações do processo */
+    int tempo_total;               /* Tempo total do processo */
+};
+
+/* Vetor de estruturas de processos prontos para execução */
+
+struct estrutura_fila_pronto fila_pronto[TAM_VET];
+
+/* Estrutura de um processo bloqueado */
+
+struct estrutura_fila_bloq {
+    int numero;                    /* Número identificador do processo */
+    int tamanho;                   /* Tamanho do processo em Mb */
+    int qtd_info;                  /* Quantidade de informações do processo */
+    time_t inicio_execucao;        /* Horário do início da execução do processo em segundos */
+    time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
+    info *infos;                   /* Vetor de informações do processo */
+    int tempo_total;               /* Tempo total do processo */
+};
+
+/* Vetor de estruturas de processos bloqueados */
+
+struct estrutura_fila_bloq fila_bloq[TAM_VET];
 
 /* Estrutura de um bloco (partição fixa) de memória */
 
