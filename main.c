@@ -69,7 +69,7 @@ int main(void) {
     /* ------------------------------------------------- */
 
     cabecalho();
-    espera_tecla();
+    espera_enter();
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -96,10 +96,13 @@ int main(void) {
     /* PARTE 4: Leitura do arquivo de entrada            */
     /* ------------------------------------------------- */
 
+    printf("-----------------------------------------------------------------------------------\n\n");
     printf("LEITURA DO ARQUIVO DE ENTRADA:\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
+    sleep(2);
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
     printf("- Número total de processos: %d\n\n", qtd_processos);
+    sleep(1);
 
     /* Aloca memória para um vetor de processos */
     proc_v = (processo*) malloc(qtd_processos * sizeof (processo));
@@ -107,6 +110,7 @@ int main(void) {
     /* Aloca memória para uma estrutura de memória */
     M = (mem*) malloc(sizeof (mem));
 
+    /* Inicializa o tempo dos processos */
     for (q = 0; q < qtd_processos; q++) {
         proc_v[q].tempo_total = 0;
     }
@@ -118,15 +122,16 @@ int main(void) {
         printf("-----------------------------------\n");
         printf("PROCESSO #%d\n", proc_v[i].numero);
         printf("-----------------------------------\n");
+        sleep(2);
         printf("- Número do processo: %d\n", proc_v[i].numero);
         printf("- Tamanho do processo: %dMb\n", proc_v[i].tamanho);
+        printf("-----------------------------------\n");
+        sleep(2);
         scanf("%d [^\n]", &qtd_info_processo); /* Lê a quantidade de informações do processo */
         proc_v[i].qtd_info = qtd_info_processo;
 
         /* Aloca memória para um vetor de informações do processo */
         proc_v[i].infos = (info*) malloc(sizeof (info) * qtd_info_processo);
-
-        printf("-----------------------------------\n");
 
         for (j = 0; j < proc_v[i].qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo); /* Lê o nome da informação (exec ou io) e o tempo de execução ou de espera */
@@ -138,11 +143,13 @@ int main(void) {
             if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
                 printf("- Tempo de espera %d: %ds\n", n, proc_v[i].infos[j].tempo);
                 printf("-----------------------------------\n");
+                sleep(2);
                 n++;
                 l++;
             } else {
                 printf("- Tempo de execução %d: %ds\n", m, proc_v[i].infos[j].tempo);
                 printf("-----------------------------------\n");
+                sleep(2);
                 m++;
                 l++;
             }
@@ -173,7 +180,10 @@ int main(void) {
     switch (id) {
             /* First Fit */
         case 1:
-            printf("Algoritmo First Fit\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf("F I R S T  F I T\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            sleep(2);
             first_fit(proc_v, M, qtd_processos, tempo_total);
 
             /* Next Fit */
