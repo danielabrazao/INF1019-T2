@@ -1,14 +1,14 @@
-/* 
+/*
  * -------------------------------------------------
  * ~ ARQUIVO DE CABEÇALHO DE UTILITÁRIOS
  * -------------------------------------------------
- * 
+ *
  *  Descrição: Arquivo de cabeçalho contendo funções auxiliares.
  *  Arquivo: utilities.h criado em 5 de Novembro de 2015, às 12:03.
  *  Professor: Luiz Fernando Bessa Seibel
  *  Instituição: Pontifícia Universidade Católica do Rio de Janeiro
  *  Disciplina: Sistemas de Computação (INF1019)
- *  Autoras: 
+ *  Autoras:
  * - - - - - - - - - - - - - - - - - - - - - - - - -
  *  -> Daniela Brazão Maksoud
  *  -> Curso: Ciência da Computação
@@ -18,23 +18,23 @@
  *  -> Curso: Engenharia da Computação
  *  -> Matrícula: 1421110
  * - - - - - - - - - - - - - - - - - - - - - - - - -
- * 
- *  Este arquivo é parte do programa principal do Simulador de Gerenciador 
+ *
+ *  Este arquivo é parte do programa principal do Simulador de Gerenciador
  *  de Memória.
  *
- *  O Simulador de Gerenciador de Memória é um software livre; você 
- *  pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença 
- *  Pública Geral GNU como publicada pela Fundação do Software Livre 
+ *  O Simulador de Gerenciador de Memória é um software livre; você
+ *  pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença
+ *  Pública Geral GNU como publicada pela Fundação do Software Livre
  *  (FSF); na versão 3 da Licença.
  *
- *  Este programa é distribuído na esperança de que possa ser útil, 
+ *  Este programa é distribuído na esperança de que possa ser útil,
  *  mas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO
  *  a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a
  *  Licença Pública Geral GNU para maiores detalhes.
  *
  *  Você deve ter recebido uma cópia da Licença Pública Geral GNU junto
  *  com este programa, Se não, veja <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #ifndef UTILITIES_H
@@ -112,18 +112,72 @@ void espera_enter() {
         printf("Pressione a tecla ");
         printf(ANSI_COLOR_MAGENTA "Enter" ANSI_COLOR_RESET "");
         printf(" para continuar...\n");
-        scanf("%*1c%c",&tecla);
+        scanf("%*1c%c", &tecla);
     }
+}
+
+/* Função que decrementa os tempos dos processos bloqueados */
+
+void *decrementa_io(void *arguments) {
+    
+    struct arg_struct_io *args = arguments;
+    struct estrutura_fila_bloq *fila_bloq = args->fila_bloq;
+    int *tempo_total = args->tempo_total;
+    int a, c, dif = 0;
+
+    for (a = 0; a < TAM_VET; a++) {
+        if (fila_bloq[a].numero > 0) {
+            for (c = 0; c < fila_bloq[a].qtd_info; c++) {
+                if ((strcmp(fila_bloq[a].infos[c].nome, "io") == 0) && (fila_bloq[a].infos[c].tempo > 0)) {
+                    while (fila_bloq[a].infos[c].tempo > 0 && dif <= FATIA_TEMPO) {
+                        sleep(1);
+                        printf("Countdown: %ds\n", fila_bloq[a].infos[c].tempo);
+                        fila_bloq[a].infos[c].tempo--;
+                        fila_bloq[a].tempo_total--;
+                        tempo_total--;
+                        time(&fila_bloq[a].fim_execucao); /* Armazena o tempo de fim da execução do algoritmo */
+                        dif = fila_bloq[a].fim_execucao - fila_bloq[a].inicio_execucao;
+                    }
+                }
+            }
+        }
+    }
+    
+    pthread_exit(NULL);
+}
+
+/* Função que decrementa os tempos dos processos prontos */
+
+void *decrementa_exec(void *threadid, processo *proc_v, int *tempo_total) {
+
+    int i, k, dif = 0;
+
+    while ((strcmp(proc_v[i].infos[k].nome, "exec") == 0) && proc_v[i].infos[k].tempo > 0 && dif <= FATIA_TEMPO) {
+        sleep(1);
+        printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
+        proc_v[i].infos[k].tempo--;
+        proc_v[i].tempo_total--;
+        tempo_total--;
+        time(&proc_v[i].fim_execucao); /* Armazena o tempo de fim da execução do algoritmo */
+        dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
+    }
+    sleep(1);
+    printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
+    
+    pthread_exit(NULL);
 }
 
 /* Função que executa algoritmo de alocação de ajuste rápido */
 
 void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
 
-    int i, j, k = 0, w, l, d, flag, z, tempo = 0;
+    int a, c, i, j, k = 0, w, l, d, flag, z, tempo = 0, b;
+    unsigned int t = 0;
     time_t dif = 0; /* Diferença entre os tempos final e inicial da execução do algoritmo */
-
-    printf(ANSI_COLOR_MAGENTA "MAPA DE MEMÓRIA:" ANSI_COLOR_RESET "\n\n");
+    pthread_t threads[NUM_THREADS]; /* Vetor de threads */
+    struct arg_struct_io args;
+    
+    printf(ANSI_COLOR_MAGENTA "MAPA DE MEMÓRIA" ANSI_COLOR_RESET ":\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
     sleep(2);
 
@@ -158,7 +212,6 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                         /* Bloco está alocado para um processo */
                         if (M->bloco[w].isAlocado > 0) {
                             printf("- Número do processo: %d\n", M->bloco[w].isAlocado);
-                            fflush(stdout); // Flush do buffer.
 
                             for (l = 0; l < qtd_proc; l++) {
                                 if (M->bloco[w].isAlocado == proc_v[l].numero) {
@@ -170,43 +223,48 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                             printf("-----------------------------------\n");
                             sleep(2);
                         } else {
-                            printf("- Bloco de memória vazio.\n");
+                            printf("- Bloco de memória");
+                            printf(ANSI_COLOR_MAGENTA " vazio" ANSI_COLOR_RESET ".\n");
                             printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
                             printf("-----------------------------------\n");
                             sleep(2);
                         }
                     }
 
-                    d = 0;
+                    d = FALSE;
 
                     /* Percorre as informações sobre o processo */
                     for (k = 0; k < proc_v[i].qtd_info && dif < FATIA_TEMPO; k++) {
 
                         /* EXEC */
-                        if ((strcmp(proc_v[i].infos[k].nome, "exec") == 0) && (dif < 10) && (proc_v[i].infos[k].tempo > 0)) {
-                            if (d == 0 && proc_v[i].infos[k].tempo > 0) {
+                        if ((strcmp(proc_v[i].infos[k].nome, "exec") == 0) && (proc_v[i].infos[k].tempo > 0) && (proc_v->bloq == FALSE)) {
+
+                            if (d == FALSE) {
                                 printf("\n-----------------------------------\n");
                                 printf("PROCESSO #%d - RELÓGIO\n", proc_v[i].numero);
                                 printf("-----------------------------------\n");
                                 sleep(2);
                                 printf("Comando: %s\n\n", proc_v[i].infos[k].nome);
                                 sleep(2);
-                                d = 1;
+                                d = TRUE;
                             }
 
                             time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início da execução do algoritmo */
 
-                            while (proc_v[i].infos[k].tempo > 0 && dif <= FATIA_TEMPO) {
-                                sleep(1);
-                                printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
-                                proc_v[i].infos[k].tempo--;
-                                proc_v[i].tempo_total--;
-                                tempo_total--;
-                                time(&proc_v[i].fim_execucao); /* Armazena o tempo de fim da execução do algoritmo */
-                                dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
-                            }
-                            sleep(1);
-                            printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
+                            printf("Criando thread %d...\n", t);
+                            args.fila_bloq = fila_bloq;
+                            printf("1\n");
+                            args.tempo_total = &tempo_total;
+                            printf("2\n");
+                            pthread_create(&threads[t], NULL, decrementa_io, (void *) &args);
+                            printf("3\n");
+                            t++;
+                            printf("Criando thread %d...\n", t);
+                            pthread_create(&threads[t], NULL, decrementa_exec, (void *)&args);
+
+                            for (t = 0; t < NUM_THREADS; t++)
+                                pthread_join(threads[t], NULL);
+
                             printf("-----------------------------------\n\n");
 
                             /* Imprime o mapa de memória */
@@ -228,9 +286,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                                     printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
                                 } else {
                                     printf("- Bloco de memória vazio.\n");
-                                    fflush(stdout); // Flush do buffer.
                                     printf("- Tamanho do bloco de memória: %dMb\n", M->bloco[w].tamanho);
-                                    fflush(stdout); // Flush do buffer.
                                 }
                             }
 
@@ -270,22 +326,31 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                             sleep(2);
                         } else {
 
-                            /* IO 
-                             * Esvazia o bloco de memória ocupado;
-                             * Decrementa o tempo do IO.
-                             */
+                            /* IO */
+
+                            /* Esvazia bloco de memória previamente ocupado e o processo vai para o disco. */
 
                             M->bloco[j].isAlocado = 0;
 
-                            while (proc_v[i].infos[k].tempo > 0) {
-                                sleep(1);
-                                proc_v[i].infos[k].tempo--;
-                                proc_v[i].tempo_total--;
-                                tempo_total--;
-                                time(&proc_v[i].fim_execucao);
-                                dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
+                            /* Insere o processo na fila de processsos bloqueados */
+
+                            fila_bloq[i].numero = proc_v[i].numero;
+                            fila_bloq[i].tamanho = proc_v[i].tamanho;
+                            fila_bloq[i].qtd_info = proc_v[i].qtd_info;
+                            fila_bloq[i].inicio_execucao = proc_v[i].inicio_execucao;
+                            fila_bloq[i].fim_execucao = proc_v[i].fim_execucao;
+                            fila_bloq[i].tempo_total = proc_v[i].tempo_total;
+
+                            for (b = 0; b < fila_bloq[i].qtd_info; b++) {
+                                strcpy(proc_v[i].infos[b].nome, fila_bloq[i].infos[b].nome);
+                                fila_bloq[i].infos[b].tempo = proc_v[i].infos[b].tempo;
                             }
 
+                            /* Marca o processo como bloqueado na fila de processos prontos */
+
+                            proc_v[i].bloq = TRUE;
+
+                            printf("Processo #%d entrou em IO.\n", proc_v[i].numero);
                         }
                     }
                     printf("\n");

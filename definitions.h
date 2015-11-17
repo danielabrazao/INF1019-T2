@@ -52,8 +52,14 @@
 #include <fcntl.h>
 #include <termios.h>
 #include <time.h>
+#include <pthread.h>
 
 /* MACROS */
+
+/* Booleano */
+
+#define TRUE    1
+#define FALSE   0
 
 /* Cores */
 
@@ -68,10 +74,11 @@
 /* Tamanhos fixos */
 
 #define TAM_STR     100     /* Tamanho da string máxima */
-#define TAM_VET     100     /* Tamanho do vetor máximo */
+#define TAM_VET     50      /* Tamanho do vetor máximo */
 #define TAM_MEM     16      /* Tamanho da memória em Mb */
 #define QTD_BLOC    5       /* Quantidade de blocos de memória */
 #define FATIA_TEMPO 10      /* Time slice dos processos */
+#define NUM_THREADS 2       /* Quantidade de threads */
 
 
 /* Erros tratados */
@@ -102,25 +109,13 @@ struct estrutura_processo {
     time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
     info *infos;                   /* Vetor de informações do processo */
     int tempo_total;               /* Tempo total do processo */
+    int bloq;                      /* Indica se o processo está bloqueado ou não.
+                                    * 0 => Não está bloqueado.
+                                    * 1 => Está bloqueado.
+                                    */
 };
 
 typedef struct estrutura_processo processo;
-
-/* Estrutura de um processo pronto para execução */
-
-struct estrutura_fila_pronto {
-    int numero;                    /* Número identificador do processo */
-    int tamanho;                   /* Tamanho do processo em Mb */
-    int qtd_info;                  /* Quantidade de informações do processo */
-    time_t inicio_execucao;        /* Horário do início da execução do processo em segundos */
-    time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
-    info *infos;                   /* Vetor de informações do processo */
-    int tempo_total;               /* Tempo total do processo */
-};
-
-/* Vetor de estruturas de processos prontos para execução */
-
-struct estrutura_fila_pronto fila_pronto[TAM_VET];
 
 /* Estrutura de um processo bloqueado */
 
@@ -160,5 +155,12 @@ struct estrutura_memoria {
 };
 
 typedef struct estrutura_memoria mem;
+
+/* Estrutura de argumentos para thread */
+
+struct arg_struct_io {
+    struct estrutura_fila_bloq *fila_bloq;
+    int *tempo_total;
+};
 
 #endif	/* DEFINITIONS_H */
