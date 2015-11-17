@@ -61,8 +61,15 @@ int main(void) {
     int tempo; /* Tempo de execução ou de espera */
     char s[5]; /* Nome da informação do processo (exec ou io) */
     mem *M; /* Memória */
-    int qtd_processos; /* Quantidade de processos */
+    int qtd_processos = 0; /* Quantidade de processos */
     int tempo_total = 0; /* Tempo total de todos os processos */
+
+    /* ------------------------------------------------- */
+    /* PARTE 1: Exibição da mensagem inicial             */
+    /* ------------------------------------------------- */
+
+    cabecalho();
+    espera_tecla();
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -86,14 +93,7 @@ int main(void) {
     }
 
     /* ------------------------------------------------- */
-    /* PARTE 4: Exibição da mensagem inicial             */
-    /* ------------------------------------------------- */
-
-    cabecalho();
-    espera_tecla();
-
-    /* ------------------------------------------------- */
-    /* PARTE 5: Leitura do arquivo de entrada            */
+    /* PARTE 4: Leitura do arquivo de entrada            */
     /* ------------------------------------------------- */
 
     printf("LEITURA DO ARQUIVO DE ENTRADA:\n\n");
@@ -156,16 +156,16 @@ int main(void) {
     scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executado */
 
     /* ------------------------------------------------- */
-    /* PARTE 6: Inicialização da memória                 */
+    /* PARTE 5: Inicialização da memória                 */
     /* ------------------------------------------------- */
 
     /* Aloca memória para uma estrutura de memória */
     M = (mem*) malloc(sizeof (mem));
-    
+
     inicializar_memoria(M);
 
     /* ------------------------------------------------- */
-    /* PARTE 7: Execução do algoritmo de alocação        */
+    /* PARTE 6: Execução do algoritmo de alocação        */
     /* ------------------------------------------------- */
 
     printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);

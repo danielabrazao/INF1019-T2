@@ -92,14 +92,19 @@ void inicializar_memoria(mem *M) {
 
 }
 
-/* Função que aguarda usuário digitar a tecla Enter para prosseguir */
+/* Função que aguarda o usuário digitar a tecla Enter para prosseguir */
 
 void espera_tecla() {
 
     int tecla = 0;
     
-    printf("Pressione qualquer tecla para continuar...\n\n");
-    scanf("%d [^\n]", &tecla);
+    printf("Pressione a tecla Enter para continuar...\n\n");
+    tecla = getchar();
+    
+    while(tecla != 10){
+    printf("Pressione a tecla Enter para continuar...\n\n");
+    tecla = getchar();
+    }
 }
 
 /* Função que executa algoritmo de alocação de ajuste rápido */
