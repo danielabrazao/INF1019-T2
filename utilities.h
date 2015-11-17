@@ -114,7 +114,6 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
     int i, j, k = 0, w, l, d, flag, z, tempo = 0;
     time_t dif = 0; /* Diferença entre os tempos final e inicial da execução do algoritmo */
 
-    printf("-----------------------------------------------------------------------------------\n\n");
     printf("MAPA DE MEMÓRIA:\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
     sleep(2);
