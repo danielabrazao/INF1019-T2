@@ -46,52 +46,32 @@
 
 void cabecalho() {
     printf("\n-----------------------------------------------------------------------------------\n\n");
-    fflush(stdout); // Flush do buffer.
     printf("\tPONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO\n");
-    fflush(stdout); // Flush do buffer.
     printf("\tSegundo Trabalho de Sistemas de Computação\n");
-    fflush(stdout); // Flush do buffer.
     printf("\tAutores: Daniela Brazão e Thaíssa Falbo\n");
-    fflush(stdout); // Flush do buffer.
     printf("\tProfessor: Luiz Fernando Bessa Seibel\n");
-    fflush(stdout); // Flush do buffer.
     printf("\tDisciplina: Sistemas de Computação (INF1019)\n\n");
-    fflush(stdout); // Flush do buffer.
     printf("-----------------------------------------------------------------------------------\n\n");
-    fflush(stdout); // Flush do buffer.
     printf("\tSimulador de Gerenciador de Memória\n");
-    fflush(stdout); // Flush do buffer.
     printf("\tCopyright (C) 2015\n\tDaniela Brazão & Thaíssa Falbo\n\n");
-    fflush(stdout); // Flush do buffer.printf("-----------------------------------------------------------------------------------\n\n");
-    printf("\tEste programa é um software livre; você pode redistribuí-lo e/ou \n");
-    fflush(stdout); // Flush do buffer.
-    printf("\tmodificá-lo dentro dos termos da Licença Pública Geral GNU como \n");
-    fflush(stdout); // Flush do buffer.
-    printf("\tpublicada pela Fundação do Software Livre (FSF); na versão 3 da \n");
-    fflush(stdout); // Flush do buffer.
-    printf("\tLicença.\n\n");
-    fflush(stdout); // Flush do buffer.
-    printf("\tEste programa é distribuído na esperança de que possa ser útil, \n");
-    fflush(stdout); // Flush do buffer.
-    printf("\tmas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO \n");
-    fflush(stdout); // Flush do buffer.
-    printf("\ta qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença \n");
-    fflush(stdout); // Flush do buffer.
-    printf("\tPública Geral GNU para maiores detalhes.\n\n");
-    fflush(stdout); // Flush do buffer.
-    printf("\tVocê deve ter recebido uma cópia da Licença Pública Geral GNU junto \n");
-    fflush(stdout); // Flush do buffer.
-    printf("\tcom este programa. Se não, veja <http://www.gnu.org/licenses/>.\n\n");
-    fflush(stdout); // Flush do buffer.
     printf("-----------------------------------------------------------------------------------\n\n");
-    fflush(stdout); // Flush do buffer.
+    printf("\tEste programa é um software livre; você pode redistribuí-lo e/ou \n");
+    printf("\tmodificá-lo dentro dos termos da Licença Pública Geral GNU como \n");
+    printf("\tpublicada pela Fundação do Software Livre (FSF); na versão 3 da \n");
+    printf("\tLicença.\n\n");
+    printf("\tEste programa é distribuído na esperança de que possa ser útil, \n");
+    printf("\tmas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO \n");
+    printf("\ta qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença \n");
+    printf("\tPública Geral GNU para maiores detalhes.\n\n");
+    printf("\tVocê deve ter recebido uma cópia da Licença Pública Geral GNU junto \n");
+    printf("\tcom este programa. Se não, veja <http://www.gnu.org/licenses/>.\n\n");
+    printf("-----------------------------------------------------------------------------------\n\n");
 }
 
 /* Função que exibe mensagem de erro */
 
 void showError(char str[TAM_STR + 1], int n) {
     printf("Erro %d: %s\n", n, str);
-    fflush(stdout); // Flush do buffer.
     exit(n);
 }
 
@@ -112,11 +92,21 @@ void inicializar_memoria(mem *M) {
 
 }
 
+/* Função que aguarda usuário digitar a tecla Enter para prosseguir */
+
+void espera_tecla() {
+
+    int tecla = 0;
+    
+    printf("Pressione qualquer tecla para continuar...\n\n");
+    scanf("%d [^\n]", &tecla);
+}
+
 /* Função que executa algoritmo de alocação de ajuste rápido */
 
 void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
 
-    int i, j, k = 0, w, l, d, flag, z, resto_tempo;
+    int i, j, k = 0, w, l, d, flag, z, tempo = 0;
     time_t dif = 0; /* Diferença entre os tempos final e inicial da execução do algoritmo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
@@ -126,11 +116,14 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
     printf("-----------------------------------------------------------------------------------\n\n");
     fflush(stdout); // Flush do buffer.
 
-    resto_tempo = tempo_total / 3;
+    /* Tempo total de todos os processos dividido pela fatia de tempo */
+    if (tempo_total >= qtd_proc) {
+        tempo = tempo_total / FATIA_TEMPO;
+    }
 
-    printf("Tempo total / 3 = %d\n\n", resto_tempo);
+    printf("Tempo total = %d\n\n", tempo);
 
-    for (z = 0; z < resto_tempo; z++) {
+    for (z = 0; z < tempo; z++) {
         /* Percorre todos os processos */
         for (i = 0; i < qtd_proc; i++) {
             printf("i = %d\n\n", i);
@@ -195,6 +188,8 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                                 fflush(stdout); // Flush do buffer.
                                 printf("-----------------------------------\n");
                                 fflush(stdout); // Flush do buffer.
+                                printf("Comando: %s\n\n", proc_v[i].infos[k].nome);
+                                fflush(stdout); // Flush do buffer.
                                 d = 1;
                             }
                             while (proc_v[i].infos[k].tempo > 0 && dif <= FATIA_TEMPO) {
@@ -207,7 +202,9 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                                 time(&proc_v[i].fim_execucao); /* Armazena o tempo de fim da execução do algoritmo */
                                 dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
                             }
+                            sleep(1);
                             printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
+                            sleep(1);
                             printf("-----------------------------------\n\n");
 
                             /* Imprime o mapa de memória */
@@ -243,10 +240,11 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                             printf("-----------------------------------\n\n");
                             fflush(stdout); // Flush do buffer.
 
-                            /* Libera bloco de memória caso tenha estourado o tempo máximo de execução de um processo */
-                            if (dif == 10) {
+                            /* Libera bloco de memória caso tenha estourado o tempo máximo de execução de um processo ou todos os processos tenham terminado */
+                            if ((dif == 10) || (tempo_total == 0)) {
                                 M->bloco[j].isAlocado = 0;
                             }
+
 
                             /* Imprime o mapa de memória */
                             for (w = 0; w < QTD_BLOC; w++) {
@@ -277,6 +275,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                                     fflush(stdout); // Flush do buffer.
                                 }
                             }
+
                             printf("-----------------------------------\n");
                             fflush(stdout); // Flush do buffer.
                         } else {
@@ -296,6 +295,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                                 time(&proc_v[i].fim_execucao);
                                 dif = proc_v[i].fim_execucao - proc_v[i].inicio_execucao;
                             }
+
                         }
                     }
                     printf("\n");
@@ -309,5 +309,10 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
             }
         }
     }
+
+    if (tempo_total % 3 > 0) {
+        // repete aquilo mais uma vez
+    }
 }
+
 #endif	/* UTILITIES_H */

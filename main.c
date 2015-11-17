@@ -52,7 +52,6 @@ int main(void) {
 
     int outputfd; /* Descritor de arquivos abertos = Retorno de open */
     int retorno; /* Valor de retorno de dup */
-    int retorno2; /* Valor de retorno de dup2 */
     int i = 0, j = 0, m = 1, l = 1, n = 1, q; /* Contadores auxiliares */
     int numero_processo; /* Número do processo */
     int tamanho_processo; /* Memória requerida pelo processo */
@@ -72,7 +71,6 @@ int main(void) {
     /* Tratamento de erro para abertura do arquivo 'entrada.txt' */
     if ((outputfd = open("files/entrada.txt", O_RDONLY, 0666)) == -1) {
         showError("Falha na abertura do arquivo 'entrada.txt'.\n", ERR_FOPEN);
-        fflush(stdout); // Flush do buffer.
     }
 
     /* ------------------------------------------------- */
@@ -85,52 +83,29 @@ int main(void) {
     if ((retorno = dup(outputfd)) == -1) {
         /* Duplicação de stdin (menor descritor fechado) */
         showError("Falha na duplicação de stdin.\n", ERR_DUP);
-        fflush(stdout); // Flush do buffer.
     }
 
     /* ------------------------------------------------- */
-    /* PARTE 4: Abertura do arquivo de saída             */
-    /* ------------------------------------------------- */
-
-    /* Tratamento de erro para abertura do arquivo 'saida_lp.txt' */
-    if ((outputfd = open("files/saida.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666)) == -1) {
-        showError("Falha na abertura do arquivo 'saida.txt'.\n", ERR_FOPEN);
-        fflush(stdout); // Flush do buffer.
-    }
-
-    /* ------------------------------------------------- */
-    /* PARTE 5: Redirecionamento da saída padrão         */
-    /* ------------------------------------------------- */
-
-    close(1); /* Fechamento da saída stdout (monitor) */
-
-    /* Tratamento de erro para duplicação de stdout */
-    if ((retorno2 = dup2(outputfd, 1)) == -1) {
-        /* Duplicação de stdout. */
-        showError("Falha na duplicação de stdout.\n", ERR_DUP2);
-        fflush(stdout); // Flush do buffer.
-    }
-
-    /* ------------------------------------------------- */
-    /* PARTE 6: Exibição da mensagem inicial             */
+    /* PARTE 4: Exibição da mensagem inicial             */
     /* ------------------------------------------------- */
 
     cabecalho();
+    espera_tecla();
 
     /* ------------------------------------------------- */
-    /* PARTE 7: Leitura do arquivo de entrada            */
+    /* PARTE 5: Leitura do arquivo de entrada            */
     /* ------------------------------------------------- */
 
     printf("LEITURA DO ARQUIVO DE ENTRADA:\n\n");
-    fflush(stdout); // Flush do buffer.
     printf("-----------------------------------------------------------------------------------\n\n");
-    fflush(stdout); // Flush do buffer.
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
     printf("- Número total de processos: %d\n\n", qtd_processos);
-    fflush(stdout); // Flush do buffer.
 
     /* Aloca memória para um vetor de processos */
     proc_v = (processo*) malloc(qtd_processos * sizeof (processo));
+
+    /* Aloca memória para uma estrutura de memória */
+    M = (mem*) malloc(sizeof (mem));
 
     for (q = 0; q < qtd_processos; q++) {
         proc_v[q].tempo_total = 0;
@@ -141,15 +116,10 @@ int main(void) {
         proc_v[i].numero = numero_processo;
         proc_v[i].tamanho = tamanho_processo;
         printf("-----------------------------------\n");
-        fflush(stdout); // Flush do buffer.
         printf("PROCESSO #%d\n", proc_v[i].numero);
-        fflush(stdout); // Flush do buffer.
         printf("-----------------------------------\n");
-        fflush(stdout); // Flush do buffer.
         printf("- Número do processo: %d\n", proc_v[i].numero);
-        fflush(stdout); // Flush do buffer.
         printf("- Tamanho do processo: %dMb\n", proc_v[i].tamanho);
-        fflush(stdout); // Flush do buffer.
         scanf("%d [^\n]", &qtd_info_processo); /* Lê a quantidade de informações do processo */
         proc_v[i].qtd_info = qtd_info_processo;
 
@@ -157,7 +127,6 @@ int main(void) {
         proc_v[i].infos = (info*) malloc(sizeof (info) * qtd_info_processo);
 
         printf("-----------------------------------\n");
-        fflush(stdout); // Flush do buffer.
 
         for (j = 0; j < proc_v[i].qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo); /* Lê o nome da informação (exec ou io) e o tempo de execução ou de espera */
@@ -166,19 +135,14 @@ int main(void) {
             proc_v[i].tempo_total = proc_v[i].tempo_total + tempo;
             tempo_total = tempo_total + tempo; /* Tempo total de todos os processos juntos */
             printf("- Nome da %da informação: %s\n", l, proc_v[i].infos[j].nome);
-            fflush(stdout); // Flush do buffer.
             if (strcmp(proc_v[i].infos[j].nome, "io") == 0) {
                 printf("- Tempo de espera %d: %ds\n", n, proc_v[i].infos[j].tempo);
-                fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
-                fflush(stdout); // Flush do buffer.
                 n++;
                 l++;
             } else {
                 printf("- Tempo de execução %d: %ds\n", m, proc_v[i].infos[j].tempo);
-                fflush(stdout); // Flush do buffer.
                 printf("-----------------------------------\n");
-                fflush(stdout); // Flush do buffer.
                 m++;
                 l++;
             }
@@ -192,20 +156,24 @@ int main(void) {
     scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executado */
 
     /* ------------------------------------------------- */
-    /* PARTE 8: Inicialização da memória                 */
+    /* PARTE 6: Inicialização da memória                 */
     /* ------------------------------------------------- */
 
+    /* Aloca memória para uma estrutura de memória */
+    M = (mem*) malloc(sizeof (mem));
+    
     inicializar_memoria(M);
 
     /* ------------------------------------------------- */
-    /* PARTE 9: Execução do algoritmo de alocação        */
+    /* PARTE 7: Execução do algoritmo de alocação        */
     /* ------------------------------------------------- */
-    
-    printf("Tempo total dos processos = %d\n\n", tempo_total);
-    
+
+    printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
+
     switch (id) {
             /* First Fit */
         case 1:
+            printf("Algoritmo First Fit\n\n");
             first_fit(proc_v, M, qtd_processos, tempo_total);
 
             /* Next Fit */
