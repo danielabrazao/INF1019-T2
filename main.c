@@ -69,6 +69,7 @@ int main(void){
     mem *M; /* Memória */
 
     LIS_tppLista fila_prontos; /* Lista para alocação da fila de prontos */
+    LIS_tppLista lista_bloqueados; /* Lista para alocação da lista de bloqueados */
 
     fila_prontos = LIS_CriarLista(DestroiProcesso);
 

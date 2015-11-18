@@ -158,7 +158,21 @@ void ImprimeMemoria(mem *M){
 }
 
 
-void first_fit(LIS_tppLista lista_prontos, mem *M, int qtd_proc, int tempo_total) {
+void ImprimeLista(LIS_tppLista p_lista){
+    int i, qtd;
+    processo * p_processo;
+    IrInicioLista(p_lista);
+    qtd = LIS_NumeroElementos(p_lista);
+    for(i=0;i<qtd;i++){
+        p_processo = LIS_ObterValor(p_lista);
+        ImprimeProcesso(p_processo);
+        LIS_AvancarElementoCorrente(p_lista, 1);
+    }
+
+    IrInicioLista(p_lista);
+}
+
+void first_fit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) {
     int tempo=0,flag,i;
     processo * p_processo;
 
@@ -178,44 +192,69 @@ void first_fit(LIS_tppLista lista_prontos, mem *M, int qtd_proc, int tempo_total
     printf("Tempo total = %d\n\n", tempo);
 
 
-    IrInicioLista(lista_prontos);
-    /* Pega o primeiro processo */
+    
 
-    p_processo = LIS_ObterValor(lista_prontos);
+    while(LIS_NumeroElementos(fila_prontos) > 0){
 
-    ImprimeProcesso(p_processo);
+        printf("\n");
+        printf("Imprimindo fila de prontos antes da alocação...\n");
+        ImprimeLista(fila_prontos);
+        printf("Terminei de imprimir a fila de prontos...\n");
+        printf("\n");
 
-    printf("Preciso de %d de memoria para este processo...\n", p_processo->tamanho);
 
-    // Procurando posicao de memoria
-    i=0;
-    flag = FALSE;
-    while((flag == FALSE) && (i<QTD_BLOC)){
-        if(M->bloco[i].tamanho >= p_processo->tamanho){
-            flag = TRUE;
+        /** Obitendo primeiro processo na fila **/
+        IrInicioLista(fila_prontos);
+        p_processo = LIS_ObterValor(fila_prontos);
+        ImprimeProcesso(p_processo);
+        printf("Preciso de %d de memoria para este processo...\n", p_processo->tamanho);
+
+        // *** Procurando posicao de memoria para alocar o processo
+        i=0;
+        flag = FALSE;
+        while((flag == FALSE) && (i<QTD_BLOC)){
+            if(M->bloco[i].tamanho >= p_processo->tamanho){
+                flag = TRUE;
+            }
+            i++;
         }
-        i++;
-    }
-    i-=1;
+        i-=1;
 
-    if(flag==FALSE){  // Nao encontrei posicao de memoria, devo destruir o processo
-        printf("Nao encontrei posicao de memoria, devo destruir o processo\n");
-        LIS_ExcluirElemento(lista_prontos);
-        DestroiProcesso(p_processo);
-    }else{  // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
-        printf("Encontrei posicao de memoria, vou alocar o processo\n");
-        M->bloco[i].p_processo = p_processo;
-        LIS_ExcluirElemento(lista_prontos);
-    }
+        if(flag==FALSE){  // Nao encontrei posicao de memoria, devo destruir o processo
+            printf("Nao encontrei posicao de memoria, devo destruir o processo\n");
+            LIS_ExcluirElemento(fila_prontos);
+            DestroiProcesso(p_processo);
+        }else{  // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
+            printf("Encontrei posicao de memoria, vou alocar o processo\n");
+            M->bloco[i].p_processo = p_processo;
+            LIS_ExcluirElemento(fila_prontos);
+        }
 
-
-    ImprimeMemoria(M);
+        ImprimeMemoria(M);
 
 
+        /** Imprimo a fila de prontos após a alocação **/
+        if(LIS_NumeroElementos(fila_prontos)==0){
+            printf("Fila de prontos está vazia\n");
+        }else{
+            printf("Imprimindo fila de prontos...\n");
+            ImprimeLista(fila_prontos);
+            printf("Terminei de imprimir a fila de prontos...\n");
+        }
+
+        /* 
+
+        Executar processo a partir daqui!!! 
+        Criar função que reduz o tempo de todos os processos em exec e em IO
+        
+        */
 
 
 
-}
+    }//while
+
+
+}//fist_fit
 
 
 #endif	/* UTILITIES_H */
