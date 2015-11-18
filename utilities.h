@@ -118,31 +118,31 @@ void espera_enter() {
 
 /* Função que decrementa os tempos dos processos bloqueados */
 
-void *decrementa_io(void *arguments) {
-    
-    struct arg_struct_io *args = arguments;
-    struct estrutura_fila_bloq *fila_bloq = args->fila_bloq;
-    int *tempo_total = args->tempo_total;
+void *decrementa_io(void *args) {
+
+    estrutura_io *actual_args = args;
+
     int a, c, dif = 0;
 
     for (a = 0; a < TAM_VET; a++) {
-        if (fila_bloq[a].numero > 0) {
-            for (c = 0; c < fila_bloq[a].qtd_info; c++) {
-                if ((strcmp(fila_bloq[a].infos[c].nome, "io") == 0) && (fila_bloq[a].infos[c].tempo > 0)) {
-                    while (fila_bloq[a].infos[c].tempo > 0 && dif <= FATIA_TEMPO) {
+        if (actual_args->fila_bloq[a].numero > 0) {
+            for (c = 0; c < actual_args->fila_bloq[a].qtd_info; c++) {
+                if ((strcmp(actual_args->fila_bloq[a].infos[c].nome, "io") == 0) && (actual_args->fila_bloq[a].infos[c].tempo > 0)) {
+                    while (actual_args->fila_bloq[a].infos[c].tempo > 0 && dif <= FATIA_TEMPO) {
                         sleep(1);
-                        printf("Countdown: %ds\n", fila_bloq[a].infos[c].tempo);
-                        fila_bloq[a].infos[c].tempo--;
-                        fila_bloq[a].tempo_total--;
-                        tempo_total--;
-                        time(&fila_bloq[a].fim_execucao); /* Armazena o tempo de fim da execução do algoritmo */
-                        dif = fila_bloq[a].fim_execucao - fila_bloq[a].inicio_execucao;
+                        printf("Countdown: %ds\n", actual_args->fila_bloq[a].infos[c].tempo);
+                        actual_args->fila_bloq[a].infos[c].tempo--;
+                        actual_args->fila_bloq[a].tempo_total--;
+                        actual_args->tempo_total--;
+                        time(&actual_args->fila_bloq[a].fim_execucao); /* Armazena o tempo de fim da execução do algoritmo */
+                        dif = actual_args->fila_bloq[a].fim_execucao - actual_args->fila_bloq[a].inicio_execucao;
                     }
                 }
             }
         }
     }
-    
+
+    free(actual_args);
     pthread_exit(NULL);
 }
 
@@ -163,7 +163,7 @@ void *decrementa_exec(void *threadid, processo *proc_v, int *tempo_total) {
     }
     sleep(1);
     printf("Countdown: %ds\n", proc_v[i].infos[k].tempo);
-    
+
     pthread_exit(NULL);
 }
 
@@ -175,8 +175,7 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
     unsigned int t = 0;
     time_t dif = 0; /* Diferença entre os tempos final e inicial da execução do algoritmo */
     pthread_t threads[NUM_THREADS]; /* Vetor de threads */
-    struct arg_struct_io args;
-    
+
     printf(ANSI_COLOR_MAGENTA "MAPA DE MEMÓRIA" ANSI_COLOR_RESET ":\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
     sleep(2);
@@ -251,16 +250,15 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
 
                             time(&proc_v[i].inicio_execucao); /* Armazena o tempo de início da execução do algoritmo */
 
-                            printf("Criando thread %d...\n", t);
-                            args.fila_bloq = fila_bloq;
-                            printf("1\n");
-                            args.tempo_total = &tempo_total;
-                            printf("2\n");
-                            pthread_create(&threads[t], NULL, decrementa_io, (void *) &args);
-                            printf("3\n");
-                            t++;
-                            printf("Criando thread %d...\n", t);
-                            pthread_create(&threads[t], NULL, decrementa_exec, (void *)&args);
+                            for (t = 0; t < NUM_THREADS; ++t) {
+                                estrutura_io *args = malloc(sizeof *args);
+                                args->fila_bloq = fila_bloq;
+                                args->tempo_total = &tempo_total;
+                                if (pthread_create(&threads[t], NULL, decrementa_io, args)) {
+                                    free(args);
+                                    //goto error_handler;
+                                }
+                            }
 
                             for (t = 0; t < NUM_THREADS; t++)
                                 pthread_join(threads[t], NULL);
@@ -341,11 +339,10 @@ void first_fit(processo *proc_v, mem *M, int qtd_proc, int tempo_total) {
                             fila_bloq[i].fim_execucao = proc_v[i].fim_execucao;
                             fila_bloq[i].tempo_total = proc_v[i].tempo_total;
 
-                            for (b = 0; b < fila_bloq[i].qtd_info; b++) {
-                                strcpy(proc_v[i].infos[b].nome, fila_bloq[i].infos[b].nome);
-                                fila_bloq[i].infos[b].tempo = proc_v[i].infos[b].tempo;
-                            }
+                            strcpy(fila_bloq[i].infos[k].nome, proc_v[i].infos[k].nome);
+                            fila_bloq[i].infos[k].tempo = proc_v[i].infos[k].tempo;
 
+                           
                             /* Marca o processo como bloqueado na fila de processos prontos */
 
                             proc_v[i].bloq = TRUE;

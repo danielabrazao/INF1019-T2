@@ -156,11 +156,4 @@ struct estrutura_memoria {
 
 typedef struct estrutura_memoria mem;
 
-/* Estrutura de argumentos para thread */
-
-struct arg_struct_io {
-    struct estrutura_fila_bloq *fila_bloq;
-    int *tempo_total;
-};
-
 #endif	/* DEFINITIONS_H */
