@@ -41,7 +41,6 @@
 
 #include "definitions.h"    /* Arquivo de header com definições (includes e defines) */
 #include "utilities.h"      /* Arquivo de header com utilitários (funções auxiliares) */
-#include "lista.h"          /* Arquivo de header com funções e condições de retorno da lista */
 
 int main(void){
 
