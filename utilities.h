@@ -44,7 +44,7 @@
 
 /* Função que exibe mensagem inicial do gerenciador de memória */
 
-void cabecalho() {
+void Cabecalho() {
     printf("\n-----------------------------------------------------------------------------------\n\n");
     printf(ANSI_COLOR_CYAN "\tPONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO" ANSI_COLOR_RESET "\n");
     printf(ANSI_COLOR_MAGENTA "\tSegundo Trabalho de Sistemas de Computação" ANSI_COLOR_RESET "\n");
@@ -75,14 +75,14 @@ void cabecalho() {
 
 /* Função que exibe mensagem de erro */
 
-void showError(char str[TAM_STR + 1], int n) {
+void ShowError(char str[TAM_STR + 1], int n) {
     printf("Erro %d: %s\n", n, str);
     exit(n);
 }
 
 /* Função que inicializa a memória com partições fixas */
 
-void inicializar_memoria(mem *M) {
+void InicializarMemoria(mem *M) {
 
     int i;
     int v[5] = {8, 4, 2, 1, 1};
@@ -97,18 +97,18 @@ void inicializar_memoria(mem *M) {
 
 /* Função que aguarda o usuário digitar a tecla Enter para prosseguir */
 
-void espera_enter() {
+void EsperaEnter() {
 
     char tecla = 'a';
 
     printf("Pressione a tecla ");
-    printf(ANSI_COLOR_MAGENTA "Enter" ANSI_COLOR_RESET "");
+    printf(ANSI_COLOR_MAGENTA "Enter" ANSI_COLOR_RESET);
     printf(" para continuar...\n");
     scanf("%1c", &tecla);
 
     while (tecla != '\n') {
         printf("Pressione a tecla ");
-        printf(ANSI_COLOR_MAGENTA "Enter" ANSI_COLOR_RESET "");
+        printf(ANSI_COLOR_MAGENTA "Enter" ANSI_COLOR_RESET);
         printf(" para continuar...\n");
         scanf("%*1c%c", &tecla);
     }
@@ -120,99 +120,159 @@ void DestroiProcesso(processo * p_processo) {
     free(p_processo);
 }
 
-/* Função que imprime os dados de um processo */
+/* Função que imprime dados sobre o processo */
 
-void imprime_processo(processo * p_processo) {
+void ImprimeProcesso(processo * p_processo) {
 
-    int i; /* Contador auxiliar */
+    int i;
 
-    printf("-------- Imprimindo Processo --------\n");
-    printf("Numero: %d\n", p_processo->numero); /* Número identificador do processo */
-    printf("Tamanho: %d\n", p_processo->tamanho); /* Tamanho do processo em Mb */
-    printf("Quantidade de informação: %d\n", p_processo->qtd_info); /* Quantidade de informações do processo */
+    printf("-------------------------------------\n");
+    printf(ANSI_COLOR_MAGENTA "Processo %d\n" ANSI_COLOR_RESET, p_processo->numero); /* Número identificador do processo */
+    printf("-------------------------------------\n");
+    printf(ANSI_COLOR_CYAN "Tamanho" ANSI_COLOR_RESET);
+    printf(": %d Mb\n", p_processo->tamanho); /* Tamanho do processo em Mb */
+    printf(ANSI_COLOR_CYAN "Quantidade de informação" ANSI_COLOR_RESET);
+    printf(": %d\n", p_processo->qtd_info); /* Quantidade de informações do processo */
 
     for (i = 0; i < p_processo->qtd_info; i++) { /* Vetor de informações do processo */
-        printf("Nome da info:: %s\n", p_processo->infos[i].nome);
-        printf("Tempo da info: %d\n", p_processo->infos[i].tempo);
+        printf(ANSI_COLOR_CYAN "Nome da info" ANSI_COLOR_RESET);
+        printf(": %s\n", p_processo->infos[i].nome);
+        printf(ANSI_COLOR_CYAN "Tempo da info" ANSI_COLOR_RESET);
+        printf(": %d s\n", p_processo->infos[i].tempo);
 
     }
-    
-    printf("Tempo total: %d\n", p_processo->tempo_total);
+    printf(ANSI_COLOR_CYAN "Tempo total" ANSI_COLOR_RESET);
+    printf(": %d s\n", p_processo->tempo_total);
+    printf("-------------------------------------\n\n");
 }
 
-/* Função que imprime os dados dos blocos de memória */
+/* Função que imprime dados sobre os blocos de memória */
 
-void imprime_memoria(mem *M) {
-    
-    int i; /* Contador auxiliar */
-    
-    printf("\n---- Imprimindo Memória -----\n");
-    
-    /* Percorre todos os blocos da memória */
+void ImprimeMemoria(mem *M) {
+    int i;
+
+    printf("-----------------------------------------------------------------------------------\n\n");
+    printf(ANSI_COLOR_MAGENTA "MAPA DE MEMÓRIA" ANSI_COLOR_RESET ":\n\n");
+    printf("-----------------------------------------------------------------------------------\n\n");
+
     for (i = 0; i < QTD_BLOC; i++) {
-        printf("------------------\n");    
-        printf(ANSI_COLOR_CYAN "Bloco %d\n" ANSI_COLOR_RESET, i+1);
-        printf("------------------\n"); 
-        printf("Tamanho: %dMb\n", M->bloco[i].tamanho);
+        printf("-------------------------------------\n");
+        printf("- ");
+        printf(ANSI_COLOR_MAGENTA "Bloco %d\n" ANSI_COLOR_RESET, i + 1);
+        printf("-------------------------------------\n");
+        printf("- ");
+        printf(ANSI_COLOR_CYAN "Tamanho" ANSI_COLOR_RESET);
+        printf(": %d Mb\n", M->bloco[i].tamanho);
         if (M->bloco[i].p_processo != NULL) {
-            printf("Processo alocado: %d\n", M->bloco[i].p_processo->numero);
-            printf("Tamanho do processo alocado: %d\n", M->bloco[i].p_processo->tamanho);
+            ImprimeProcesso(M->bloco[i].p_processo);
         } else {
-            printf("Vazio\n");
+            printf("- Bloco vazio.\n");
         }
     }
 
+    printf("-------------------------------------\n\n");
 }
 
-void first_fit(LIS_tppLista lista_prontos, mem *M, int qtd_proc, int tempo_total) {
+/* Função que imprime dados sobre a lista */
 
-    int tempo = 0, flag, i;
+void ImprimeLista(LIS_tppLista p_lista) {
+
+    int i, qtd;
     processo * p_processo;
 
-    printf(ANSI_COLOR_MAGENTA "MAPA DE MEMÓRIA" ANSI_COLOR_RESET ":\n\n");
-    printf("-----------------------------------------------------------------------------------\n");
+    IrInicioLista(p_lista);
 
-    imprime_memoria(M);
+    qtd = LIS_NumeroElementos(p_lista);
 
-    /* Tempo total de todos os processos dividido pela fatia de tempo */
-    if (tempo_total >= FATIA_TEMPO) {
-        tempo = qtd_proc;
+    for (i = 0; i < qtd; i++) {
+        p_processo = LIS_ObterValor(p_lista);
+        ImprimeProcesso(p_processo);
+        LIS_AvancarElementoCorrente(p_lista, 1);
     }
 
-    printf("Tempo total = %d\n\n", tempo);
-
-
-    IrInicioLista(lista_prontos);
-    /* Pega o primeiro processo */
-
-    p_processo = LIS_ObterValor(lista_prontos);
-
-    imprime_processo(p_processo);
-
-    printf("Preciso de %d de memoria para este processo...\n", p_processo->tamanho);
-
-    // Procurando posicao de memoria
-    i = 0;
-    flag = FALSE;
-    while ((flag == FALSE) && (i < QTD_BLOC)) {
-        if (M->bloco[i].tamanho >= p_processo->tamanho) {
-            flag = TRUE;
-        }
-        i++;
-    }
-    i -= 1;
-
-    if (flag == FALSE) { // Nao encontrei posicao de memoria, devo destruir o processo
-        printf("Nao encontrei posicao de memoria, devo destruir o processo\n");
-        LIS_ExcluirElemento(lista_prontos);
-        DestroiProcesso(p_processo);
-    } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
-        printf("Encontrei posicao de memoria, vou alocar o processo\n");
-        M->bloco[i].p_processo = p_processo;
-        LIS_ExcluirElemento(lista_prontos);
-    }
-
-    imprime_memoria(M);
+    IrInicioLista(p_lista);
 }
 
+/* Função do algoritmo de ajuste rápido */
+
+void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) {
+
+    int flag, i;
+    processo * p_processo;
+
+    ImprimeMemoria(M);
+
+    while (LIS_NumeroElementos(fila_prontos) > 0) {
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
+
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        ImprimeLista(fila_prontos);
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "PROCESSO A SER ALOCADO" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
+
+
+        /* Obtém primeiro processo na fila de prontos */
+        IrInicioLista(fila_prontos);
+        p_processo = LIS_ObterValor(fila_prontos);
+        ImprimeProcesso(p_processo);
+        printf("É necessário um bloco de memória de %d Mb para comportar o processo %d.\n", p_processo->tamanho, p_processo->numero);
+
+        // *** Procurando posicao de memoria para alocar o processo
+        i = 0;
+
+        flag = FALSE;
+
+        while ((flag == FALSE) && (i < QTD_BLOC)) {
+            if ((M->bloco[i].tamanho >= p_processo->tamanho) && (M->bloco[i].p_processo == NULL)) {
+                flag = TRUE;
+            }
+            i++;
+        }
+        i = i - 1;
+
+        if (flag == FALSE) { // Nao encontrei posicao de memoria, devo destruir o processo
+            printf("- Posição de memória não encontrada.\n");
+            LIS_ExcluirElemento(fila_prontos);
+            DestroiProcesso(p_processo);
+            printf("- Processo destruído.\n");
+        } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
+            printf("- Posição de memória encontrada.\n");
+            M->bloco[i].p_processo = p_processo;
+            printf("- Processo %d alocado.\n\n", p_processo->numero);
+            LIS_ExcluirElemento(fila_prontos);
+            IrInicioLista(fila_prontos);
+        }
+
+        ImprimeMemoria(M);
+
+        /* Imprime a fila de prontos após a alocação */
+        if (LIS_NumeroElementos(fila_prontos) == 0) {
+            printf("Fila de prontos está vazia.\n");
+        } else {
+            printf("Imprimindo fila de prontos...\n\n");
+            ImprimeLista(fila_prontos);
+            printf("Terminei de imprimir a fila de prontos...\n");
+        }
+
+        /* 
+        Executar processo a partir daqui!!! 
+        Criar função que reduz o tempo de todos os processos em exec e em IO
+        
+         */
+
+
+
+    }//while
+
+
+}//fist_fit
 #endif	/* UTILITIES_H */

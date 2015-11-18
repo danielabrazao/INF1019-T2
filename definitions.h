@@ -65,6 +65,10 @@
 #define TRUE    1
 #define FALSE   0
 
+/* Variáveis Globais */
+
+int op = FALSE; /* Opção de ativar ou desativar o sleep */
+
 /* Cores */
 
 #define ANSI_COLOR_RED     "\x1b[31m"

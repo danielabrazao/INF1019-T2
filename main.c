@@ -61,7 +61,6 @@ int main(void) {
     int tempo_total = 0; /* Tempo total de todos os processos */
     processo * p_processo; /* Ponteiro para processo */
     mem *M; /* Memória */
-    int op = FALSE; /* Opção de ativar ou desativar o sleep */
 
     LIS_tppLista fila_prontos;
 
@@ -73,7 +72,7 @@ int main(void) {
 
     /* Tratamento de erro para abertura do arquivo 'entrada.txt' */
     if ((outputfd = open("files/entrada.txt", O_RDONLY, 0666)) == -1) {
-        showError("Falha na abertura do arquivo 'entrada.txt'.\n", ERR_FOPEN);
+        ShowError("Falha na abertura do arquivo 'entrada.txt'.\n", ERR_FOPEN);
     }
 
     /* ------------------------------------------------- */
@@ -85,7 +84,7 @@ int main(void) {
     /* Tratamento de erro para duplicação de stdin */
     if ((retorno = dup(outputfd)) == -1) {
         /* Duplicação de stdin (menor descritor fechado) */
-        showError("Falha na duplicação de stdin.\n", ERR_DUP);
+        ShowError("Falha na duplicação de stdin.\n", ERR_DUP);
     }
 
     /* ------------------------------------------------- */
@@ -112,7 +111,7 @@ int main(void) {
 
         /* Tratamento de erro para alocação de memória */
         if (p_processo == NULL) {
-            showError("Falha ao alocar memória para um processo.\n", ERR_MALLOC);
+            ShowError("Falha ao alocar memória para um processo.\n", ERR_MALLOC);
         }
 
         /* Preenche dados do processo */
@@ -210,7 +209,7 @@ int main(void) {
     M = (mem*) malloc(sizeof (mem));
 
     /* Inicializa memória com partições fixas */
-    inicializar_memoria(M);
+    InicializarMemoria(M);
 
     /* ------------------------------------------------- */
     /* PARTE 6: Execução do algoritmo de alocação        */
@@ -219,7 +218,7 @@ int main(void) {
     printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
 
     switch (id) {
-            /* First Fit */
+        /* First Fit */
         case 1:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -229,10 +228,10 @@ int main(void) {
                     sleep(2);
                 }
             }
-            first_fit(fila_prontos, M, qtd_processos, tempo_total);
+            FirstFit(fila_prontos, M, qtd_processos, tempo_total);
             break;
 
-            /* Next Fit */
+        /* Next Fit */
         case 2:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "N E X T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -240,10 +239,10 @@ int main(void) {
             if (op == TRUE) {
                 sleep(2);
             }
+            //NextFit();
             break;
-            //next_fit();
 
-            /* Worst Fit */
+        /* Worst Fit */
         case 3:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "W O R S T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -251,11 +250,11 @@ int main(void) {
             if (op == TRUE) {
                 sleep(2);
             }
+            //worstFit();
             break;
-            //worst_fit();
 
 
-            /* Best Fit */
+        /* Best Fit */
         case 4:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "B E S T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -263,8 +262,8 @@ int main(void) {
             if (op == TRUE) {
                 sleep(2);
             }
+            //BestFit();
             break;
-            //best_fit();  
     }
 
 }
