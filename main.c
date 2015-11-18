@@ -194,7 +194,7 @@ int main(void){
     printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
 
     switch (id) {
-            /* First Fit */
+        /* First Fit */
         case 1:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -202,56 +202,29 @@ int main(void){
             sleep(2);
             //first_fit(proc_v, M, qtd_processos, tempo_total);
 
-            /* Next Fit */
-            //case 2:
-            //next_fit();
-
-            /* Worst Fit */
-            //case 3:
-            //worst_fit();
-
-
-            /* Best Fit */
-            //case 4:
-            //best_fit();  
-    }
-
-    /* ------------------------------------------------- */
-    /* PARTE 5: Inicialização da memória                 */
-    /* ------------------------------------------------- */
-
-    /* Aloca memória para uma estrutura de memória */
-    M = (mem*) malloc(sizeof (mem));
-
-    inicializar_memoria(M);
-
-
-    /* ------------------------------------------------- */
-    /* PARTE 6: Execução do algoritmo de alocação        */
-    /* ------------------------------------------------- */
-
-    printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
-
-    switch (id) {
-            /* First Fit */
-        case 1:
+        /* Next Fit */
+        case 2:
             printf("-----------------------------------------------------------------------------------\n\n");
-            printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
+            printf(ANSI_COLOR_CYAN "N E X T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
             sleep(2);
-            //first_fit(proc_v, M, qtd_processos, tempo_total);
-
-            /* Next Fit */
-            //case 2:
             //next_fit();
 
-            /* Worst Fit */
-            //case 3:
+        /* Worst Fit */
+        case 3:
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_CYAN "W O R S T  F I T" ANSI_COLOR_RESET "\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            sleep(2);
             //worst_fit();
 
 
-            /* Best Fit */
-            //case 4:
+        /* Best Fit */
+        case 4:
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_CYAN "B E S T  F I T" ANSI_COLOR_RESET "\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            sleep(2);
             //best_fit();  
     }
 
