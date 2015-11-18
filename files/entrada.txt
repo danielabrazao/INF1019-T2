@@ -1,8 +1,8 @@
 2
-Processo #1 – 5Mb
+Processo #1 – 8Mb
 1
-io 10
-Processo #2 – 5Mb
+exec 10
+Processo #2 – 4Mb
 1
 exec 10
 1

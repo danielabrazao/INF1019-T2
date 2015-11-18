@@ -46,5 +46,4 @@ void IrFinalLista( LIS_tppLista pLista ) ;
 
 LIS_tpCondRet LIS_ProcurarValor( LIS_tppLista pLista , void * pValor) ;
 
-
 int LIS_NumeroElementos(LIS_tppLista pLista);

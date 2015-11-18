@@ -68,9 +68,9 @@ int main(void){
     processo * p_processo; /* Ponteiro para processo */
     mem *M; /* Memória */
 
-    LIS_tppLista filaProntos;
+    LIS_tppLista fila_prontos; /* Lista para alocação da fila de prontos */
 
-    filaProntos = LIS_CriarLista(DestroiProcesso);
+    fila_prontos = LIS_CriarLista(DestroiProcesso);
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -163,11 +163,11 @@ int main(void){
         /** INSERIR PROCESSO NA FILA!!! **/
 
         
-        printf("%d elementos na lista\n", LIS_NumeroElementos(filaProntos));
+        printf("%d elementos na lista\n", LIS_NumeroElementos(fila_prontos));
 
-        LIS_InserirElementoApos(filaProntos ,p_processo);
+        LIS_InserirElementoApos(fila_prontos ,p_processo);
 
-        printf("%d elementos na lista apos insercao\n", LIS_NumeroElementos(filaProntos));
+        printf("%d elementos na lista apos insercao\n", LIS_NumeroElementos(fila_prontos));
 
 
         printf("\n");
@@ -207,7 +207,7 @@ int main(void){
             printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
             sleep(2);
-            //first_fit(proc_v, M, qtd_processos, tempo_total);
+            first_fit(fila_prontos, M, qtd_processos, tempo_total);
 
             /* Next Fit */
             //case 2:

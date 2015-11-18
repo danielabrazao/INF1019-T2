@@ -231,43 +231,49 @@ typedef struct LIS_tagLista {
    LIS_tpCondRet LIS_ExcluirElemento( LIS_tppLista pLista )
    {
 
-      tpElemLista * pElem ;
+      tpElemLista * pElem;
 
-      #ifdef _DEBUG
-         assert( pLista  != NULL ) ;
-      #endif
+   #ifdef _DEBUG
+      assert(pLista != NULL);
+   #endif
 
-      if ( pLista->pElemCorr == NULL )
+      if (pLista->pElemCorr == NULL)
       {
-         return LIS_CondRetListaVazia ;
+         return LIS_CondRetListaVazia;
       } /* if */
 
-      pElem = pLista->pElemCorr ;
+      pElem = pLista->pElemCorr;
 
       /* Desencadeia Я esquerda */
 
-         if ( pElem->pAnt != NULL )
-         {
-            pElem->pAnt->pProx   = pElem->pProx ;
-            pLista->pElemCorr    = pElem->pAnt ;
-         } else {
-            pLista->pElemCorr    = pElem->pProx ;
-            pLista->pOrigemLista = pLista->pElemCorr ;
-         } /* if */
+      if (pElem->pAnt != NULL)
+      {
+         pElem->pAnt->pProx = pElem->pProx;
+         pLista->pElemCorr = pElem->pAnt;
+      }
+      else {
+         pLista->pElemCorr = pElem->pProx;
+         pLista->pOrigemLista = pLista->pElemCorr;
+      } /* if */
 
-      /* Desencadeia Я direita */
+       /* Desencadeia Я direita */
 
-         if ( pElem->pProx != NULL )
-         {
-            pElem->pProx->pAnt = pElem->pAnt ;
-         } else
-         {
-            pLista->pFimLista = pElem->pAnt ;
-         } /* if */
+      if (pElem->pProx != NULL)
+      {
+         pElem->pProx->pAnt = pElem->pAnt;
+      }
+      else
+      {
+         pLista->pFimLista = pElem->pAnt;
+      } /* if */
 
-      LiberarElemento( pLista , pElem ) ;
+      free(pElem);
 
-      return LIS_CondRetOK ;
+      pLista->numElem--;
+
+
+      return LIS_CondRetOK;
+   
 
    } /* Fim funусo: LIS  &Excluir elemento */
 
