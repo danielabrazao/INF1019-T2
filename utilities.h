@@ -90,8 +90,6 @@ void inicializar_memoria(mem *M) {
     M->tamanho = TAM_MEM;
 
     for (i = 0; i < 5; i++) {
-
-        M->bloco[i].isAlocado = 0;
         M->bloco[i].tamanho = v[i];
     }
 
@@ -116,8 +114,105 @@ void espera_enter() {
     }
 }
 
-void DestroiProcesso(processo * pProcesso){
-    free(pProcesso);
+/* Função que libera a memória alocada para um processo */
+
+void DestroiProcesso(processo * p_processo) {
+    free(p_processo);
+}
+
+/* Função que imprime os dados de um processo */
+
+void imprime_processo(processo * p_processo) {
+
+    int i; /* Contador auxiliar */
+
+    printf("-------- Imprimindo Processo --------\n");
+    printf("Numero: %d\n", p_processo->numero); /* Número identificador do processo */
+    printf("Tamanho: %d\n", p_processo->tamanho); /* Tamanho do processo em Mb */
+    printf("Quantidade de informação: %d\n", p_processo->qtd_info); /* Quantidade de informações do processo */
+
+    for (i = 0; i < p_processo->qtd_info; i++) { /* Vetor de informações do processo */
+        printf("Nome da info:: %s\n", p_processo->infos[i].nome);
+        printf("Tempo da info: %d\n", p_processo->infos[i].tempo);
+
+    }
+    
+    printf("Tempo total: %d\n", p_processo->tempo_total);
+}
+
+/* Função que imprime os dados dos blocos de memória */
+
+void imprime_memoria(mem *M) {
+    
+    int i; /* Contador auxiliar */
+    
+    printf("\n---- Imprimindo Memória -----\n");
+    
+    /* Percorre todos os blocos da memória */
+    for (i = 0; i < QTD_BLOC; i++) {
+        printf("------------------\n");    
+        printf(ANSI_COLOR_CYAN "Bloco %d\n" ANSI_COLOR_RESET, i+1);
+        printf("------------------\n"); 
+        printf("Tamanho: %dMb\n", M->bloco[i].tamanho);
+        if (M->bloco[i].p_processo != NULL) {
+            printf("Processo alocado: %d\n", M->bloco[i].p_processo->numero);
+            printf("Tamanho do processo alocado: %d\n", M->bloco[i].p_processo->tamanho);
+        } else {
+            printf("Vazio\n");
+        }
+    }
+
+}
+
+void first_fit(LIS_tppLista lista_prontos, mem *M, int qtd_proc, int tempo_total) {
+
+    int tempo = 0, flag, i;
+    processo * p_processo;
+
+    printf(ANSI_COLOR_MAGENTA "MAPA DE MEMÓRIA" ANSI_COLOR_RESET ":\n\n");
+    printf("-----------------------------------------------------------------------------------\n");
+
+    imprime_memoria(M);
+
+    /* Tempo total de todos os processos dividido pela fatia de tempo */
+    if (tempo_total >= FATIA_TEMPO) {
+        tempo = qtd_proc;
+    }
+
+    printf("Tempo total = %d\n\n", tempo);
+
+
+    IrInicioLista(lista_prontos);
+    /* Pega o primeiro processo */
+
+    p_processo = LIS_ObterValor(lista_prontos);
+
+    imprime_processo(p_processo);
+
+    printf("Preciso de %d de memoria para este processo...\n", p_processo->tamanho);
+
+    // Procurando posicao de memoria
+    i = 0;
+    flag = FALSE;
+    while ((flag == FALSE) && (i < QTD_BLOC)) {
+        if (M->bloco[i].tamanho >= p_processo->tamanho) {
+            flag = TRUE;
+        }
+        i++;
+    }
+    i -= 1;
+
+    if (flag == FALSE) { // Nao encontrei posicao de memoria, devo destruir o processo
+        printf("Nao encontrei posicao de memoria, devo destruir o processo\n");
+        LIS_ExcluirElemento(lista_prontos);
+        DestroiProcesso(p_processo);
+    } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
+        printf("Encontrei posicao de memoria, vou alocar o processo\n");
+        M->bloco[i].p_processo = p_processo;
+        LIS_ExcluirElemento(lista_prontos);
+    }
+
+    imprime_memoria(M);
 }
 
 #endif	/* UTILITIES_H */

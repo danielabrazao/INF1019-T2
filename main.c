@@ -42,7 +42,7 @@
 #include "definitions.h"    /* Arquivo de header com definições (includes e defines) */
 #include "utilities.h"      /* Arquivo de header com utilitários (funções auxiliares) */
 
-int main(void){
+int main(void) {
 
     /* ------------------------------------------------- */
     /* PARTE 1: Declaração de variáveis locais da main   */
@@ -61,10 +61,11 @@ int main(void){
     int tempo_total = 0; /* Tempo total de todos os processos */
     processo * p_processo; /* Ponteiro para processo */
     mem *M; /* Memória */
+    int op = FALSE; /* Opção de ativar ou desativar o sleep */
 
-    LIS_tppLista filaProntos;
+    LIS_tppLista fila_prontos;
 
-    filaProntos = LIS_CriarLista(DestroiProcesso);
+    fila_prontos = LIS_CriarLista(DestroiProcesso);
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -94,10 +95,14 @@ int main(void){
     printf("-----------------------------------------------------------------------------------\n\n");
     printf(ANSI_COLOR_MAGENTA "LEITURA DO ARQUIVO DE ENTRADA:" ANSI_COLOR_RESET "\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
-    sleep(2);
+    if (op == TRUE) {
+        sleep(2);
+    }
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
     printf("- Número total de processos: %d\n\n", qtd_processos);
-    sleep(1);
+    if (op == TRUE) {
+        sleep(5);
+    }
 
     /* Percorre todos os processos */
     for (i = 0; i < qtd_processos; i++) {
@@ -124,7 +129,6 @@ int main(void){
         printf("- Número do processo: %d\n", p_processo->numero);
         printf("- Tamanho do processo: %dMb\n", p_processo->tamanho);
         printf("-----------------------------------\n");
-        sleep(4); // Aguarda a leitura do usuário.
 
         scanf("%d [^\n]", &qtd_info_processo); /* Lê a quantidade de informações do processo */
         p_processo->qtd_info = qtd_info_processo;
@@ -145,28 +149,48 @@ int main(void){
             if (strcmp(p_processo->infos[j].nome, "io") == 0) {
                 printf("- Tempo de espera %d: %ds\n", n, p_processo->infos[j].tempo);
                 printf("-----------------------------------\n");
-                sleep(2); // Aguarda a leitura do usuário.
                 n++;
                 l++;
             } else {
                 printf("- Tempo de execução %d: %ds\n", m, p_processo->infos[j].tempo);
                 printf("-----------------------------------\n");
-                sleep(2); // Aguarda a leitura do usuário.
                 m++;
                 l++;
             }
         }
 
-        /** INSERIR PROCESSO NA FILA!!! **/
+        if (op == TRUE) {
+            sleep(10);
+        }
 
-        printf("%d elementos na lista\n", LIS_NumeroElementos(filaProntos));
+        printf("\nControle antes: ");
+        if (LIS_NumeroElementos(fila_prontos) == 0) {
+            printf("Nenhum elemento na fila de prontos.\n");
+        } else if (LIS_NumeroElementos(fila_prontos) == 1) {
+            printf("1 elemento na fila de prontos.\n");
+        } else {
+            printf("%d elementos na fila de prontos.\n", LIS_NumeroElementos(fila_prontos));
+        }
 
-        LIS_InserirElementoApos(filaProntos ,p_processo);
+        if (op == TRUE) {
+            sleep(1);
+        }
 
-        printf("%d elementos na lista apos insercao\n", LIS_NumeroElementos(filaProntos));
+        /* Insere processo na fila de prontos */
+        LIS_InserirElementoApos(fila_prontos, p_processo);
 
+        printf("\nControle depois: ");
+        if (LIS_NumeroElementos(fila_prontos) == 1) {
+            printf("1 elemento na fila de prontos.\n");
+        } else {
+            printf("%d elementos na fila de prontos.\n", LIS_NumeroElementos(fila_prontos));
+        }
 
-        printf("\n\n");
+        printf("\n");
+
+        if (op == TRUE) {
+            sleep(5);
+        }
 
         /* Reinicializa os contadores das informações do processo */
         l = 1;
@@ -185,6 +209,7 @@ int main(void){
     /* Aloca memória para uma estrutura de memória */
     M = (mem*) malloc(sizeof (mem));
 
+    /* Inicializa memória com partições fixas */
     inicializar_memoria(M);
 
     /* ------------------------------------------------- */
@@ -194,37 +219,51 @@ int main(void){
     printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
 
     switch (id) {
-        /* First Fit */
+            /* First Fit */
         case 1:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            sleep(2);
-            //first_fit(proc_v, M, qtd_processos, tempo_total);
+            if (op == TRUE) {
+                if (op == TRUE) {
+                    sleep(2);
+                }
+            }
+            first_fit(fila_prontos, M, qtd_processos, tempo_total);
+            break;
 
-        /* Next Fit */
+            /* Next Fit */
         case 2:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "N E X T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            sleep(2);
+            if (op == TRUE) {
+                sleep(2);
+            }
+            break;
             //next_fit();
 
-        /* Worst Fit */
+            /* Worst Fit */
         case 3:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "W O R S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            sleep(2);
+            if (op == TRUE) {
+                sleep(2);
+            }
+            break;
             //worst_fit();
 
 
-        /* Best Fit */
+            /* Best Fit */
         case 4:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "B E S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            sleep(2);
+            if (op == TRUE) {
+                sleep(2);
+            }
+            break;
             //best_fit();  
     }
 

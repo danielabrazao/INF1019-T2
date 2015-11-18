@@ -93,38 +93,37 @@
 /* Estrutura de uma informação de um processo */
 
 typedef struct estrutura_info {
-    char nome[5];   /* Nome da informação (exec ou io) */
-    int tempo;      /* Tempo de execução para exec ou de espera para io */
-}info;
+    char nome[5]; /* Nome da informação (exec ou io) */
+    int tempo; /* Tempo de execução para exec ou de espera para io */
+} info;
 
 /* Estrutura de um processo */
 
 typedef struct estrutura_processo {
-    int numero;                    /* Número identificador do processo */
-    int tamanho;                   /* Tamanho do processo em Mb */
-    int qtd_info;                  /* Quantidade de informações do processo */
-    info *infos;                   /* Vetor de informações do processo */
-    int tempo_total;               /* Tempo total do processo */
-}processo;
+    int numero; /* Número identificador do processo */
+    int tamanho; /* Tamanho do processo em Mb */
+    int qtd_info; /* Quantidade de informações do processo */
+    info *infos; /* Vetor de informações do processo */
+    int tempo_total; /* Tempo total do processo */
+} processo;
 
 /* Estrutura de um bloco (partição fixa) da memória */
 
 typedef struct estrutura_bloco_memoria {
-    int tamanho;    /* Tamanho do bloco de memória em Mb */
-    int isAlocado;  /* Equivale:
-                         * - a 0, caso o bloco de memória não esteja alocado.
-                         * - ao número identificador do processo alocado no bloco de memória.
-                         */
-}bloco_mem;
+    int tamanho; /* Tamanho do bloco de memória em Mb */
+    processo * p_processo; /* Equivale:
+                            * - a NULL, caso o bloco de memória não esteja alocado.
+                            * - ao ponteiro do processo alocado no bloco de memória.
+                            */
+} bloco_mem;
 
 /* Estrutura da memória */
 
 typedef struct estrutura_memoria {
+    int tamanho; /* Tamanho da memória em Mb */
+    bloco_mem bloco[QTD_BLOC]; /* Vetor de partições da memória */
 
-    int tamanho;                   /* Tamanho da memória em Mb */
-    bloco_mem bloco[QTD_BLOC];     /* Vetor de partições da memória */
-    
-}mem;
+} mem;
 
 #endif  /* DEFINITIONS_H */
 
