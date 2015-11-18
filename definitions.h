@@ -82,38 +82,31 @@
 #define TAM_MEM     16      /* Tamanho da memória em Mb */
 #define QTD_BLOC    5       /* Quantidade de blocos de memória */
 #define FATIA_TEMPO 10      /* Time slice dos processos */
-#define NUM_THREADS 2       /* Quantidade de threads */
-
 
 /* Erros tratados */
 
 #define ERR_FOPEN       1   /* Erro na abertura de um arquivo */
 #define ERR_DUP         2   /* Erro na duplicação de uma entrada ou saída com dup */
-#define ERR_DUP2        3   /* Erro na duplicação de uma entrada ou saída com dup2 */
 #define ERR_INPUT       4   /* Arquivo de entrada inválido */
 
-
+/* Estrutura de uma informação de um processo */
 
 typedef struct estrutura_info {
     char nome[5];   /* Nome da informação (exec ou io) */
     int tempo;      /* Tempo de execução para exec ou de espera para io */
 }info;
 
+/* Estrutura de um processo */
 
 typedef struct estrutura_processo {
     int numero;                    /* Número identificador do processo */
     int tamanho;                   /* Tamanho do processo em Mb */
     int qtd_info;                  /* Quantidade de informações do processo */
-    time_t inicio_execucao;        /* Horário do início da execução do processo em segundos */
-    time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
     info *infos;                   /* Vetor de informações do processo */
     int tempo_total;               /* Tempo total do processo */
 }processo;
 
-
-
-
-/* Estrutura de um bloco (partição fixa) de memória */
+/* Estrutura de um bloco (partição fixa) da memória */
 
 typedef struct estrutura_bloco_memoria {
     int tamanho;    /* Tamanho do bloco de memória em Mb */
@@ -131,13 +124,6 @@ typedef struct estrutura_memoria {
     bloco_mem bloco[QTD_BLOC];     /* Vetor de partições da memória */
     
 }mem;
-
-/* Estrutura de argumentos para thread */
-
-struct arg_struct_io {
-    struct estrutura_fila_bloq *fila_bloq;
-    int *tempo_total;
-};
 
 #endif  /* DEFINITIONS_H */
 
