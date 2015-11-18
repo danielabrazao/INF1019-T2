@@ -62,7 +62,7 @@ int main(void){
     char s[5]; /* Nome da informação do processo (exec ou io) */
     int qtd_processos = 0; /* Quantidade de processos */
     int tempo_total = 0; /* Tempo total de todos os processos */
-	processo * p_processo; /* Ponteiro para processo */
+    processo * p_processo; /* Ponteiro para processo */
 
 
  	/* ------------------------------------------------- */
@@ -153,7 +153,7 @@ int main(void){
             }
         }
 
-        /** INSERIR PROCESSO NA FILA!!! oi **/
+        /** INSERIR PROCESSO NA FILA!!! **/
         
         printf("\n");
         l = 1;
