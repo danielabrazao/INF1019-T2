@@ -46,6 +46,7 @@
 
 
 
+
 void DestroiProcesso(processo * pProcesso){
     free(pProcesso);
 }
@@ -54,8 +55,9 @@ void DestroiProcesso(processo * pProcesso){
 
 int main(void){
 
- 	
-	/* ------------------------------------------------- */
+
+
+    /* ------------------------------------------------- */
     /* PARTE 1: Declaração de variáveis locais da main   */
     /* ------------------------------------------------- */
 
@@ -70,13 +72,13 @@ int main(void){
     char s[5]; /* Nome da informação do processo (exec ou io) */
     int qtd_processos = 0; /* Quantidade de processos */
     int tempo_total = 0; /* Tempo total de todos os processos */
-	processo * p_processo; /* Ponteiro para processo */
+    processo * p_processo; /* Ponteiro para processo */
 
     LIS_tppLista filaProntos;
 
     filaProntos = LIS_CriarLista(DestroiProcesso);
 
- 	/* ------------------------------------------------- */
+    /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
     /* ------------------------------------------------- */
 
@@ -112,18 +114,24 @@ int main(void){
     sleep(1);
 
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 1d56bd91d994bb3176f7b56bc39e40980392d171
     for (i = 0; i < qtd_processos; i++) {
 
-    	 /* Aloca memória para um processo */
-    	p_processo = (processo*) malloc(sizeof (processo));
-    	if(p_processo == NULL){
-    		exit(1);
-    	}
+        /* Aloca memória para um processo */
+        p_processo = (processo*) malloc(sizeof (processo));
+        if (p_processo == NULL) {
+            exit(1);
+        }
 
-    	/* Preenche processo */
-    	p_processo->tempo_total = 0;
+        /* Preenche processo */
+        p_processo->tempo_total = 0;
         scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo); /* Lê o número identificador do processo e o seu tamanho em Mb */
-       	p_processo->numero = numero_processo;
+        p_processo->numero = numero_processo;
         p_processo->tamanho = tamanho_processo;
         printf("-----------------------------------\n");
         printf("PROCESSO #%d\n", p_processo->numero);
@@ -135,8 +143,8 @@ int main(void){
         sleep(2);
         scanf("%d [^\n]", &qtd_info_processo); /* Lê a quantidade de informações do processo */
         p_processo->qtd_info = qtd_info_processo;
-		
-		/* Aloca memória para um vetor de informações do processo */
+
+        /* Aloca memória para um vetor de informações do processo */
         p_processo->infos = (info*) malloc(sizeof (info) * qtd_info_processo);
 
         for (j = 0; j < p_processo->qtd_info; j++) {
@@ -162,6 +170,7 @@ int main(void){
         }
 
         /** INSERIR PROCESSO NA FILA!!! **/
+
         
         printf("%d elementos na lista\n", LIS_NumeroElementos(filaProntos));
 
@@ -171,6 +180,7 @@ int main(void){
 
 
         printf("\n");
+
         printf("\n");
         l = 1;
         m = 1;
