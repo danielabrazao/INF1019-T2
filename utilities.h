@@ -260,9 +260,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
             printf(ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET);
             printf(".\n\n");
         } else {
-            printf("Imprimindo fila de prontos...\n\n");
             ImprimeLista(fila_prontos);
-            printf("Terminei de imprimir a fila de prontos...\n");
         }
 
         /* 

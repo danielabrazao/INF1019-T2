@@ -67,7 +67,14 @@ int main(void) {
     fila_prontos = LIS_CriarLista(DestroiProcesso);
 
     /* ------------------------------------------------- */
-    /* PARTE 2: Abertura do arquivo de entrada           */
+    /* PARTE 2: Exibição do cabeçalho                    */
+    /* ------------------------------------------------- */
+
+    Cabecalho();
+    EsperaEnter();
+
+    /* ------------------------------------------------- */
+    /* PARTE 3: Abertura do arquivo de entrada           */
     /* ------------------------------------------------- */
 
     /* Tratamento de erro para abertura do arquivo 'entrada.txt' */
@@ -76,7 +83,7 @@ int main(void) {
     }
 
     /* ------------------------------------------------- */
-    /* PARTE 3: Redirecionamento da entrada padrão       */
+    /* PARTE 4: Redirecionamento da entrada padrão       */
     /* ------------------------------------------------- */
 
     close(0); /* Fechamento da entrada stdin (teclado) */
@@ -88,7 +95,7 @@ int main(void) {
     }
 
     /* ------------------------------------------------- */
-    /* PARTE 4: Leitura do arquivo de entrada            */
+    /* PARTE 5: Leitura do arquivo de entrada            */
     /* ------------------------------------------------- */
 
     printf("-----------------------------------------------------------------------------------\n\n");
@@ -202,7 +209,7 @@ int main(void) {
     scanf("%d [^\n]", &id);
 
     /* ------------------------------------------------- */
-    /* PARTE 5: Inicialização da memória                 */
+    /* PARTE 6: Inicialização da memória                 */
     /* ------------------------------------------------- */
 
     /* Aloca memória para uma estrutura de memória */
@@ -212,17 +219,21 @@ int main(void) {
     InicializarMemoria(M);
 
     /* ------------------------------------------------- */
-    /* PARTE 6: Execução do algoritmo de alocação        */
+    /* PARTE 7: Execução do algoritmo de alocação        */
     /* ------------------------------------------------- */
 
-    printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
+    if (LIS_NumeroElementos(fila_prontos) == 1) {
+        printf("Tempo total do processo = %d s\n\n", tempo_total);
+    } else {
+        printf("Tempo total dos processos = %d s\n\n", tempo_total);
+    }
 
     switch (id) {
-        /* First Fit */
+            /* First Fit */
         case 1:
-            printf("-----------------------------------------------------------------------------------\n\n");
+            printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n\n");
             printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
-            printf("-----------------------------------------------------------------------------------\n\n");
+            printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n\n");
             if (op == TRUE) {
                 if (op == TRUE) {
                     sleep(2);
@@ -231,7 +242,7 @@ int main(void) {
             FirstFit(fila_prontos, M, qtd_processos, tempo_total);
             break;
 
-        /* Next Fit */
+            /* Next Fit */
         case 2:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "N E X T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -242,7 +253,7 @@ int main(void) {
             //NextFit();
             break;
 
-        /* Worst Fit */
+            /* Worst Fit */
         case 3:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "W O R S T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -254,7 +265,7 @@ int main(void) {
             break;
 
 
-        /* Best Fit */
+            /* Best Fit */
         case 4:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "B E S T  F I T" ANSI_COLOR_RESET "\n\n");
