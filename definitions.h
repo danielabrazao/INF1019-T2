@@ -88,6 +88,7 @@
 #define ERR_FOPEN       1   /* Erro na abertura de um arquivo */
 #define ERR_DUP         2   /* Erro na duplicação de uma entrada ou saída com dup */
 #define ERR_INPUT       4   /* Arquivo de entrada inválido */
+#define ERR_MALLOC      5   /* Erro na alocação de memória */
 
 /* Estrutura de uma informação de um processo */
 

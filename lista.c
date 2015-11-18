@@ -1,8 +1,8 @@
-#include   <stdio.h>
-#include   <string.h>
-#include   <memory.h>
-#include   <stdio.h>
-#include   <assert.h>
+#include <stdio.h>
+#include <string.h>
+#include <memory.h>
+#include <stdio.h>
+#include <assert.h>
 
 #include "lista.h"
 

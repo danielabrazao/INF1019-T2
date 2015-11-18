@@ -37,15 +37,12 @@
  * 
  */
 
-
-
 /* Pré-processamento */
 
 #include "definitions.h"    /* Arquivo de header com definições (includes e defines) */
 #include "utilities.h"      /* Arquivo de header com utilitários (funções auxiliares) */
 
 int main(void) {
-
 
     /* ------------------------------------------------- */
     /* PARTE 1: Declaração de variáveis locais da main   */
@@ -62,8 +59,8 @@ int main(void) {
     char s[5]; /* Nome da informação do processo (exec ou io) */
     int qtd_processos = 0; /* Quantidade de processos */
     int tempo_total = 0; /* Tempo total de todos os processos */
-    processo * p_processo; /* Ponteiro para processo */
-
+    processo * p_processo; /* Ponteiro para um processo */
+    mem * M; /* Memória */
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -73,7 +70,6 @@ int main(void) {
     if ((outputfd = open("files/entrada.txt", O_RDONLY, 0666)) == -1) {
         showError("Falha na abertura do arquivo 'entrada.txt'.\n", ERR_FOPEN);
     }
-
 
     /* ------------------------------------------------- */
     /* PARTE 3: Redirecionamento da entrada padrão       */
@@ -99,54 +95,59 @@ int main(void) {
     printf("- Número total de processos: %d\n\n", qtd_processos);
     sleep(1);
 
-
-
-
-
+    /* Percorre todos os processos */
     for (i = 0; i < qtd_processos; i++) {
 
-        /* Aloca memória para um processo */
+        /* Aloca memória para o processo */
         p_processo = (processo*) malloc(sizeof (processo));
+
+        /* Tratamento de erro para alocação de memória */
         if (p_processo == NULL) {
-            exit(1);
+            showError("Falha ao alocar memória para um processo.\n", ERR_MALLOC);
         }
 
-        /* Preenche processo */
-        p_processo->tempo_total = 0;
+        /* Preenche dados do processo */
+        p_processo->tempo_total = 0; // Inicializa o tempo total de cada processo como zero.
+
         scanf("Processo #%d – %dMb [^\n]", &numero_processo, &tamanho_processo); /* Lê o número identificador do processo e o seu tamanho em Mb */
         p_processo->numero = numero_processo;
         p_processo->tamanho = tamanho_processo;
+
+        /* Imprime dados sobre o processo */
         printf("-----------------------------------\n");
         printf("PROCESSO #%d\n", p_processo->numero);
         printf("-----------------------------------\n");
-        sleep(2);
         printf("- Número do processo: %d\n", p_processo->numero);
         printf("- Tamanho do processo: %dMb\n", p_processo->tamanho);
         printf("-----------------------------------\n");
-        sleep(2);
+        sleep(4); // Aguarda a leitura do usuário.
+
         scanf("%d [^\n]", &qtd_info_processo); /* Lê a quantidade de informações do processo */
         p_processo->qtd_info = qtd_info_processo;
 
         /* Aloca memória para um vetor de informações do processo */
         p_processo->infos = (info*) malloc(sizeof (info) * qtd_info_processo);
 
+        /* Percorre todas as informações do processo */
         for (j = 0; j < p_processo->qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo); /* Lê o nome da informação (exec ou io) e o tempo de execução ou de espera */
             strcpy(p_processo->infos[j].nome, s);
             p_processo->infos[j].tempo = tempo;
             p_processo->tempo_total = p_processo->tempo_total + tempo;
             tempo_total = tempo_total + tempo; /* Tempo total de todos os processos juntos */
+
+            /* Imprime dados sobre a informação do processo */
             printf("- Nome da %da informação: %s\n", l, p_processo->infos[j].nome);
             if (strcmp(p_processo->infos[j].nome, "io") == 0) {
                 printf("- Tempo de espera %d: %ds\n", n, p_processo->infos[j].tempo);
                 printf("-----------------------------------\n");
-                sleep(2);
+                sleep(2); // Aguarda a leitura do usuário.
                 n++;
                 l++;
             } else {
                 printf("- Tempo de execução %d: %ds\n", m, p_processo->infos[j].tempo);
                 printf("-----------------------------------\n");
-                sleep(2);
+                sleep(2); // Aguarda a leitura do usuário.
                 m++;
                 l++;
             }
@@ -155,16 +156,54 @@ int main(void) {
         /** INSERIR PROCESSO NA FILA!!! **/
 
         printf("\n");
+
+        /* Reinicializa os contadores das informações do processo */
         l = 1;
         m = 1;
         n = 1;
 
-
-
     }
 
-    scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executado */
+    /* Lê a opção do algoritmo de alocação que deve ser executado */
+    scanf("%d [^\n]", &id);
 
+    /* ------------------------------------------------- */
+    /* PARTE 5: Inicialização da memória                 */
+    /* ------------------------------------------------- */
+
+    /* Aloca memória para uma estrutura de memória */
+    M = (mem*) malloc(sizeof (mem));
+
+    inicializar_memoria(M);
+
+    /* ------------------------------------------------- */
+    /* PARTE 6: Execução do algoritmo de alocação        */
+    /* ------------------------------------------------- */
+
+    printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
+
+    switch (id) {
+            /* First Fit */
+        case 1:
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            sleep(2);
+            //first_fit(proc_v, M, qtd_processos, tempo_total);
+
+            /* Next Fit */
+            //case 2:
+            //next_fit();
+
+            /* Worst Fit */
+            //case 3:
+            //worst_fit();
+
+
+            /* Best Fit */
+            //case 4:
+            //best_fit();  
+    }
 
 }
 
