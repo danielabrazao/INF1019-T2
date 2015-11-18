@@ -44,6 +44,14 @@
 #include "definitions.h"    /* Arquivo de header com definições (includes e defines) */
 #include "utilities.h"      /* Arquivo de header com utilitários (funções auxiliares) */
 
+
+
+void DestroiProcesso(processo * pProcesso){
+    free(pProcesso);
+}
+
+
+
 int main(void){
 
  	
@@ -64,6 +72,9 @@ int main(void){
     int tempo_total = 0; /* Tempo total de todos os processos */
 	processo * p_processo; /* Ponteiro para processo */
 
+    LIS_tppLista filaProntos;
+
+    filaProntos = LIS_CriarLista(DestroiProcesso);
 
  	/* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -99,9 +110,6 @@ int main(void){
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
     printf("- Número total de processos: %d\n\n", qtd_processos);
     sleep(1);
-
-
-    
 
 
     for (i = 0; i < qtd_processos; i++) {
@@ -155,6 +163,13 @@ int main(void){
 
         /** INSERIR PROCESSO NA FILA!!! **/
         
+        printf("%d elementos na lista\n", LIS_NumeroElementos(filaProntos));
+
+        LIS_InserirElementoApos(filaProntos ,p_processo);
+
+        printf("%d elementos na lista apos insercao\n", LIS_NumeroElementos(filaProntos));
+
+
         printf("\n");
         l = 1;
         m = 1;

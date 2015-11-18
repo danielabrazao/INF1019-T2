@@ -519,6 +519,13 @@ typedef struct LIS_tagLista {
 
    } /* Fim funусo: LIS  -Limpar a cabeуa da lista */
 
+
+   int LIS_NumeroElementos(LIS_tppLista pLista) {
+      return pLista->numElem;
+   }
+
+
+
 /********** Fim do mзdulo de implementaусo: LIS  Lista duplamente encadeada **********/
 
 
