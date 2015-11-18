@@ -1,7 +1,7 @@
 #include   <stdio.h>
 #include   <string.h>
 #include   <memory.h>
-#include   <stdio.h>
+#include   <stdlib.h>
 #include   <assert.h>
 
 #include "lista.h"

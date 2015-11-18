@@ -46,13 +46,6 @@
 
 
 
-
-void DestroiProcesso(processo * pProcesso){
-    free(pProcesso);
-}
-
-
-
 int main(void){
 
 
