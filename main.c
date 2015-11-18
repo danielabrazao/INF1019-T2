@@ -171,6 +171,7 @@ int main(void){
 
 
         printf("\n");
+        printf("\n");
         l = 1;
         m = 1;
         n = 1;
