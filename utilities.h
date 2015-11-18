@@ -116,4 +116,8 @@ void espera_enter() {
     }
 }
 
+void DestroiProcesso(processo * pProcesso){
+    free(pProcesso);
+}
+
 #endif	/* UTILITIES_H */

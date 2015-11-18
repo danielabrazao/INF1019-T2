@@ -166,9 +166,7 @@ int main(void){
         printf("%d elementos na lista apos insercao\n", LIS_NumeroElementos(filaProntos));
 
 
-        printf("\n");
-
-        printf("\n");
+        printf("\n\n");
 
         /* Reinicializa os contadores das informações do processo */
         l = 1;
