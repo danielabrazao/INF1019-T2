@@ -41,8 +41,9 @@
 
 #include "definitions.h"    /* Arquivo de header com definições (includes e defines) */
 #include "utilities.h"      /* Arquivo de header com utilitários (funções auxiliares) */
+#include "lista.h"          /* Arquivo de header com funções e condições de retorno da lista */
 
-int main(void) {
+int main(void){
 
     /* ------------------------------------------------- */
     /* PARTE 1: Declaração de variáveis locais da main   */
@@ -50,7 +51,7 @@ int main(void) {
 
     int outputfd; /* Descritor de arquivos abertos = Retorno de open */
     int retorno; /* Valor de retorno de dup */
-    int i = 0, j = 0, m = 1, l = 1, n = 1, q; /* Contadores auxiliares */
+    int i = 0, j = 0, m = 1, l = 1, n = 1; /* Contadores auxiliares */
     int numero_processo; /* Número do processo */
     int tamanho_processo; /* Memória requerida pelo processo */
     int qtd_info_processo; /* Total de entradas que descrevem a execução do processo */
@@ -59,8 +60,12 @@ int main(void) {
     char s[5]; /* Nome da informação do processo (exec ou io) */
     int qtd_processos = 0; /* Quantidade de processos */
     int tempo_total = 0; /* Tempo total de todos os processos */
-    processo * p_processo; /* Ponteiro para um processo */
-    mem * M; /* Memória */
+    processo * p_processo; /* Ponteiro para processo */
+    mem *M; /* Memória */
+
+    LIS_tppLista filaProntos;
+
+    filaProntos = LIS_CriarLista(DestroiProcesso);
 
     /* ------------------------------------------------- */
     /* PARTE 2: Abertura do arquivo de entrada           */
@@ -155,6 +160,15 @@ int main(void) {
 
         /** INSERIR PROCESSO NA FILA!!! **/
 
+        printf("%d elementos na lista\n", LIS_NumeroElementos(filaProntos));
+
+        LIS_InserirElementoApos(filaProntos ,p_processo);
+
+        printf("%d elementos na lista apos insercao\n", LIS_NumeroElementos(filaProntos));
+
+
+        printf("\n");
+
         printf("\n");
 
         /* Reinicializa os contadores das informações do processo */
@@ -175,6 +189,45 @@ int main(void) {
     M = (mem*) malloc(sizeof (mem));
 
     inicializar_memoria(M);
+
+    /* ------------------------------------------------- */
+    /* PARTE 6: Execução do algoritmo de alocação        */
+    /* ------------------------------------------------- */
+
+    printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
+
+    switch (id) {
+            /* First Fit */
+        case 1:
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            sleep(2);
+            //first_fit(proc_v, M, qtd_processos, tempo_total);
+
+            /* Next Fit */
+            //case 2:
+            //next_fit();
+
+            /* Worst Fit */
+            //case 3:
+            //worst_fit();
+
+
+            /* Best Fit */
+            //case 4:
+            //best_fit();  
+    }
+
+    /* ------------------------------------------------- */
+    /* PARTE 5: Inicialização da memória                 */
+    /* ------------------------------------------------- */
+
+    /* Aloca memória para uma estrutura de memória */
+    M = (mem*) malloc(sizeof (mem));
+
+    inicializar_memoria(M);
+
 
     /* ------------------------------------------------- */
     /* PARTE 6: Execução do algoritmo de alocação        */
