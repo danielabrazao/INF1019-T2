@@ -256,7 +256,9 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
 
         /* Imprime a fila de prontos após a alocação */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
-            printf("Fila de prontos está vazia.\n");
+            printf("A fila de prontos está ");
+            printf(ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET);
+            printf(".\n\n");
         } else {
             printf("Imprimindo fila de prontos...\n\n");
             ImprimeLista(fila_prontos);
