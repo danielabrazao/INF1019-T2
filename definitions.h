@@ -37,13 +37,12 @@
  * 
  */
 
-
-
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
 /* BIBLIOTECAS */
 
+/* Cabeçalhos do ANSI C */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -56,8 +55,8 @@
 #include <time.h>
 #include <pthread.h>
 
+/* Cabeçalhos criados */
 #include "lista.h"
-
 
 /* MACROS */
 
