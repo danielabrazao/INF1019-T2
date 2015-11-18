@@ -87,7 +87,6 @@ int main(void) {
         showError("Falha na duplicação de stdin.\n", ERR_DUP);
     }
 
-
     /* ------------------------------------------------- */
     /* PARTE 4: Leitura do arquivo de entrada            */
     /* ------------------------------------------------- */
