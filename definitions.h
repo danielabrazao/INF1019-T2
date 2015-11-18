@@ -127,10 +127,8 @@ typedef struct estrutura_bloco_memoria {
 /* Estrutura da memória */
 
 typedef struct estrutura_memoria {
-
     int tamanho;                   /* Tamanho da memória em Mb */
-    bloco_mem bloco[QTD_BLOC];     /* Vetor de partições da memória */
-    
+    bloco_mem bloco[QTD_BLOC];     /* Vetor de partições da memória */  
 }mem;
 
 /* Estrutura de argumentos para thread */

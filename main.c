@@ -73,6 +73,7 @@ int main(void){
     int qtd_processos = 0; /* Quantidade de processos */
     int tempo_total = 0; /* Tempo total de todos os processos */
     processo * p_processo; /* Ponteiro para processo */
+    mem *M; /* Memória */
 
     LIS_tppLista filaProntos;
 
@@ -113,19 +114,16 @@ int main(void){
     printf("- Número total de processos: %d\n\n", qtd_processos);
     sleep(1);
 
-
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 1d56bd91d994bb3176f7b56bc39e40980392d171
     for (i = 0; i < qtd_processos; i++) {
 
         /* Aloca memória para um processo */
         p_processo = (processo*) malloc(sizeof (processo));
         if (p_processo == NULL) {
             exit(1);
+        }
+
+        for (q = 0; q < qtd_processos; q++) {
+            p_processo->tempo_total = 0;
         }
 
         /* Preenche processo */
@@ -192,6 +190,45 @@ int main(void){
 
     scanf("%d [^\n]", &id); /* Lê a opção do algoritmo de alocação que deve ser executado */
 
+
+    /* ------------------------------------------------- */
+    /* PARTE 5: Inicialização da memória                 */
+    /* ------------------------------------------------- */
+
+    /* Aloca memória para uma estrutura de memória */
+    M = (mem*) malloc(sizeof (mem));
+
+    inicializar_memoria(M);
+
+
+    /* ------------------------------------------------- */
+    /* PARTE 6: Execução do algoritmo de alocação        */
+    /* ------------------------------------------------- */
+
+    printf("Tempo total do(s) processo(s) = %ds\n\n", tempo_total);
+
+    switch (id) {
+            /* First Fit */
+        case 1:
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            sleep(2);
+            //first_fit(proc_v, M, qtd_processos, tempo_total);
+
+            /* Next Fit */
+            //case 2:
+            //next_fit();
+
+            /* Worst Fit */
+            //case 3:
+            //worst_fit();
+
+
+            /* Best Fit */
+            //case 4:
+            //best_fit();  
+    }
 
 }
 
