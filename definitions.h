@@ -37,8 +37,10 @@
  * 
  */
 
+
+
 #ifndef DEFINITIONS_H
-#define	DEFINITIONS_H
+#define DEFINITIONS_H
 
 /* BIBLIOTECAS */
 
@@ -53,6 +55,9 @@
 #include <termios.h>
 #include <time.h>
 #include <pthread.h>
+
+#include "lista.h"
+
 
 /* MACROS */
 
@@ -88,20 +93,15 @@
 #define ERR_DUP2        3   /* Erro na duplicação de uma entrada ou saída com dup2 */
 #define ERR_INPUT       4   /* Arquivo de entrada inválido */
 
-/* ESTRUTURAS */
 
-/* Estrutura de uma informação sobre um processo */
 
-struct estrutura_info {
-	char nome[5];   /* Nome da informação (exec ou io) */
-	int tempo;      /* Tempo de execução para exec ou de espera para io */
-};
+typedef struct estrutura_info {
+    char nome[5];   /* Nome da informação (exec ou io) */
+    int tempo;      /* Tempo de execução para exec ou de espera para io */
+}info;
 
-typedef struct estrutura_info info;
 
-/* Estrutura de um processo */
-
-struct estrutura_processo {
+typedef struct estrutura_processo {
     int numero;                    /* Número identificador do processo */
     int tamanho;                   /* Tamanho do processo em Mb */
     int qtd_info;                  /* Quantidade de informações do processo */
@@ -109,52 +109,29 @@ struct estrutura_processo {
     time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
     info *infos;                   /* Vetor de informações do processo */
     int tempo_total;               /* Tempo total do processo */
-    int bloq;                      /* Indica se o processo está bloqueado ou não.
-                                    * 0 => Não está bloqueado.
-                                    * 1 => Está bloqueado.
-                                    */
-};
+}processo;
 
-typedef struct estrutura_processo processo;
 
-/* Estrutura de um processo bloqueado */
 
-struct estrutura_fila_bloq {
-    int numero;                    /* Número identificador do processo */
-    int tamanho;                   /* Tamanho do processo em Mb */
-    int qtd_info;                  /* Quantidade de informações do processo */
-    time_t inicio_execucao;        /* Horário do início da execução do processo em segundos */
-    time_t fim_execucao;           /* Horário do fim da execução do processo em segundos */
-    info *infos;                   /* Vetor de informações do processo */
-    int tempo_total;               /* Tempo total do processo */
-};
-
-/* Vetor de estruturas de processos bloqueados */
-
-struct estrutura_fila_bloq fila_bloq[TAM_VET];
 
 /* Estrutura de um bloco (partição fixa) de memória */
 
-struct estrutura_bloco_memoria {
-	int tamanho;    /* Tamanho do bloco de memória em Mb */
-	int isAlocado;  /* Equivale:
+typedef struct estrutura_bloco_memoria {
+    int tamanho;    /* Tamanho do bloco de memória em Mb */
+    int isAlocado;  /* Equivale:
                          * - a 0, caso o bloco de memória não esteja alocado.
                          * - ao número identificador do processo alocado no bloco de memória.
                          */
-};
-
-typedef struct estrutura_bloco_memoria bloco_mem;
+}bloco_mem;
 
 /* Estrutura da memória */
 
-struct estrutura_memoria {
+typedef struct estrutura_memoria {
 
-	int tamanho;                   /* Tamanho da memória em Mb */
-	bloco_mem bloco[QTD_BLOC];     /* Vetor de partições da memória */
-	
-};
-
-typedef struct estrutura_memoria mem;
+    int tamanho;                   /* Tamanho da memória em Mb */
+    bloco_mem bloco[QTD_BLOC];     /* Vetor de partições da memória */
+    
+}mem;
 
 /* Estrutura de argumentos para thread */
 
@@ -163,4 +140,8 @@ struct arg_struct_io {
     int *tempo_total;
 };
 
-#endif	/* DEFINITIONS_H */
+#endif  /* DEFINITIONS_H */
+
+
+
+
