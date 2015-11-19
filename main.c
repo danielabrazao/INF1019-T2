@@ -105,7 +105,7 @@ int main(void) {
         sleep(2);
     }
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
-    printf("- Número total de processos: %d\n\n", qtd_processos);
+    printf("- " ANSI_COLOR_CYAN "Número total de processos" ANSI_COLOR_RESET ": %d\n\n", qtd_processos);
     if (op == TRUE) {
         sleep(5);
     }
