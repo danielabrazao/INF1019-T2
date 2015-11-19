@@ -208,38 +208,38 @@ void ImprimeLista(LIS_tppLista p_lista) {
 
 /* Função que contabiliza e decrementa os tempos de execução e de espera dos processos */
 
-void Relogio(mem *M, LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados) {
+void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
 
-    int tempo = 0, i; /* Contadores auxiliares */
-    processo * p_processo1; /* Ponteiro para um processo da fila de prontos */
-    processo * p_processo2; /* Ponteiro para um processo da fila de bloqueados */
+    int tempo = 0, i, j; /* Contadores auxiliares */
+    processo * p_processo; /* Ponteiro para um processo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
     printf(ANSI_COLOR_MAGENTA "RELÓGIO" ANSI_COLOR_RESET ":\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
 
-    /* Vai para o início das filas */
-    IrInicioLista(fila_prontos);
+    /* Vai para o início da fila de bloqueados */
     IrInicioLista(fila_bloqueados);
-
-    /* Obtém endereço do primeiro processo da fila de prontos */
-    p_processo1 = LIS_ObterValor(fila_prontos);
 
     while (tempo < FATIA_TEMPO) {
         sleep(1);
         tempo++;
-        /* Se a fila de prontos não está vazia */
-        if (LIS_NumeroElementos(fila_prontos) > 0) {
-            p_processo1->tempo_total--;
-            printf("1: %d s\n", p_processo1->tempo_total);
+
+        /* Percorre todos os blocos de memória */
+        for (j = 0; j < QTD_BLOC; j++) {
+            if (M->bloco[j].p_processo != NULL) {
+                M->bloco[j].p_processo->tempo_total--;
+                M->bloco[j].p_processo->infos->tempo--;
+                printf("1: %d s\n", M->bloco[j].p_processo->tempo_total);
+            }
         }
 
         /* Percorre todos os processos da fila de bloqueados */
         for (i = 0; i < LIS_NumeroElementos(fila_bloqueados); i++) {
             /* Obtém endereço do processo da fila de bloqueados */
-            p_processo2 = LIS_ObterValor(fila_bloqueados);
-            p_processo2->tempo_total--;
-            printf("2: %d s\n", p_processo2->tempo_total);
+            p_processo = LIS_ObterValor(fila_bloqueados);
+            p_processo->tempo_total--;
+            p_processo->infos->tempo--;
+            printf("2: %d s\n", p_processo->tempo_total);
             LIS_AvancarElementoCorrente(fila_bloqueados, 1);
         }
         printf("%d s\n", tempo);
@@ -351,7 +351,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                     if (M->bloco[j].p_processo->infos->tempo > 0) {
                         /* Se for exec */
                         if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
-                            Relogio(M, fila_prontos, fila_bloqueados);
+                            Relogio(M, fila_bloqueados);
                             /* Se o comando exec não foi finalizado */
                             if ((M->bloco[j].p_processo->infos->tempo > 0)) {
                                 /* Insere processo na fila de prontos */
@@ -363,7 +363,9 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                             LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
                             /* Exclui processo da fila de prontos */
                             LIS_ExcluirElemento(fila_prontos);
-                            Relogio(M, fila_prontos, fila_bloqueados);
+                            /* Libera bloco de memória */
+                            M->bloco[j].p_processo = NULL;
+                            Relogio(M, fila_bloqueados);
                         }
                     }
                 }
@@ -383,10 +385,10 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
         /* Se o processo foi finalizado */
         if (M->bloco[i].p_processo->tempo_total == 0) {
-            
+
             /* Libera bloco de memória */
             M->bloco[i].p_processo = NULL;
-            
+
             /* Imprime dados sobre os blocos de memória */
             ImprimeMemoria(M);
         }
