@@ -215,6 +215,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
             sleep(1);
         }
 
+        /* Imprime dados sobre a fila de prontos */
         ImprimeLista(fila_prontos);
 
         printf("-----------------------------------------------------------------------------------\n\n");
