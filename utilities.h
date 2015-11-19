@@ -206,11 +206,34 @@ void ImprimeLista(LIS_tppLista p_lista) {
     IrInicioLista(p_lista);
 }
 
+/* Função que contabiliza a ocorrência de um mesmo comando em um processo */
+
+int ContaComando(mem *M, char *comando) {
+
+    int j, k, n = 0; /* Contadores auxiliares */
+
+    /* Percorre todos os blocos de memória */
+    for (j = 0; j < QTD_BLOC; j++) {
+        /* Se o bloco de memória está alocado com um processo */
+        if (M->bloco[j].p_processo != NULL) {
+            /* Percorre todos os comandos */
+            for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                if ((M->bloco[j].p_processo != NULL) && (strcmp(M->bloco[j].p_processo->infos[k].nome, comando) == 0)) {
+                    n++;
+                }
+            }
+        }
+    }
+    
+    return n;
+
+}
+
 /* Função que contabiliza e decrementa os tempos de execução e de espera dos processos */
 
 void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
 
-    int tempo = 0, i, j, k; /* Contadores auxiliares */
+    int tempo = 0, i, j, k, p; /* Contadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
@@ -226,13 +249,19 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
 
         /* Percorre todos os blocos de memória */
         for (j = 0; j < QTD_BLOC; j++) {
+            /* Se o bloco de memória está alocado com um processo */
             if (M->bloco[j].p_processo != NULL) {
+                ImprimeMemoria(M);
                 /* Percorre todos os comandos */
                 for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
-                    if ((M->bloco[j].p_processo != NULL) && (M->bloco[j].p_processo->infos[k].tempo > 0)) {
+                    p = M->bloco[j].p_processo->infos[k].tempo;
+                    if ((M->bloco[j].p_processo != NULL) && (M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "exec") == 0)) {
                         M->bloco[j].p_processo->tempo_total--;
                         M->bloco[j].p_processo->infos[k].tempo--;
                         printf(ANSI_COLOR_CYAN "Exec" ANSI_COLOR_RESET ": %d s\n", M->bloco[j].p_processo->tempo_total);
+                    } else if (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0) {
+                        /* Insere processo na fila de bloqueados */
+                        LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
                     }
                 }
             }
@@ -244,9 +273,11 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
             p_processo = LIS_ObterValor(fila_bloqueados);
             /* Percorre todos os comandos */
             for (k = 0; k < p_processo->qtd_info; k++) {
+                printf("oi\n");
                 if (p_processo->infos[k].tempo > 0) {
+                    printf("oi2\n");
                     p_processo->tempo_total--;
-                    p_processo->infos->tempo--;
+                    p_processo->infos[k].tempo--;
                     printf(ANSI_COLOR_CYAN "Io" ANSI_COLOR_RESET ": %d s\n", p_processo->tempo_total);
                 } else if (p_processo->infos[k].tempo == 0) {
                     LIS_ExcluirElemento(fila_bloqueados);
