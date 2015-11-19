@@ -209,6 +209,7 @@ void ImprimeLista(LIS_tppLista p_lista) {
 /* Função que contabiliza e decrementa os tempos de execução e de espera dos processos */
 
 void Relogio(mem *M) {
+
 }
 
 /* Função do algoritmo de alocação de memória de ajuste rápido */
@@ -293,6 +294,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
             printf("- Processo %d alocado.\n\n", p_processo->numero);
             LIS_ExcluirElemento(fila_prontos);
             IrInicioLista(fila_prontos);
+
         }
 
         if (op == TRUE) {
@@ -301,6 +303,17 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
 
         /* Imprime dados sobre os blocos de memória */
         ImprimeMemoria(M);
+
+        /* Executa o comando do processo alocado no bloco de memória */
+        /* Percorre todos os comandos do processo */
+        for (k = 0; k < p_processo->qtd_info; k++) {
+            /* Procura comando não finalizado */
+            if (p_processo->infos->tempo > 0) {
+                if () {
+                } else() {
+                }
+            }
+        }
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
