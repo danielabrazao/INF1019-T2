@@ -198,7 +198,8 @@ void ImprimeLista(LIS_tppLista p_lista) {
 
 void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) {
 
-    int flag, i;
+    int i; /* Contadores auxiliares */
+    int flag; /* Marcadores auxiliares */
     processo * p_processo;
 
     ImprimeMemoria(M);
