@@ -208,9 +208,23 @@ void ImprimeLista(LIS_tppLista p_lista) {
 
 /* Função que contabiliza e decrementa os tempos de execução e de espera dos processos */
 
-//void Relogio(mem *M) {
+void Relogio(mem *M, LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados) {
 
-//}
+    int tempo = 0; /* Contadores auxiliares */
+
+    printf("-----------------------------------------------------------------------------------\n\n");
+    printf(ANSI_COLOR_MAGENTA "RELÓGIO" ANSI_COLOR_RESET ":\n\n");
+    printf("-----------------------------------------------------------------------------------\n\n");
+
+    while (tempo < FATIA_TEMPO) {
+        sleep(1);
+        tempo++;
+        
+        printf("%d\n", tempo);
+    }
+    sleep(1);
+    printf("\n");
+}
 
 /* Função do algoritmo de alocação de memória de ajuste rápido */
 
@@ -315,17 +329,17 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                     if (M->bloco[j].p_processo->infos->tempo > 0) {
                         /* Se for exec */
                         if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
-                            //Relogio(M);
+                            Relogio(M, fila_prontos, fila_bloqueados);
                             /* Se o comando exec não foi finalizado */
                             if ((M->bloco[j].p_processo->infos->tempo > 0)) {
                                 /* Insere processo na fila de prontos */
                                 LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
                             }
-                        } /* Se for io */
+                        }/* Se for io */
                         else {
                             /* Insere processo na fila de bloqueados */
                             LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
-                            //Relogio(M);
+                            Relogio(M, fila_prontos, fila_bloqueados);
                         }
                     }
                 }
