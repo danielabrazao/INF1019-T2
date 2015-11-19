@@ -208,7 +208,8 @@ void ImprimeLista(LIS_tppLista p_lista) {
 
 /* Função que contabiliza e decrementa os tempos de execução e de espera dos processos */
 
-void Relogio();
+void Relogio(mem *M) {
+}
 
 /* Função do algoritmo de alocação de memória de ajuste rápido */
 
