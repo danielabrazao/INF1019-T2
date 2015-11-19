@@ -274,9 +274,9 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
 
 
 
-    }//while
+    } // While
 
 
-}//fist_fit
+} // FistFit
 
 #endif	/* UTILITIES_H */
