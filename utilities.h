@@ -145,6 +145,10 @@ void ImprimeProcesso(processo * p_processo) {
     printf(ANSI_COLOR_CYAN "Tempo total" ANSI_COLOR_RESET);
     printf(": %d s\n", p_processo->tempo_total);
     printf("-------------------------------------\n\n");
+
+    if (op == TRUE) {
+        sleep(5);
+    }
 }
 
 /* Função que imprime dados sobre os blocos de memória */
@@ -172,6 +176,10 @@ void ImprimeMemoria(mem *M) {
     }
 
     printf("-------------------------------------\n\n");
+
+    if (op == TRUE) {
+        sleep(5);
+    }
 }
 
 /* Função que imprime dados sobre uma lista */
@@ -191,8 +199,16 @@ void ImprimeLista(LIS_tppLista p_lista) {
         LIS_AvancarElementoCorrente(p_lista, 1);
     }
 
+    if (op == TRUE) {
+        sleep(5);
+    }
+
     IrInicioLista(p_lista);
 }
+
+/* Função que contabiliza e decrementa os tempos de execução e de espera dos processos */
+
+void Relogio();
 
 /* Função do algoritmo de alocação de memória de ajuste rápido */
 
@@ -272,10 +288,14 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
             if (op == TRUE) {
                 sleep(1);
             }
-            
+
             printf("- Processo %d alocado.\n\n", p_processo->numero);
             LIS_ExcluirElemento(fila_prontos);
             IrInicioLista(fila_prontos);
+        }
+
+        if (op == TRUE) {
+            sleep(1);
         }
 
         /* Imprime dados sobre os blocos de memória */
