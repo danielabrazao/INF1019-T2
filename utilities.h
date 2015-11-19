@@ -242,11 +242,12 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
             printf("2: %d s\n", p_processo->tempo_total);
             LIS_AvancarElementoCorrente(fila_bloqueados, 1);
         }
-        
-        IrInicioLista(fila_bloqueados);
-        
+
         printf("%d s\n", tempo);
     }
+
+    IrInicioLista(fila_bloqueados);
+
     sleep(1);
     printf("\n");
 }
@@ -365,13 +366,12 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         else {
                             /* Insere processo na fila de bloqueados */
                             LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
-                            /* Libera bloco de memória */
-                            M->bloco[j].p_processo = NULL;
                         }
                     }
                 }
             }
-            printf("oi4\n");
+            /* Libera bloco de memória */
+            M->bloco[j].p_processo = NULL;
         }
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
@@ -386,7 +386,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
         }
 
         /* Se o processo foi finalizado */
-        if (M->bloco[i].p_processo->tempo_total == 0) {
+        if ((M->bloco[i].p_processo != NULL) && (M->bloco[i].p_processo->tempo_total == 0)) {
 
             /* Libera bloco de memória */
             M->bloco[i].p_processo = NULL;
