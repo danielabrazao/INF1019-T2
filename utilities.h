@@ -208,9 +208,9 @@ void ImprimeLista(LIS_tppLista p_lista) {
 
 /* Função que contabiliza e decrementa os tempos de execução e de espera dos processos */
 
-void Relogio(mem *M) {
+//void Relogio(mem *M) {
 
-}
+//}
 
 /* Função do algoritmo de alocação de memória de ajuste rápido */
 
@@ -307,15 +307,26 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
         /* Executa o comando do processo alocado no bloco de memória */
         /* Percorre todos os blocos de memória */
         for (j = 0; j < QTD_BLOC; j++) {
-            /* Percorre todos os comandos do processo */
-            for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
-                /* Procura comando não finalizado */
-                if (M->bloco[j].p_processo->infos->tempo > 0) {
-                    if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
-                        Relogio();
-                    } else {
-                        LIS_InserirElementoApos(fila_bloqueados, p_processo);
-                        Relogio();
+            /* Se o bloco estiver alocado com um processo */
+            if (M->bloco[j].p_processo != NULL) {
+                /* Percorre todos os comandos do processo */
+                for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                    /* Procura comando não finalizado */
+                    if (M->bloco[j].p_processo->infos->tempo > 0) {
+                        /* Se for exec */
+                        if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
+                            //Relogio(M);
+                            /* Se o comando exec não foi finalizado */
+                            if ((M->bloco[j].p_processo->infos->tempo > 0)) {
+                                /* Insere processo na fila de prontos */
+                                LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
+                            }
+                        } /* Se for io */
+                        else {
+                            /* Insere processo na fila de bloqueados */
+                            LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
+                            //Relogio(M);
+                        }
                     }
                 }
             }
