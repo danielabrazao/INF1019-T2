@@ -261,7 +261,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
         }
         i = i - 1;
 
-        if (flag == FALSE) { // Nao encontrei posicao de memoria, devo destruir o processo
+        if (flag == FALSE) { // Posição de memória não encontrada, logo o processo é destruído.
             printf("- Posição de memória não encontrada.\n");
 
             if (op == TRUE) {
