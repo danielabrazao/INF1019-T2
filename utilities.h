@@ -170,7 +170,7 @@ void ImprimeMemoria(mem *M) {
         printf(": %d Mb\n", M->bloco[i].tamanho);
         if (M->bloco[i].p_processo != NULL) {
             ImprimeProcesso(M->bloco[i].p_processo);
-        } else if (M->bloco[i].p_processo == NULL){
+        } else if (M->bloco[i].p_processo == NULL) {
             printf("- Bloco vazio.\n");
         }
     }
@@ -210,7 +210,7 @@ void ImprimeLista(LIS_tppLista p_lista) {
 
 void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
 
-    int tempo = 0, i, j; /* Contadores auxiliares */
+    int tempo = 0, i, j, k; /* Contadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
@@ -227,9 +227,15 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
         /* Percorre todos os blocos de memória */
         for (j = 0; j < QTD_BLOC; j++) {
             if (M->bloco[j].p_processo != NULL) {
-                M->bloco[j].p_processo->tempo_total--;
-                M->bloco[j].p_processo->infos->tempo--;
-                printf("1: %d s\n", M->bloco[j].p_processo->tempo_total);
+                /* Percorre todos os comandos */
+                for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                    printf("%d\n", k);
+                    if ((M->bloco[j].p_processo != NULL) && (M->bloco[j].p_processo->infos[k].tempo > 0)) {
+                        M->bloco[j].p_processo->tempo_total--;
+                        M->bloco[j].p_processo->infos[k].tempo--;
+                        printf("1: %d s\n", M->bloco[j].p_processo->tempo_total);
+                    }
+                }
             }
         }
 
@@ -349,10 +355,9 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
         for (j = 0; j < QTD_BLOC; j++) {
             /* Se o bloco estiver alocado com um processo */
             if (M->bloco[j].p_processo != NULL) {
-                qtd_info = M->bloco[j].p_processo->qtd_info;
-                /* Percorre todos os comandos do processo */
-                for (k = 0; k < qtd_info; k++) {
-                    /* Procura comando não finalizado */
+                if (M->bloco[j].p_processo != NULL) {/* Percorre todos os comandos do processo */
+                    for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                        /* Procura comando não finalizado */
                         /* Se for exec */
                         if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "exec") == 0)) {
                             Relogio(M, fila_bloqueados);
@@ -367,13 +372,11 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                             LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
                             /* Libera bloco de memória */
                             M->bloco[i].p_processo = NULL;
-                            qtd_info = 0;
                         }
+                    }
                 }
             }
         }
-        
-        printf("4\n");
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
