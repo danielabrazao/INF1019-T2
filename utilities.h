@@ -220,7 +220,6 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
         printf(ANSI_COLOR_MAGENTA "PROCESSO A SER ALOCADO" ANSI_COLOR_RESET ":\n\n");
         printf("-----------------------------------------------------------------------------------\n\n");
 
-
         /* Obtém primeiro processo na fila de prontos */
         IrInicioLista(fila_prontos);
         p_processo = LIS_ObterValor(fila_prontos);
