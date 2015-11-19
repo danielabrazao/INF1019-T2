@@ -142,6 +142,11 @@ int main(void) {
         /* Aloca memória para um vetor de informações do processo */
         p_processo->infos = (info*) malloc(sizeof (info) * qtd_info_processo);
 
+        /* Tratamento de erro para alocação de memória */
+        if (p_processo->infos == NULL) {
+            ShowError("Falha ao alocar memória para o vetor de informações do processo.\n", ERR_MALLOC);
+        }
+
         /* Percorre todas as informações do processo */
         for (j = 0; j < p_processo->qtd_info; j++) {
             scanf("%s %d [^\n]", s, &tempo); /* Lê o nome da informação (exec ou io) e o tempo de execução ou de espera */
@@ -214,6 +219,11 @@ int main(void) {
 
     /* Aloca memória para uma estrutura de memória */
     M = (mem*) malloc(sizeof (mem));
+
+    /* Tratamento de erro para alocação de memória */
+    if (M == NULL) {
+        ShowError("Falha ao alocar memória para a estrutura de memória do simulador.\n", ERR_MALLOC);
+    }
 
     /* Inicializa memória com partições fixas */
     InicializarMemoria(M);
