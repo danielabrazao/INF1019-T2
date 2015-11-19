@@ -248,6 +248,8 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
                     p_processo->tempo_total--;
                     p_processo->infos->tempo--;
                     printf(ANSI_COLOR_CYAN "Io" ANSI_COLOR_RESET ": %d s\n", p_processo->tempo_total);
+                } else if (p_processo->infos[k].tempo == 0) {
+                    LIS_ExcluirElemento(fila_bloqueados);
                 }
             }
             LIS_AvancarElementoCorrente(fila_bloqueados, 1);
@@ -266,7 +268,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
 
 void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
 
-    int i, j, k, qtd_info; /* Contadores auxiliares */
+    int i, j, k, qtd_info, tempo = 0; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
@@ -277,6 +279,17 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
         printf("%d elementos\n", LIS_NumeroElementos(fila_prontos));
 
+        if((LIS_NumeroElementos(fila_prontos) == 0) && (LIS_NumeroElementos(fila_bloqueados) > 0)){
+            /* Obtém primeiro processo na fila de bloqueados */
+            IrInicioLista(fila_bloqueados);
+            
+            ImprimeLista(lista_bloqueados);
+            
+            Relogio(M, fila_bloqueados);
+            
+            ImprimeLista(lista_bloqueados);
+        }
+        
         if ((LIS_NumeroElementos(fila_prontos) > 0)) {
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
@@ -372,10 +385,21 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                     /* Se for exec */
                     if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "exec") == 0)) {
                         Relogio(M, fila_bloqueados);
+
+                        /* Imprime dados sobre os blocos de memória */
+                        ImprimeMemoria(M);
+
                         /* Se o comando exec não foi finalizado */
-                        if ((M->bloco[j].p_processo->infos[k].tempo > 0)) {
+                       
+                        if (M->bloco[j].p_processo->infos[k].tempo > 0) {
                             /* Insere processo na fila de prontos */
                             LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
+
+                            /* Libera bloco de memória */
+                            M->bloco[i].p_processo = NULL;
+
+                            /* Imprime dados sobre os blocos de memória */
+                            ImprimeMemoria(M);
                         }
                     }/* Se for io */
                     else if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0)) {
@@ -404,7 +428,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                 }
             }
         }
-
+        
         /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
             printf("-----------------------------------------------------------------------------------\n\n");
