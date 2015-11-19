@@ -268,7 +268,7 @@ int main(void) {
             if (op == TRUE) {
                 sleep(2);
             }
-            //NextFit();
+            NextFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
             /* Worst Fit */
@@ -279,7 +279,7 @@ int main(void) {
             if (op == TRUE) {
                 sleep(2);
             }
-            //worstFit();
+            WorstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
 
@@ -291,7 +291,7 @@ int main(void) {
             if (op == TRUE) {
                 sleep(2);
             }
-            //BestFit();
+            BestFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
     }
 

@@ -214,6 +214,7 @@ void Relogio(mem *M) {
 
 /* Função do algoritmo de alocação de memória de ajuste rápido */
 
+/* Algoritmo FistFit - Neste algoritmo, todas as posicoes de memorias sao varridas até que se encontre uma posicao compativel */
 void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
 
     int i, j, k; /* Contadores auxiliares */
@@ -306,20 +307,22 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
         /* Executa o comando do processo alocado no bloco de memória */
         /* Percorre todos os blocos de memória */
+        /*
         for (j = 0; j < QTD_BLOC; j++) {
-            /* Percorre todos os comandos do processo */
+            // Percorre todos os comandos do processo 
             for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
-                /* Procura comando não finalizado */
+                //Procura comando não finalizado 
                 if (M->bloco[j].p_processo->infos->tempo > 0) {
                     if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
-                        Relogio();
+                        Relogio(M);
                     } else {
                         LIS_InserirElementoApos(fila_bloqueados, p_processo);
-                        Relogio();
+                        Relogio(M);
                     }
                 }
             }
         }
+        */
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
@@ -341,5 +344,419 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
 
 } // FistFit
+
+
+
+/* Algoritmo Next Fit - Neste algoritmo o index inicial referente ao vetor de blocos de memoria e atualizado, 
+evitando que os blocos ocupados anteriormente sejam varridos */
+void NextFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
+
+    int i, j, k; /* Contadores auxiliares */
+    int flag, next=0; /* Marcadores auxiliares */
+    processo * p_processo; /* Ponteiro para um processo */
+
+    /* Imprime dados sobre os blocos de memória */
+    ImprimeMemoria(M);
+
+    while (LIS_NumeroElementos(fila_prontos) > 0) {
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Imprime dados sobre a fila de prontos */
+        ImprimeLista(fila_prontos);
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "PROCESSO A SER ALOCADO" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
+
+        /* Obtém primeiro processo na fila de prontos */
+        IrInicioLista(fila_prontos);
+        p_processo = LIS_ObterValor(fila_prontos);
+        ImprimeProcesso(p_processo);
+        printf("É necessário um bloco de memória de %d Mb para comportar o processo %d.\n", p_processo->tamanho, p_processo->numero);
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Procura uma posição de memória para alocar o processo */
+        i = next;
+
+        flag = FALSE;
+
+        while ((flag == FALSE) && (i < QTD_BLOC)) {
+            if ((M->bloco[i].tamanho >= p_processo->tamanho) && (M->bloco[i].p_processo == NULL)) {
+                flag = TRUE;
+            }
+            i++;
+        }
+        next = i;
+        i = i - 1;
+
+
+        if (flag == FALSE) { // Posição de memória não encontrada, logo o processo é destruído.
+            printf("- Posição de memória não encontrada.\n");
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            LIS_ExcluirElemento(fila_prontos);
+            DestroiProcesso(p_processo);
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            printf("- Processo destruído.\n\n");
+        } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
+            printf("- Posição de memória encontrada no bloco %d.\n", i + 1);
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            M->bloco[i].p_processo = p_processo;
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            printf("- Processo %d alocado.\n\n", p_processo->numero);
+            LIS_ExcluirElemento(fila_prontos);
+            IrInicioLista(fila_prontos);
+
+        }
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Imprime dados sobre os blocos de memória */
+        ImprimeMemoria(M);
+
+        /* Executa o comando do processo alocado no bloco de memória */
+        /* Percorre todos os blocos de memória */
+        /*
+        for (j = 0; j < QTD_BLOC; j++) {
+            // Percorre todos os comandos do processo 
+            for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                //Procura comando não finalizado 
+                if (M->bloco[j].p_processo->infos->tempo > 0) {
+                    if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
+                        Relogio(M);
+                    } else {
+                        LIS_InserirElementoApos(fila_bloqueados, p_processo);
+                        Relogio(M);
+                    }
+                }
+            }
+        }
+        */
+
+        /* Imprime a fila de prontos após a alocação do processo na memória */
+        if (LIS_NumeroElementos(fila_prontos) == 0) {
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+        }
+
+        /* 
+        Executar processo a partir daqui!!! 
+        Criar função que reduz o tempo de todos os processos em exec e em IO
+        
+         */
+
+
+
+    } // While
+
+
+}// Next Fit
+
+
+/* Algoritmo Best Fit - Neste algoritmo, todas as posicoes de memoria sao varridas. E' escolhida a posicao com o tamanho
+o mais proximo possivel do tamanho do processo */
+void BestFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
+
+    int i, j, k; /* Contadores auxiliares */
+    int flag, dif, best, dif_compara; /* Marcadores auxiliares */
+    processo * p_processo; /* Ponteiro para um processo */
+
+    /* Imprime dados sobre os blocos de memória */
+    ImprimeMemoria(M);
+
+    while (LIS_NumeroElementos(fila_prontos) > 0) {
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Imprime dados sobre a fila de prontos */
+        ImprimeLista(fila_prontos);
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "PROCESSO A SER ALOCADO" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
+
+        /* Obtém primeiro processo na fila de prontos */
+        IrInicioLista(fila_prontos);
+        p_processo = LIS_ObterValor(fila_prontos);
+        ImprimeProcesso(p_processo);
+        printf("É necessário um bloco de memória de %d Mb com a menor folga possivel para comportar o processo %d.\n", p_processo->tamanho, p_processo->numero);
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Procura uma posição de memória para alocar o processo */
+        i = 0;
+        dif = 1000;
+        flag = FALSE;
+
+        while (i < QTD_BLOC) {
+            if ((M->bloco[i].tamanho >= p_processo->tamanho) && (M->bloco[i].p_processo == NULL)) {
+                dif_compara = M->bloco[i].tamanho - p_processo->tamanho;
+                if(dif_compara <= dif){
+                    dif = dif_compara;
+                    best = i;
+                    flag = TRUE;
+                }
+            }
+            i++;
+        }
+        i = best;
+
+
+        if (flag == FALSE) { // Posição de memória não encontrada, logo o processo é destruído.
+            printf("- Posição de memória não encontrada.\n");
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            LIS_ExcluirElemento(fila_prontos);
+            DestroiProcesso(p_processo);
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            printf("- Processo destruído.\n\n");
+        } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
+            printf("- Posição de memória encontrada no bloco %d.\n", i + 1);
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            M->bloco[i].p_processo = p_processo;
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            printf("- Processo %d alocado.\n\n", p_processo->numero);
+            LIS_ExcluirElemento(fila_prontos);
+            IrInicioLista(fila_prontos);
+
+        }
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Imprime dados sobre os blocos de memória */
+        ImprimeMemoria(M);
+
+        /* Executa o comando do processo alocado no bloco de memória */
+        /* Percorre todos os blocos de memória */
+        /*
+        for (j = 0; j < QTD_BLOC; j++) {
+            // Percorre todos os comandos do processo 
+            for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                //Procura comando não finalizado 
+                if (M->bloco[j].p_processo->infos->tempo > 0) {
+                    if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
+                        Relogio(M);
+                    } else {
+                        LIS_InserirElementoApos(fila_bloqueados, p_processo);
+                        Relogio(M);
+                    }
+                }
+            }
+        }
+        */
+
+        /* Imprime a fila de prontos após a alocação do processo na memória */
+        if (LIS_NumeroElementos(fila_prontos) == 0) {
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+        }
+
+        /* 
+        Executar processo a partir daqui!!! 
+        Criar função que reduz o tempo de todos os processos em exec e em IO
+        
+         */
+
+
+
+    } // While
+
+
+}// Best Fit
+
+
+/* Algoritmo Worst Fit -  Neste algoritmo, todas as posicoes de memoria sao varridas. E' escolhida a posicao com a maior
+folga possivel para alocar o processo */
+void WorstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
+
+    int i, j, k; /* Contadores auxiliares */
+    int flag, dif, worst, dif_compara; /* Marcadores auxiliares */
+    processo * p_processo; /* Ponteiro para um processo */
+
+    /* Imprime dados sobre os blocos de memória */
+    ImprimeMemoria(M);
+
+    while (LIS_NumeroElementos(fila_prontos) > 0) {
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Imprime dados sobre a fila de prontos */
+        ImprimeLista(fila_prontos);
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "PROCESSO A SER ALOCADO" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
+
+        /* Obtém primeiro processo na fila de prontos */
+        IrInicioLista(fila_prontos);
+        p_processo = LIS_ObterValor(fila_prontos);
+        ImprimeProcesso(p_processo);
+        printf("É necessário um bloco de memória de %d Mb com a maior folga possivel para comportar o processo %d.\n", p_processo->tamanho, p_processo->numero);
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Procura uma posição de memória para alocar o processo */
+        i = 0;
+        dif = 0;
+        flag = FALSE;
+
+        while (i < QTD_BLOC) {
+            if ((M->bloco[i].tamanho >= p_processo->tamanho) && (M->bloco[i].p_processo == NULL)) {
+                dif_compara = M->bloco[i].tamanho - p_processo->tamanho;
+                if(dif_compara >= dif){
+                    dif = dif_compara;
+                    worst = i;
+                    flag = TRUE;
+                }
+            }
+            i++;
+        }
+        i = worst;
+
+
+        if (flag == FALSE) { // Posição de memória não encontrada, logo o processo é destruído.
+            printf("- Posição de memória não encontrada.\n");
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            LIS_ExcluirElemento(fila_prontos);
+            DestroiProcesso(p_processo);
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            printf("- Processo destruído.\n\n");
+        } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
+            printf("- Posição de memória encontrada no bloco %d.\n", i + 1);
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            M->bloco[i].p_processo = p_processo;
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
+            printf("- Processo %d alocado.\n\n", p_processo->numero);
+            LIS_ExcluirElemento(fila_prontos);
+            IrInicioLista(fila_prontos);
+
+        }
+
+        if (op == TRUE) {
+            sleep(1);
+        }
+
+        /* Imprime dados sobre os blocos de memória */
+        ImprimeMemoria(M);
+
+        /* Executa o comando do processo alocado no bloco de memória */
+        /* Percorre todos os blocos de memória */
+        /*
+        for (j = 0; j < QTD_BLOC; j++) {
+            // Percorre todos os comandos do processo 
+            for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                //Procura comando não finalizado 
+                if (M->bloco[j].p_processo->infos->tempo > 0) {
+                    if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
+                        Relogio(M);
+                    } else {
+                        LIS_InserirElementoApos(fila_bloqueados, p_processo);
+                        Relogio(M);
+                    }
+                }
+            }
+        }
+        */
+
+        /* Imprime a fila de prontos após a alocação do processo na memória */
+        if (LIS_NumeroElementos(fila_prontos) == 0) {
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+        }
+
+        /* 
+        Executar processo a partir daqui!!! 
+        Criar função que reduz o tempo de todos os processos em exec e em IO
+        
+         */
+
+
+
+    } // While
+
+
+}// Worst Fit
 
 #endif	/* UTILITIES_H */
