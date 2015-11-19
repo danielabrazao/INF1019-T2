@@ -170,7 +170,7 @@ void ImprimeMemoria(mem *M) {
         printf(": %d Mb\n", M->bloco[i].tamanho);
         if (M->bloco[i].p_processo != NULL) {
             ImprimeProcesso(M->bloco[i].p_processo);
-        } else {
+        } else if (M->bloco[i].p_processo == NULL){
             printf("- Bloco vazio.\n");
         }
     }
@@ -256,7 +256,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados) {
 
 void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
 
-    int i, j, k; /* Contadores auxiliares */
+    int i, j, k, qtd_info; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
@@ -347,32 +347,33 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
         /* Executa o comando do processo alocado no bloco de memória */
         /* Percorre todos os blocos de memória */
         for (j = 0; j < QTD_BLOC; j++) {
-            printf("%d\n", j);
             /* Se o bloco estiver alocado com um processo */
             if (M->bloco[j].p_processo != NULL) {
+                qtd_info = M->bloco[j].p_processo->qtd_info;
                 /* Percorre todos os comandos do processo */
-                for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                for (k = 0; k < qtd_info; k++) {
                     /* Procura comando não finalizado */
-                    if (M->bloco[j].p_processo->infos->tempo > 0) {
                         /* Se for exec */
-                        if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
+                        if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "exec") == 0)) {
                             Relogio(M, fila_bloqueados);
                             /* Se o comando exec não foi finalizado */
-                            if ((M->bloco[j].p_processo->infos->tempo > 0)) {
+                            if ((M->bloco[j].p_processo->infos[k].tempo > 0)) {
                                 /* Insere processo na fila de prontos */
                                 LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
                             }
                         }/* Se for io */
-                        else if ((strcmp(M->bloco[j].p_processo->infos->nome, "io") == 0)) {
+                        else if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0)) {
                             /* Insere processo na fila de bloqueados */
                             LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
                             /* Libera bloco de memória */
-                            M->bloco[j].p_processo = NULL;
+                            M->bloco[i].p_processo = NULL;
+                            qtd_info = 0;
                         }
-                    }
                 }
             }
         }
+        
+        printf("4\n");
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
