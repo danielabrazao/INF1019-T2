@@ -381,6 +381,16 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
             ImprimeMemoria(M);
         }
 
+        /* Se o processo foi finalizado */
+        if (M->bloco[i].p_processo->tempo_total == 0) {
+            
+            /* Libera bloco de memória */
+            M->bloco[i].p_processo = NULL;
+            
+            /* Imprime dados sobre os blocos de memória */
+            ImprimeMemoria(M);
+        }
+
     } // While
 
 
