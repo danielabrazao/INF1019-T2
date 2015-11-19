@@ -363,15 +363,15 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                                 LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
                             }
                         }/* Se for io */
-                        else {
+                        else if ((strcmp(M->bloco[j].p_processo->infos->nome, "io") == 0)) {
                             /* Insere processo na fila de bloqueados */
                             LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
+                            /* Libera bloco de memória */
+                            M->bloco[j].p_processo = NULL;
                         }
                     }
                 }
             }
-            /* Libera bloco de memória */
-            M->bloco[j].p_processo = NULL;
         }
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
