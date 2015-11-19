@@ -343,6 +343,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
         /* Executa o comando do processo alocado no bloco de memória */
         /* Percorre todos os blocos de memória */
         for (j = 0; j < QTD_BLOC; j++) {
+            printf("%d\n", j);
             /* Se o bloco estiver alocado com um processo */
             if (M->bloco[j].p_processo != NULL) {
                 /* Percorre todos os comandos do processo */
@@ -369,12 +370,9 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         }
                     }
                 }
-                printf("oi3\n");
             }
             printf("oi4\n");
         }
-        
-        printf("oi5\n");
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
