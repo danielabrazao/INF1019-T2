@@ -200,7 +200,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
 
     int i; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
-    processo * p_processo;
+    processo * p_processo; /* Ponteiro para um processo */
 
     ImprimeMemoria(M);
 
