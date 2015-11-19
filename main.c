@@ -130,10 +130,10 @@ int main(void) {
 
         /* Imprime dados sobre o processo */
         printf("-----------------------------------\n");
-        printf("PROCESSO #%d\n", p_processo->numero);
+        printf(ANSI_COLOR_MAGENTA "PROCESSO #%d\n" ANSI_COLOR_RESET, p_processo->numero);
         printf("-----------------------------------\n");
-        printf("- Número do processo: %d\n", p_processo->numero);
-        printf("- Tamanho do processo: %dMb\n", p_processo->tamanho);
+        printf("- " ANSI_COLOR_CYAN "Número do processo" ANSI_COLOR_RESET ": %d\n", p_processo->numero);
+        printf("- " ANSI_COLOR_CYAN "Tamanho do processo" ANSI_COLOR_RESET ": %dMb\n", p_processo->tamanho);
         printf("-----------------------------------\n");
 
         scanf("%d [^\n]", &qtd_info_processo); /* Lê a quantidade de informações do processo */
@@ -156,14 +156,14 @@ int main(void) {
             tempo_total = tempo_total + tempo; /* Tempo total de todos os processos juntos */
 
             /* Imprime dados sobre a informação do processo */
-            printf("- Nome da %da informação: %s\n", l, p_processo->infos[j].nome);
+            printf("- " ANSI_COLOR_CYAN "Nome da %da informação" ANSI_COLOR_RESET ": %s\n", l, p_processo->infos[j].nome);
             if (strcmp(p_processo->infos[j].nome, "io") == 0) {
-                printf("- Tempo de espera %d: %ds\n", n, p_processo->infos[j].tempo);
+                printf("- " ANSI_COLOR_CYAN "Tempo de espera %d" ANSI_COLOR_RESET ": %ds\n", n, p_processo->infos[j].tempo);
                 printf("-----------------------------------\n");
                 n++;
                 l++;
             } else {
-                printf("- Tempo de execução %d: %ds\n", m, p_processo->infos[j].tempo);
+                printf("- " ANSI_COLOR_CYAN "Tempo de execução %d" ANSI_COLOR_RESET ": %ds\n", m, p_processo->infos[j].tempo);
                 printf("-----------------------------------\n");
                 m++;
                 l++;
@@ -174,7 +174,7 @@ int main(void) {
             sleep(10);
         }
 
-        printf("\nControle antes: ");
+        printf(ANSI_COLOR_CYAN "\nControle antes" ANSI_COLOR_RESET ": ");
         if (LIS_NumeroElementos(fila_prontos) == 0) {
             printf("Nenhum elemento na fila de prontos.\n");
         } else if (LIS_NumeroElementos(fila_prontos) == 1) {
@@ -190,7 +190,7 @@ int main(void) {
         /* Insere processo na fila de prontos */
         LIS_InserirElementoApos(fila_prontos, p_processo);
 
-        printf("\nControle depois: ");
+        printf(ANSI_COLOR_CYAN "\nControle depois" ANSI_COLOR_RESET ": ");
         if (LIS_NumeroElementos(fila_prontos) == 1) {
             printf("1 elemento na fila de prontos.\n");
         } else {
@@ -233,9 +233,9 @@ int main(void) {
     /* ------------------------------------------------- */
 
     if (LIS_NumeroElementos(fila_prontos) == 1) {
-        printf("Tempo total do processo = %d s\n\n", tempo_total);
+        printf(ANSI_COLOR_CYAN "Tempo total do processo" ANSI_COLOR_RESET ": %d s\n\n", tempo_total);
     } else {
-        printf("Tempo total dos processos = %d s\n\n", tempo_total);
+        printf(ANSI_COLOR_CYAN "Tempo total dos processos" ANSI_COLOR_RESET ": %d s\n\n", tempo_total);
     }
 
     switch (id) {
