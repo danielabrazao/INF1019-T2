@@ -202,6 +202,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
     int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
+    /* Imprime dados sobre os blocos de memória */
     ImprimeMemoria(M);
 
     while (LIS_NumeroElementos(fila_prontos) > 0) {
@@ -226,6 +227,10 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
         ImprimeProcesso(p_processo);
         printf("É necessário um bloco de memória de %d Mb para comportar o processo %d.\n", p_processo->tamanho, p_processo->numero);
 
+        if (op == TRUE) {
+            sleep(1);
+        }
+
         /* Procura uma posição de memória para alocar o processo */
         i = 0;
 
@@ -241,17 +246,38 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
 
         if (flag == FALSE) { // Nao encontrei posicao de memoria, devo destruir o processo
             printf("- Posição de memória não encontrada.\n");
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
             LIS_ExcluirElemento(fila_prontos);
             DestroiProcesso(p_processo);
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
             printf("- Processo destruído.\n");
         } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
             printf("- Posição de memória encontrada no bloco %d.\n", i + 1);
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+
             M->bloco[i].p_processo = p_processo;
+
+            if (op == TRUE) {
+                sleep(1);
+            }
+            
             printf("- Processo %d alocado.\n\n", p_processo->numero);
             LIS_ExcluirElemento(fila_prontos);
             IrInicioLista(fila_prontos);
         }
 
+        /* Imprime dados sobre os blocos de memória */
         ImprimeMemoria(M);
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
