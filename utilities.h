@@ -314,7 +314,8 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                     if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
                         Relogio();
                     } else {
-                        
+                        LIS_InserirElementoApos(fila_bloqueados, p_processo);
+                        Relogio();
                     }
                 }
             }
