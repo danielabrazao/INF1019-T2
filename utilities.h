@@ -369,8 +369,12 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         }
                     }
                 }
+                printf("oi3\n");
             }
+            printf("oi4\n");
         }
+        
+        printf("oi5\n");
 
         /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
