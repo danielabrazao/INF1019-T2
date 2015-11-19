@@ -45,6 +45,7 @@
 /* Função que exibe mensagem inicial do gerenciador de memória */
 
 void Cabecalho() {
+    system("clear"); // Limpa a tela.
     printf("\n-----------------------------------------------------------------------------------\n\n");
     printf(ANSI_COLOR_CYAN "\tPONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO DE JANEIRO" ANSI_COLOR_RESET "\n");
     printf(ANSI_COLOR_MAGENTA "\tSegundo Trabalho de Sistemas de Computação" ANSI_COLOR_RESET "\n");
