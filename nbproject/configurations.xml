@@ -5,11 +5,13 @@
                    displayName="Arquivos de Cabeçalho"
                    projectFiles="true">
       <itemPath>definitions.h</itemPath>
+      <itemPath>lista.h</itemPath>
       <itemPath>utilities.h</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Arquivos de Código-Fonte"
                    projectFiles="true">
+      <itemPath>lista.c</itemPath>
       <itemPath>main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -40,6 +42,10 @@
       </compileType>
       <item path="definitions.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="lista.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="lista.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="utilities.h" ex="false" tool="3" flavor2="0">
@@ -66,6 +72,10 @@
         </asmTool>
       </compileType>
       <item path="definitions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lista.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="lista.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
