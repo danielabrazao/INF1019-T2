@@ -42,7 +42,7 @@
 
 #include "definitions.h" /* Arquivo de cabeçalho com definições (includes e defines) */
 
-/* Função que exibe mensagem inicial do gerenciador de memória */
+/* Função que limpa a tela e exibe a mensagem inicial do gerenciador de memória */
 
 void Cabecalho() {
     system("clear"); // Limpa a tela.
@@ -74,7 +74,7 @@ void Cabecalho() {
     printf("-----------------------------------------------------------------------------------\n\n");
 }
 
-/* Função que exibe mensagem de erro */
+/* Função que exibe uma mensagem de erro */
 
 void ShowError(char str[TAM_STR + 1], int n) {
     printf("Erro %d: %s\n", n, str);
@@ -121,7 +121,7 @@ void DestroiProcesso(processo * p_processo) {
     free(p_processo);
 }
 
-/* Função que imprime dados sobre o processo */
+/* Função que imprime dados sobre um processo */
 
 void ImprimeProcesso(processo * p_processo) {
 
@@ -174,7 +174,7 @@ void ImprimeMemoria(mem *M) {
     printf("-------------------------------------\n\n");
 }
 
-/* Função que imprime dados sobre a lista */
+/* Função que imprime dados sobre uma lista */
 
 void ImprimeLista(LIS_tppLista p_lista) {
 
@@ -194,7 +194,7 @@ void ImprimeLista(LIS_tppLista p_lista) {
     IrInicioLista(p_lista);
 }
 
-/* Função do algoritmo de ajuste rápido */
+/* Função do algoritmo de alocação de memória de ajuste rápido */
 
 void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) {
 
@@ -276,4 +276,5 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
 
 
 }//fist_fit
+
 #endif	/* UTILITIES_H */
