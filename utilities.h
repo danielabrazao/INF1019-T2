@@ -263,7 +263,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
     /* Imprime dados sobre os blocos de memória */
     ImprimeMemoria(M);
 
-    while (LIS_NumeroElementos(fila_prontos) > 0) {
+    while ((LIS_NumeroElementos(fila_prontos) > 0) || (LIS_NumeroElementos(fila_bloqueados) > 0)) {
 
         printf("-----------------------------------------------------------------------------------\n\n");
         printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
