@@ -1,8 +1,8 @@
 2
 Processo #1 – 5Mb
 1
-exec 11
+io 11
 Processo #2 – 5Mb
 1
-io 11
+exec 11
 1

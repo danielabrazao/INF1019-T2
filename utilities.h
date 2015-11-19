@@ -279,17 +279,29 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
         printf("%d elementos\n", LIS_NumeroElementos(fila_prontos));
 
-        if((LIS_NumeroElementos(fila_prontos) == 0) && (LIS_NumeroElementos(fila_bloqueados) > 0)){
+        if ((LIS_NumeroElementos(fila_prontos) == 0) && (LIS_NumeroElementos(fila_bloqueados) > 0)) {
             /* Obtém primeiro processo na fila de bloqueados */
             IrInicioLista(fila_bloqueados);
-            
-            ImprimeLista(lista_bloqueados);
-            
+
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+
+            ImprimeLista(fila_bloqueados);
+
             Relogio(M, fila_bloqueados);
-            
-            ImprimeLista(lista_bloqueados);
+
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+
+            if (LIS_NumeroElementos(fila_bloqueados) > 0) {
+                ImprimeLista(fila_bloqueados);
+            } else {
+                printf("A fila de bloqueados está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+            }
         }
-        
+
         if ((LIS_NumeroElementos(fila_prontos) > 0)) {
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
@@ -390,7 +402,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         ImprimeMemoria(M);
 
                         /* Se o comando exec não foi finalizado */
-                       
+
                         if (M->bloco[j].p_processo->infos[k].tempo > 0) {
                             /* Insere processo na fila de prontos */
                             LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
@@ -428,7 +440,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                 }
             }
         }
-        
+
         /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
             printf("-----------------------------------------------------------------------------------\n\n");
