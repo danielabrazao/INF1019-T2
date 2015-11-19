@@ -210,7 +210,7 @@ void ImprimeLista(LIS_tppLista p_lista) {
 
 void Relogio(mem *M, LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados) {
 
-    int tempo = 0; /* Contadores auxiliares */
+    int tempo = 0, i; /* Contadores auxiliares */
     processo * p_processo1; /* Ponteiro para um processo da fila de prontos */
     processo * p_processo2; /* Ponteiro para um processo da fila de bloqueados */
 
@@ -222,14 +222,25 @@ void Relogio(mem *M, LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados) {
     IrInicioLista(fila_prontos);
     IrInicioLista(fila_bloqueados);
 
-    /* Obtém endereço dos processos das filas */
+    /* Obtém endereço do primeiro processo da fila de prontos */
     p_processo1 = LIS_ObterValor(fila_prontos);
-    p_processo2 = LIS_ObterValor(fila_bloqueados);
 
     while (tempo < FATIA_TEMPO) {
         sleep(1);
         tempo++;
-
+        /* Se a fila de prontos não está vazia */
+        if (LIS_NumeroElementos(fila_prontos) > 0) {
+            p_processo1->tempo_total--;
+        }
+        printf("oi3\n");
+        /* Percorre todos os processos da fila de bloqueados */
+        for (i = 0; i < LIS_NumeroElementos(fila_bloqueados); i++) {
+            printf("oi4\n");
+            /* Obtém endereço do processo da fila de bloqueados */
+            p_processo2 = LIS_ObterValor(fila_bloqueados);
+            p_processo2->tempo_total--;
+            LIS_AvancarElementoCorrente(fila_bloqueados, 1);
+        }
         printf("%d\n", tempo);
     }
     sleep(1);
@@ -775,14 +786,6 @@ void WorstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
             printf("-----------------------------------------------------------------------------------\n\n");
             printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
         }
-
-        /* 
-        Executar processo a partir daqui!!! 
-        Criar função que reduz o tempo de todos os processos em exec e em IO
-        
-         */
-
-
 
     } // While
 
