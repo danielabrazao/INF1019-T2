@@ -210,7 +210,6 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
         printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
         printf("-----------------------------------------------------------------------------------\n\n");
 
-
         if (op == TRUE) {
             sleep(1);
         }
@@ -247,7 +246,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
             DestroiProcesso(p_processo);
             printf("- Processo destruído.\n");
         } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
-            printf("- Posição de memória encontrada no bloco %d.\n", i+1);
+            printf("- Posição de memória encontrada no bloco %d.\n", i + 1);
             M->bloco[i].p_processo = p_processo;
             printf("- Processo %d alocado.\n\n", p_processo->numero);
             LIS_ExcluirElemento(fila_prontos);
@@ -255,6 +254,10 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
         }
 
         ImprimeMemoria(M);
+
+        printf("-----------------------------------------------------------------------------------\n\n");
+        printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+        printf("-----------------------------------------------------------------------------------\n\n");
 
         /* Imprime a fila de prontos após a alocação */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
