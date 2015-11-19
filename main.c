@@ -62,9 +62,17 @@ int main(void) {
     processo * p_processo; /* Ponteiro para processo */
     mem *M; /* Memória */
 
+    /* Declaração da fila de processos prontos */
+    
     LIS_tppLista fila_prontos;
 
     fila_prontos = LIS_CriarLista(DestroiProcesso);
+    
+    /* Declaração da fila de processos bloqueados */
+    
+    LIS_tppLista fila_bloqueados;
+
+    fila_bloqueados = LIS_CriarLista(DestroiProcesso);
 
     /* ------------------------------------------------- */
     /* PARTE 2: Exibição do cabeçalho                    */
@@ -249,7 +257,7 @@ int main(void) {
                     sleep(2);
                 }
             }
-            FirstFit(fila_prontos, M, qtd_processos, tempo_total);
+            FirstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
             /* Next Fit */

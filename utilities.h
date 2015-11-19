@@ -214,7 +214,7 @@ void Relogio(mem *M) {
 
 /* Função do algoritmo de alocação de memória de ajuste rápido */
 
-void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) {
+void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
 
     int i, j, k; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
@@ -314,6 +314,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
                     if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
                         Relogio();
                     } else {
+                        
                     }
                 }
             }
