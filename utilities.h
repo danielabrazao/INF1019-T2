@@ -216,7 +216,7 @@ void Relogio(mem *M) {
 
 void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) {
 
-    int i; /* Contadores auxiliares */
+    int i, j, k; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
@@ -305,12 +305,16 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
         ImprimeMemoria(M);
 
         /* Executa o comando do processo alocado no bloco de memória */
-        /* Percorre todos os comandos do processo */
-        for (k = 0; k < p_processo->qtd_info; k++) {
-            /* Procura comando não finalizado */
-            if (p_processo->infos->tempo > 0) {
-                if () {
-                } else() {
+        /* Percorre todos os blocos de memória */
+        for (j = 0; j < QTD_BLOC; j++) {
+            /* Percorre todos os comandos do processo */
+            for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
+                /* Procura comando não finalizado */
+                if (M->bloco[j].p_processo->infos->tempo > 0) {
+                    if ((strcmp(M->bloco[j].p_processo->infos->nome, "exec") == 0)) {
+                        Relogio();
+                    } else {
+                    }
                 }
             }
         }
