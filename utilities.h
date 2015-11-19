@@ -259,7 +259,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
                 sleep(1);
             }
 
-            printf("- Processo destruído.\n");
+            printf("- Processo destruído.\n\n");
         } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
             printf("- Posição de memória encontrada no bloco %d.\n", i + 1);
 
