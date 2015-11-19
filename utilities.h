@@ -227,7 +227,7 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
         ImprimeProcesso(p_processo);
         printf("É necessário um bloco de memória de %d Mb para comportar o processo %d.\n", p_processo->tamanho, p_processo->numero);
 
-        // *** Procurando posicao de memoria para alocar o processo
+        /* Procura uma posição de memória para alocar o processo */
         i = 0;
 
         flag = FALSE;
@@ -259,11 +259,9 @@ void FirstFit(LIS_tppLista fila_prontos, mem *M, int qtd_proc, int tempo_total) 
         printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
         printf("-----------------------------------------------------------------------------------\n\n");
 
-        /* Imprime a fila de prontos após a alocação */
+        /* Imprime a fila de prontos após a alocação do processo na memória */
         if (LIS_NumeroElementos(fila_prontos) == 0) {
-            printf("A fila de prontos está ");
-            printf(ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET);
-            printf(".\n\n");
+            printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
         } else {
             ImprimeLista(fila_prontos);
         }
