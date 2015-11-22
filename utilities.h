@@ -124,7 +124,7 @@ void DestroiProcesso(processo * p_processo) {
 /* Função que fornece tempo ao usuário para que leia uma informação */
 
 void AguardaLeitura(int n) {
-    
+
     if (op == TRUE) {
         sleep(n);
     }
@@ -274,7 +274,8 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
 
     IrInicioLista(fila_bloqueados);
 
-    sleep(1);
+    AguardaLeitura(1);
+
     printf("\n");
 }
 
@@ -289,6 +290,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
     /* Imprime dados sobre os blocos de memória */
     ImprimeMemoria(M);
 
+    /* Enquanto o tempo total de todos os processos for diferente de zero */
     while (tempo_total > 0) {
 
         if ((LIS_NumeroElementos(fila_prontos) > 0)) {
@@ -296,12 +298,22 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
             printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
 
-            if (op == TRUE) {
-                sleep(1);
-            }
+            AguardaLeitura(1);
 
             /* Imprime dados sobre a fila de prontos */
             ImprimeLista(fila_prontos);
+
+            printf("-----------------------------------------------------------------------------------\n\n");
+            printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
+            printf("-----------------------------------------------------------------------------------\n\n");
+
+            AguardaLeitura(1);
+
+            if ((LIS_NumeroElementos(fila_bloqueados) > 0)) {/* Imprime dados sobre a fila de prontos */
+                ImprimeLista(fila_bloqueados);
+            } else {
+                printf("A fila de bloqueados está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+            }
 
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_MAGENTA "PROCESSO A SER ALOCADO" ANSI_COLOR_RESET ":\n\n");
@@ -315,9 +327,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
             printf("É necessário um bloco de memória de %d Mb para comportar o processo %d.\n", p_processo->tamanho, p_processo->numero);
 
-            if (op == TRUE) {
-                sleep(1);
-            }
+            AguardaLeitura(1);
 
             /* Procura uma posição de memória para alocar o processo */
             i = 0;
@@ -333,42 +343,36 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
             i = i - 1;
 
             if (flag == FALSE) { // Posição de memória não encontrada, logo o processo é destruído.
-                printf("- Posição de memória não encontrada.\n");
+                printf("- Posição de memória " ANSI_COLOR_MAGENTA "não" ANSI_COLOR_RESET " encontrada.\n");
 
-                if (op == TRUE) {
-                    sleep(1);
-                }
+                AguardaLeitura(1);
 
                 LIS_ExcluirElemento(fila_prontos);
                 DestroiProcesso(p_processo);
 
-                if (op == TRUE) {
-                    sleep(1);
-                }
+                /* Subtrai o tempo do processo destruído do tempo total de todos os processos */
+                tempo_total = tempo_total - p_processo->tempo_total;
 
-                printf("- Processo destruído.\n\n");
-            } else { // Encontrei posicao de memoria, aloco o processo na memoria e retiro da lista de prontos.
+                printf("- Processo " ANSI_COLOR_MAGENTA "destruído" ANSI_COLOR_RESET ".\n\n");
+
+            } else { /* Posição de memória encontrada.
+                      * Processo alocado na memória e retirado da lista de prontos. */
+
                 printf("- Posição de memória encontrada no bloco %d.\n", i + 1);
 
-                if (op == TRUE) {
-                    sleep(1);
-                }
+                AguardaLeitura(1);
 
                 M->bloco[i].p_processo = p_processo;
 
-                if (op == TRUE) {
-                    sleep(1);
-                }
+                AguardaLeitura(1);
 
-                printf("- Processo %d alocado.\n\n", p_processo->numero);
+                printf("- Processo %d " ANSI_COLOR_CYAN "alocado" ANSI_COLOR_RESET ".\n\n", p_processo->numero);
                 LIS_ExcluirElemento(fila_prontos);
                 IrInicioLista(fila_prontos);
 
             }
 
-            if (op == TRUE) {
-                sleep(1);
-            }
+            AguardaLeitura(1);
         }
 
         /* Imprime dados sobre os blocos de memória */
@@ -407,6 +411,17 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                     else if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0)) {
                         /* Insere processo na fila de bloqueados */
                         LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
+
+                        printf("-----------------------------------------------------------------------------------\n\n");
+                        printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+                        printf("-----------------------------------------------------------------------------------\n\n");
+
+                        if (LIS_NumeroElementos(fila_prontos) == 0) {
+                            printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+
+                        } else {/* Imprime dados sobre a fila de prontos */
+                            ImprimeLista(fila_prontos);
+                        }
 
                         printf("-----------------------------------------------------------------------------------\n\n");
                         printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
