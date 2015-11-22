@@ -1,5 +1,11 @@
-1
+3
 Processo #1 – 3Mb
 1
+exec 11
+Processo #2 – 3Mb
+1
 io 11
+Processo #3 – 3Mb
+1
+exec 11
 1

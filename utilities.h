@@ -249,7 +249,6 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
                     } else if (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0) {
                         /* Insere processo na fila de bloqueados */
                         LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
-
                     }
                 }
             }
@@ -358,6 +357,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
                 LIS_ExcluirElemento(fila_prontos);
                 DestroiProcesso(p_processo);
+                IrInicioLista(fila_prontos);
 
                 /* Subtrai o tempo do processo destruído do tempo total de todos os processos */
                 tempo_total = tempo_total - p_processo->tempo_total;
@@ -409,12 +409,45 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         if (M->bloco[j].p_processo->infos[k].tempo > 0) {
                             /* Insere processo na fila de prontos */
                             LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
-
+                            
+                            IrInicioLista(fila_prontos);
+                            
                             /* Libera bloco de memória */
                             M->bloco[i].p_processo = NULL;
 
                             /* Imprime dados sobre os blocos de memória */
                             ImprimeMemoria(M);
+                            
+                        }/* Se o comando exec foi finalizado e a fila de bloqueados ainda não */
+                        else if ((M->bloco[j].p_processo->infos[k].tempo == 0) && (LIS_NumeroElementos(fila_bloqueados) > 0)) {
+
+                            printf("-----------------------------------------------------------------------------------\n\n");
+                            printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+                            printf("-----------------------------------------------------------------------------------\n\n");
+
+                            if (LIS_NumeroElementos(fila_prontos) == 0) {
+                                printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+
+                            } else {/* Imprime dados sobre a fila de prontos */
+                                ImprimeLista(fila_prontos);
+                            }
+
+                            printf("-----------------------------------------------------------------------------------\n\n");
+                            printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
+                            printf("-----------------------------------------------------------------------------------\n\n");
+
+                            if (LIS_NumeroElementos(fila_bloqueados) == 0) {
+                                printf("A fila de bloqueados está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+
+                            } else {/* Imprime dados sobre a fila de bloqueados */
+                                ImprimeLista(fila_bloqueados);
+                            }
+
+                            while (tempo_total > 0) {
+                                Relogio(M, fila_bloqueados, &tempo_total);
+                            }
+
+                            LIS_ExcluirElemento(fila_bloqueados);
                         }
 
                     }/* Se for io */
