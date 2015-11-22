@@ -5,16 +5,16 @@ typedef enum {
     /* Concluiu corretamente */
 
     LIS_CondRetListaVazia,
-    /* A lista nсo contжm elementos */
+    /* A lista não contém elementos */
 
     LIS_CondRetFimLista,
     /* Foi atingido o fim de lista */
 
     LIS_CondRetNaoAchou,
-    /* Nсo encontrou o valor procurado */
+    /* Não encontrou o valor procurado */
 
     LIS_CondRetFaltouMemoria
-    /* Faltou memзria ao tentar criar um elemento de lista */
+    /* Faltou memória ao tentar criar um elemento de lista */
 
 } LIS_tpCondRet;
 
