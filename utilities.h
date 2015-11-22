@@ -121,7 +121,7 @@ void DestroiProcesso(processo * p_processo) {
     free(p_processo);
 }
 
-/* Função que dá tempo ao usuário para a leitura de informações */
+/* Função que fornece tempo ao usuário para que leia uma informação */
 
 void AguardaLeitura(int n) {
     
