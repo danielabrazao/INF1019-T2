@@ -109,14 +109,13 @@ int main(void) {
     printf("-----------------------------------------------------------------------------------\n\n");
     printf(ANSI_COLOR_MAGENTA "LEITURA DO ARQUIVO DE ENTRADA:" ANSI_COLOR_RESET "\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
-    if (op == TRUE) {
-        sleep(2);
-    }
+    
+    AguardaLeitura(2);
+    
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
     printf("- " ANSI_COLOR_CYAN "Número total de processos" ANSI_COLOR_RESET ": %d\n\n", qtd_processos);
-    if (op == TRUE) {
-        sleep(5);
-    }
+    
+    AguardaLeitura(5);
 
     /* Percorre todos os processos */
     for (i = 0; i < qtd_processos; i++) {
@@ -178,9 +177,7 @@ int main(void) {
             }
         }
 
-        if (op == TRUE) {
-            sleep(10);
-        }
+        AguardaLeitura(10);
 
         printf(ANSI_COLOR_CYAN "\nControle antes" ANSI_COLOR_RESET ": ");
         if (LIS_NumeroElementos(fila_prontos) == 0) {
@@ -191,25 +188,19 @@ int main(void) {
             printf("%d elementos na fila de prontos.\n", LIS_NumeroElementos(fila_prontos));
         }
 
-        if (op == TRUE) {
-            sleep(1);
-        }
+        AguardaLeitura(1);
 
         /* Insere processo na fila de prontos */
         LIS_InserirElementoApos(fila_prontos, p_processo);
 
         printf(ANSI_COLOR_CYAN "\nControle depois" ANSI_COLOR_RESET ": ");
         if (LIS_NumeroElementos(fila_prontos) == 1) {
-            printf("1 elemento na fila de prontos.\n");
+            printf("1 elemento na fila de prontos.\n\n");
         } else {
-            printf("%d elementos na fila de prontos.\n", LIS_NumeroElementos(fila_prontos));
+            printf("%d elementos na fila de prontos.\n\n", LIS_NumeroElementos(fila_prontos));
         }
 
-        printf("\n");
-
-        if (op == TRUE) {
-            sleep(5);
-        }
+        AguardaLeitura(5);
 
         /* Reinicializa os contadores das informações do processo */
         l = 1;
@@ -247,51 +238,49 @@ int main(void) {
     }
 
     switch (id) {
-            /* First Fit */
+        /* First Fit */
         case 1:
             printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n\n");
             printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n\n");
-            if (op == TRUE) {
-                if (op == TRUE) {
-                    sleep(2);
-                }
-            }
+            
+            AguardaLeitura(2);
+            
             FirstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
-            /* Next Fit */
+        /* Next Fit */
         case 2:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "N E X T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            if (op == TRUE) {
-                sleep(2);
-            }
-            //NextFit();
+            
+            AguardaLeitura(2);
+            
+            //NextFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
-            /* Worst Fit */
+        /* Worst Fit */
         case 3:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "W O R S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            if (op == TRUE) {
-                sleep(2);
-            }
-            //worstFit();
+            
+            AguardaLeitura(2);
+            
+            //worstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
 
-            /* Best Fit */
+        /* Best Fit */
         case 4:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "B E S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            if (op == TRUE) {
-                sleep(2);
-            }
-            //BestFit();
+            
+            AguardaLeitura(2);
+            
+            //BestFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
     }
 

@@ -32,14 +32,14 @@ typedef struct LIS_tagLista {
                /* Ponteiro para o elemento corrente da lista */
 
          int numElem ;
-               /* NЩmero de elementos da lista */
+               /* Número de elementos da lista */
 
          void ( * ExcluirValor ) ( void * pValor ) ;
-               /* Ponteiro para a funусo de destruiусo do valor contido em um elemento */
+               /* Ponteiro para a função de destruição do valor contido em um elemento */
 
  } LIS_tpLista ;
 
-/***** Protзtipos das funушes encapuladas no mзdulo *****/
+/***** Protótipos das funções encapuladas no módulo *****/
 
    static void LiberarElemento( LIS_tppLista   pLista ,
                                 tpElemLista  * pElem   ) ;
@@ -49,11 +49,11 @@ typedef struct LIS_tagLista {
 
    static void LimparCabeca( LIS_tppLista pLista ) ;
 
-/*****  Cзdigo das funушes exportadas pelo mзdulo  *****/
+/*****  Código das funções exportadas pelo módulo  *****/
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Criar lista
+*  Função: LIS  &Criar lista
 *  ****/
 
    LIS_tppLista LIS_CriarLista(
@@ -74,11 +74,11 @@ typedef struct LIS_tagLista {
 
       return pLista ;
 
-   } /* Fim funусo: LIS  &Criar lista */
+   } /* Fim função: LIS  &Criar lista */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Destruir lista
+*  Função: LIS  &Destruir lista
 *  ****/
 
    void LIS_DestruirLista( LIS_tppLista pLista )
@@ -92,11 +92,11 @@ typedef struct LIS_tagLista {
 
       free( pLista ) ;
 
-   } /* Fim funусo: LIS  &Destruir lista */
+   } /* Fim função: LIS  &Destruir lista */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Esvaziar lista
+*  Função: LIS  &Esvaziar lista
 *  ****/
 
    void LIS_EsvaziarLista( LIS_tppLista pLista )
@@ -119,11 +119,11 @@ typedef struct LIS_tagLista {
 
       LimparCabeca( pLista ) ;
 
-   } /* Fim funусo: LIS  &Esvaziar lista */
+   } /* Fim função: LIS  &Esvaziar lista */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Inserir elemento antes
+*  Função: LIS  &Inserir elemento antes
 *  ****/
 
    LIS_tpCondRet LIS_InserirElementoAntes( LIS_tppLista pLista ,
@@ -136,7 +136,7 @@ typedef struct LIS_tagLista {
          assert( pLista != NULL ) ;
       #endif
 
-      /* Criar elemento a inerir antes */
+      /* Criar elemento a inserir antes */
 
          pElem = CriarElemento( pLista , pValor ) ;
          if ( pElem == NULL )
@@ -169,11 +169,11 @@ typedef struct LIS_tagLista {
 
          return LIS_CondRetOK ;
 
-   } /* Fim funусo: LIS  &Inserir elemento antes */
+   } /* Fim função: LIS  &Inserir elemento antes */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Inserir elemento apзs
+*  Função: LIS  &Inserir elemento apзs
 *  ****/
 
    LIS_tpCondRet LIS_InserirElementoApos( LIS_tppLista pLista ,
@@ -221,11 +221,11 @@ typedef struct LIS_tagLista {
                   
          return LIS_CondRetOK ;
 
-   } /* Fim funусo: LIS  &Inserir elemento apзs */
+   } /* Fim função: LIS  &Inserir elemento apзs */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Excluir elemento
+*  Função: LIS  &Excluir elemento
 *  ****/
 
    LIS_tpCondRet LIS_ExcluirElemento( LIS_tppLista pLista )
@@ -244,7 +244,7 @@ typedef struct LIS_tagLista {
 
       pElem = pLista->pElemCorr;
 
-      /* Desencadeia Я esquerda */
+      /* Desencadeia à esquerda */
 
       if (pElem->pAnt != NULL)
       {
@@ -256,7 +256,7 @@ typedef struct LIS_tagLista {
          pLista->pOrigemLista = pLista->pElemCorr;
       } /* if */
 
-       /* Desencadeia Я direita */
+       /* Desencadeia à direita */
 
       if (pElem->pProx != NULL)
       {
@@ -275,11 +275,11 @@ typedef struct LIS_tagLista {
       return LIS_CondRetOK;
    
 
-   } /* Fim funусo: LIS  &Excluir elemento */
+   } /* Fim função: LIS  &Excluir elemento */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Obter referЖncia para o valor contido no elemento
+*  Função: LIS  &Obter referência para o valor contido no elemento
 *  ****/
 
    void * LIS_ObterValor( LIS_tppLista pLista )
@@ -296,11 +296,11 @@ typedef struct LIS_tagLista {
 
       return pLista->pElemCorr->pValor ;
 
-   } /* Fim funусo: LIS  &Obter referЖncia para o valor contido no elemento */
+   } /* Fim função: LIS  &Obter referência para o valor contido no elemento */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Ir para o elemento inicial
+*  Função: LIS  &Ir para o elemento inicial
 *  ****/
 
    void IrInicioLista( LIS_tppLista pLista )
@@ -312,11 +312,11 @@ typedef struct LIS_tagLista {
 
       pLista->pElemCorr = pLista->pOrigemLista ;
 
-   } /* Fim funусo: LIS  &Ir para o elemento inicial */
+   } /* Fim função: LIS  &Ir para o elemento inicial */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Ir para o elemento final
+*  Função: LIS  &Ir para o elemento final
 *  ****/
 
    void IrFinalLista( LIS_tppLista pLista )
@@ -328,11 +328,11 @@ typedef struct LIS_tagLista {
 
       pLista->pElemCorr = pLista->pFimLista ;
 
-   } /* Fim funусo: LIS  &Ir para o elemento final */
+   } /* Fim função: LIS  &Ir para o elemento final */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Avanуar elemento
+*  Função: LIS  &Avançar elemento
 *  ****/
 
    LIS_tpCondRet LIS_AvancarElementoCorrente( LIS_tppLista pLista ,
@@ -356,7 +356,7 @@ typedef struct LIS_tagLista {
 
          } /* fim ativa: Tratar lista vazia */
 
-      /* Tratar avanуar para frente */
+      /* Tratar avançar para frente */
 
          if ( numElem > 0 )
          {
@@ -380,9 +380,9 @@ typedef struct LIS_tagLista {
             pLista->pElemCorr = pLista->pFimLista ;
             return LIS_CondRetFimLista ;
 
-         } /* fim ativa: Tratar avanуar para frente */
+         } /* fim ativa: Tratar avançar para frente */
 
-      /* Tratar avanуar para trрs */
+      /* Tratar avançar para trрs */
 
          else if ( numElem < 0 )
          {
@@ -406,17 +406,17 @@ typedef struct LIS_tagLista {
             pLista->pElemCorr = pLista->pOrigemLista ;
             return LIS_CondRetFimLista ;
 
-         } /* fim ativa: Tratar avanуar para trрs */
+         } /* fim ativa: Tratar avançar para trás */
 
-      /* Tratar nсo avanуar */
+      /* Tratar não avançar */
 
          return LIS_CondRetOK ;
 
-   } /* Fim funусo: LIS  &Avanуar elemento */
+   } /* Fim função: LIS  &Avançar elemento */
 
 /***************************************************************************
 *
-*  Funусo: LIS  &Procurar elemento contendo valor
+*  Função: LIS  &Procurar elemento contendo valor
 *  ****/
 
    LIS_tpCondRet LIS_ProcurarValor( LIS_tppLista pLista ,
@@ -447,19 +447,19 @@ typedef struct LIS_tagLista {
 
       return LIS_CondRetNaoAchou ;
 
-   } /* Fim funусo: LIS  &Procurar elemento contendo valor */
+   } /* Fim função: LIS  &Procurar elemento contendo valor */
 
 
-/*****  Cзdigo das funушes encapsuladas no mзdulo  *****/
+/*****  Código das funções encapsuladas no módulo  *****/
 
 
 /***********************************************************************
 *
-*  $FC Funусo: LIS  -Liberar elemento da lista
+*  $FC Função: LIS  -Liberar elemento da lista
 *
-*  $ED Descriусo da funусo
-*     Elimina os espaуos apontados pelo valor do elemento e o
-*     prзprio elemento.
+*  $ED Descrição da função
+*     Elimina os espaços apontados pelo valor do elemento e o
+*     próprio elemento.
 *
 ***********************************************************************/
 
@@ -477,12 +477,12 @@ typedef struct LIS_tagLista {
 
       pLista->numElem-- ;
 
-   } /* Fim funусo: LIS  -Liberar elemento da lista */
+   } /* Fim função: LIS  -Liberar elemento da lista */
 
 
 /***********************************************************************
 *
-*  $FC Funусo: LIS  -Criar o elemento
+*  $FC Função: LIS  -Criar o elemento
 *
 ***********************************************************************/
 
@@ -506,12 +506,12 @@ typedef struct LIS_tagLista {
 
       return pElem ;
 
-   } /* Fim funусo: LIS  -Criar o elemento */
+   } /* Fim função: LIS  -Criar o elemento */
 
 
 /***********************************************************************
 *
-*  $FC Funусo: LIS  -Limpar a cabeуa da lista
+*  $FC Função: LIS  -Limpar a cabeça da lista
 *
 ***********************************************************************/
 
@@ -523,7 +523,7 @@ typedef struct LIS_tagLista {
       pLista->pElemCorr = NULL ;
       pLista->numElem   = 0 ;
 
-   } /* Fim funусo: LIS  -Limpar a cabeуa da lista */
+   } /* Fim função: LIS  -Limpar a cabeça da lista */
 
 
    int LIS_NumeroElementos(LIS_tppLista pLista) {
@@ -532,4 +532,4 @@ typedef struct LIS_tagLista {
 
 
 
-/********** Fim do mзdulo de implementaусo: LIS  Lista duplamente encadeada **********/
+/********** Fim do módulo de implementação: LIS  Lista duplamente encadeada **********/
