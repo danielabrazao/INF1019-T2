@@ -272,6 +272,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
                     if (p_processo->infos[k].tempo == 0) {
                         LIS_ExcluirElemento(fila_bloqueados);
                     }
+
                 }
             }
             LIS_AvancarElementoCorrente(fila_bloqueados, 1);
@@ -451,7 +452,10 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
                         /* Se for a última informação */
                         if ((LIS_NumeroElementos(fila_bloqueados) == 1) && (LIS_NumeroElementos(fila_prontos) == 0)) {
-                            Relogio(M, fila_bloqueados, &tempo_total);
+
+                            while (tempo_total > 0) {
+                                Relogio(M, fila_bloqueados, &tempo_total);
+                            }
 
                             LIS_ExcluirElemento(fila_bloqueados);
                         }
