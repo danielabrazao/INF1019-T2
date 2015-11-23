@@ -291,6 +291,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
     int i, j, k, qtd_info, c, d, f = FALSE, g; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
+    processo * p_processo1; /* Ponteiro para um processo */
 
     /* Imprime dados sobre os blocos de memória */
     ImprimeMemoria(M);
@@ -487,7 +488,8 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         if (LIS_NumeroElementos(fila_prontos) == 0) {
                             printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
 
-                        } else {/* Imprime dados sobre a fila de prontos */
+                        } else {
+                            /* Imprime dados sobre a fila de prontos */
                             ImprimeLista(fila_prontos);
                         }
 
@@ -507,6 +509,9 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                             f = TRUE;
                         }
 
+                        if ((LIS_NumeroElementos(fila_bloqueados) == 1) && (LIS_NumeroElementos(fila_prontos) == 0)) {
+
+                        }
                         /* Libera bloco de memória */
                         M->bloco[i].p_processo = NULL;
 
@@ -526,14 +531,20 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
                                 Relogio(M, fila_bloqueados, &tempo_total);
 
-                                IrFinalLista(fila_prontos);
+                                /* Obtém endereço do processo da fila de bloqueados */
+                                p_processo1 = LIS_ObterValor(fila_bloqueados);
 
+                                /* Vai para o final da fila de prontos */
+                                IrFinalLista(fila_prontos);
+                                
                                 /* Insere processo na fila de prontos */
-                                LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
+                                LIS_InserirElementoApos(fila_prontos, p_processo1);
 
                                 IrInicioLista(fila_prontos);
 
                                 LIS_ExcluirElemento(fila_bloqueados);
+
+                                break;
                             }
 
                         }

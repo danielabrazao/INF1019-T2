@@ -147,7 +147,7 @@ int main(void) {
         p_processo->qtd_info = qtd_info_processo;
 
         /* Aloca memória para um vetor de informações do processo */
-        p_processo->infos = (info*) malloc(sizeof (info) * qtd_info_processo+1);
+        p_processo->infos = (info*) malloc(sizeof (info) * qtd_info_processo);
 
         /* Tratamento de erro para alocação de memória */
         if (p_processo->infos == NULL) {
@@ -177,8 +177,6 @@ int main(void) {
                 l++;
             }
         }
-        
-        strcpy(p_processo->infos[j].nome, "final");
 
         AguardaLeitura(10);
 
