@@ -244,11 +244,8 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
                         M->bloco[j].p_processo->tempo_total--;
                         M->bloco[j].p_processo->infos[k].tempo--;
                         *tempo_total = *tempo_total - 1;
-                        printf(ANSI_COLOR_CYAN "Exec" ANSI_COLOR_RESET ": %d s\n", M->bloco[j].p_processo->tempo_total);
-                        printf("tempo total = %d\n", *tempo_total);
-                    } else if (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0) {
-                        /* Insere processo na fila de bloqueados */
-                        LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
+                        printf(ANSI_COLOR_CYAN "Exec" ANSI_COLOR_RESET ": %d s\n", M->bloco[j].p_processo->infos[k].tempo);
+                        printf("Tempo total = %d\n", *tempo_total);
                     }
                 }
             }
@@ -265,7 +262,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
                     p_processo->infos[k].tempo--;
                     *tempo_total = *tempo_total - 1;
                     printf(ANSI_COLOR_CYAN "Io" ANSI_COLOR_RESET ": %d s\n", p_processo->tempo_total);
-                    printf("tempo total = %d\n", *tempo_total);
+                    printf("Tempo total = %d\n", *tempo_total);
 
                     /* Se o tempo de espera do comando acabou */
                     if (p_processo->infos[k].tempo == 0) {
@@ -291,7 +288,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
 
 void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
 
-    int i, j, k, qtd_info; /* Contadores auxiliares */
+    int i, j, k, qtd_info, c, d; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
@@ -356,8 +353,8 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                 AguardaLeitura(1);
 
                 LIS_ExcluirElemento(fila_prontos);
-                DestroiProcesso(p_processo);
                 IrInicioLista(fila_prontos);
+                DestroiProcesso(p_processo);
 
                 /* Subtrai o tempo do processo destruído do tempo total de todos os processos */
                 tempo_total = tempo_total - p_processo->tempo_total;
@@ -404,20 +401,43 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         /* Imprime dados sobre os blocos de memória */
                         ImprimeMemoria(M);
 
-                        /* Se o comando exec não foi finalizado */
+                        /* Se o comando exec foi finalizado */
+                        if (M->bloco[j].p_processo->infos[k].tempo == 0) {
+                            /* Se existe um próximo comando no mesmo bloco */
+                            if ((strcmp(M->bloco[j].p_processo->infos[k + 1].nome, "io") == 0) || (strcmp(M->bloco[j].p_processo->infos[k + 1].nome, "exec") == 0)) {
+                                IrFinalLista(fila_prontos);
 
-                        if (M->bloco[j].p_processo->infos[k].tempo > 0) {
+                                /* Insere processo na fila de prontos */
+                                LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
+
+                                IrInicioLista(fila_prontos);
+
+                                /* Libera bloco de memória */
+                                M->bloco[i].p_processo = NULL;
+
+                                /* Imprime dados sobre os blocos de memória */
+                                ImprimeMemoria(M);
+
+                                break;
+                            }
+                        }/* Se o comando exec não foi finalizado */
+                        else if (M->bloco[j].p_processo->infos[k].tempo > 0) {
+
+                            IrFinalLista(fila_prontos);
+
                             /* Insere processo na fila de prontos */
                             LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
-                            
+
                             IrInicioLista(fila_prontos);
-                            
+
                             /* Libera bloco de memória */
                             M->bloco[i].p_processo = NULL;
 
                             /* Imprime dados sobre os blocos de memória */
                             ImprimeMemoria(M);
-                            
+
+                            break;
+
                         }/* Se o comando exec foi finalizado e a fila de bloqueados ainda não */
                         else if ((M->bloco[j].p_processo->infos[k].tempo == 0) && (LIS_NumeroElementos(fila_bloqueados) > 0)) {
 
@@ -452,6 +472,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
                     }/* Se for io */
                     else if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0)) {
+
                         /* Insere processo na fila de bloqueados */
                         LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
 
