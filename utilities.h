@@ -240,7 +240,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
             if (M->bloco[j].p_processo != NULL) {
                 /* Percorre todos os comandos */
                 for (k = 0; k < M->bloco[j].p_processo->qtd_info; k++) {
-                    if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "exec") == 0)) {
+                    if ((M->bloco[j].p_processo->infos[k].ativo == TRUE) && (M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "exec") == 0)) {
                         M->bloco[j].p_processo->tempo_total--;
                         M->bloco[j].p_processo->infos[k].tempo--;
                         *tempo_total = *tempo_total - 1;
@@ -261,7 +261,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
                     p_processo->tempo_total--;
                     p_processo->infos[k].tempo--;
                     *tempo_total = *tempo_total - 1;
-                    printf(ANSI_COLOR_CYAN "Io" ANSI_COLOR_RESET ": %d s\n", p_processo->tempo_total);
+                    printf(ANSI_COLOR_CYAN "Io" ANSI_COLOR_RESET ": %d s\n", p_processo->infos[k].tempo);
                     printf("Tempo total = %d\n", *tempo_total);
 
                     /* Se o tempo de espera do comando acabou */
@@ -288,7 +288,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
 
 void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
 
-    int i, j, k, qtd_info, c, d; /* Contadores auxiliares */
+    int i, j, k, qtd_info, c, d, f = FALSE, g; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
@@ -396,7 +396,11 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                     /* Se for exec */
                     if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "exec") == 0)) {
 
+                        M->bloco[j].p_processo->infos[k].ativo = TRUE;
+
                         Relogio(M, fila_bloqueados, &tempo_total);
+
+                        M->bloco[j].p_processo->infos[k].ativo = FALSE;
 
                         /* Imprime dados sobre os blocos de memória */
                         ImprimeMemoria(M);
@@ -498,6 +502,11 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                             ImprimeLista(fila_bloqueados);
                         }
 
+                        /* Se o tempo restante de todos os processos for o tempo do comando io */
+                        if (tempo_total == M->bloco[j].p_processo->infos[k].tempo) {
+                            f = TRUE;
+                        }
+
                         /* Libera bloco de memória */
                         M->bloco[i].p_processo = NULL;
 
@@ -507,11 +516,26 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         /* Se for a última informação */
                         if ((LIS_NumeroElementos(fila_bloqueados) == 1) && (LIS_NumeroElementos(fila_prontos) == 0)) {
 
-                            while (tempo_total > 0) {
+                            if (f == TRUE) {
+                                while (tempo_total > 0) {
+                                    Relogio(M, fila_bloqueados, &tempo_total);
+                                }
+
+                                LIS_ExcluirElemento(fila_bloqueados);
+                            } else {
+
                                 Relogio(M, fila_bloqueados, &tempo_total);
+
+                                IrFinalLista(fila_prontos);
+
+                                /* Insere processo na fila de prontos */
+                                LIS_InserirElementoApos(fila_prontos, M->bloco[j].p_processo);
+
+                                IrInicioLista(fila_prontos);
+
+                                LIS_ExcluirElemento(fila_bloqueados);
                             }
 
-                            LIS_ExcluirElemento(fila_bloqueados);
                         }
                     }
                 }

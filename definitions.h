@@ -99,6 +99,10 @@ int op = FALSE; /* Opção de ativar ou desativar o sleep */
 typedef struct estrutura_info {
     char nome[5]; /* Nome da informação (exec ou io) */
     int tempo; /* Tempo de execução para exec ou de espera para io */
+    int ativo; /* Equivale:
+                 * - a 0, caso não esteja ativado.
+                 * - a 1, caso esteja ativado.
+                 */
 } info;
 
 /* Estrutura de um processo */
