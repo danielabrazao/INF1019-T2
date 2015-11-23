@@ -265,7 +265,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
                     printf("Tempo total = %d\n", *tempo_total);
 
                     /* Se o tempo de espera do comando acabou */
-                    if (p_processo->infos[k].tempo == 0) {
+                    if ((p_processo->infos[k].tempo == 0) && (p_processo->tempo_total == 0)) {
                         LIS_ExcluirElemento(fila_bloqueados);
                     }
 
@@ -531,12 +531,19 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
                                 Relogio(M, fila_bloqueados, &tempo_total);
 
+                                printf("-----------------------------------------------------------------------------------\n\n");
+                                printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
+                                printf("-----------------------------------------------------------------------------------\n\n");
+
+                                /* Imprime dados sobre a fila de bloqueados */
+                                ImprimeLista(fila_bloqueados);
+
                                 /* Obtém endereço do processo da fila de bloqueados */
                                 p_processo1 = LIS_ObterValor(fila_bloqueados);
 
                                 /* Vai para o final da fila de prontos */
                                 IrFinalLista(fila_prontos);
-                                
+
                                 /* Insere processo na fila de prontos */
                                 LIS_InserirElementoApos(fila_prontos, p_processo1);
 
