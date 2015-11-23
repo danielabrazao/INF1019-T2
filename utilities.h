@@ -257,7 +257,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
             p_processo = LIS_ObterValor(fila_bloqueados);
             /* Percorre todos os comandos */
             for (k = 0; k < p_processo->qtd_info; k++) {
-                if ((p_processo->infos[k].tempo > 0) && (strcmp(p_processo->infos[k].nome, "io") == 0)) {
+                if ((p_processo->infos[k].ativo == TRUE) && (p_processo->infos[k].tempo > 0) && (strcmp(p_processo->infos[k].nome, "io") == 0)) {
                     p_processo->tempo_total--;
                     p_processo->infos[k].tempo--;
                     *tempo_total = *tempo_total - 1;
@@ -481,6 +481,8 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         /* Insere processo na fila de bloqueados */
                         LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
 
+                        M->bloco[j].p_processo->infos[k].ativo = TRUE;
+                        
                         printf("-----------------------------------------------------------------------------------\n\n");
                         printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
                         printf("-----------------------------------------------------------------------------------\n\n");
