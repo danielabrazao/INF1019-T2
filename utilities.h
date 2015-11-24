@@ -310,6 +310,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
     /* Enquanto o tempo total de todos os processos for diferente de zero */
     while (tempo_total > 0) {
 
+        ALOCA:
         if ((LIS_NumeroElementos(fila_prontos) > 0)) {
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
@@ -517,10 +518,6 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                             ImprimeLista(fila_bloqueados);
                         }
 
-                        if ((LIS_NumeroElementos(fila_bloqueados) == 1) && (LIS_NumeroElementos(fila_prontos) == 0)) {
-
-                        }
-
                         /* Libera bloco de memória */
                         M->bloco[i].p_processo = NULL;
 
@@ -538,8 +535,21 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                             }
                         }
 
-                        /* Se a memória está vazia */
-                        if (q == FALSE) {
+                        /* Se a memória está vazia e a fila de prontos não está */
+                        if ((q == FALSE) && (LIS_NumeroElementos(fila_prontos) > 0)) {
+
+                            /* Percorre todos os processos da fila de prontos */
+                            for (l = 0; l < LIS_NumeroElementos(fila_prontos); l++) {
+                                /* Obtém endereço do processo da fila de bloqueados */
+                                p_processo1 = LIS_ObterValor(fila_prontos);
+                                /* Percorre todos os comandos */
+                                for (k = 0; k < p_processo1->qtd_info; k++) {
+                                    if ((p_processo1->infos[k].tempo > 0) && (strcmp(p_processo1->infos[k].nome, "exec") == 0)) {
+                                        goto ALOCA;
+                                    }
+                                }
+                            }
+                            
                             Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
 
                             if (LIS_NumeroElementos(fila_prontos) == 0) {
