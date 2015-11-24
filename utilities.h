@@ -251,8 +251,11 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, LIS_tppLista fila_prontos, in
             }
         }
 
+        IrInicioLista(fila_bloqueados);
+
         /* Percorre todos os processos da fila de bloqueados */
         for (i = 0; i < LIS_NumeroElementos(fila_bloqueados); i++) {
+DECREMENTA:
             /* Obtém endereço do processo da fila de bloqueados */
             p_processo = LIS_ObterValor(fila_bloqueados);
             /* Percorre todos os comandos */
@@ -264,7 +267,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, LIS_tppLista fila_prontos, in
                     printf(ANSI_COLOR_CYAN "Io" ANSI_COLOR_RESET ": %d s\n", p_processo->infos[k].tempo);
                     printf("Tempo total = %d\n", *tempo_total);
 
-                    /* Se o tempo de espera do comando acabou */
+                    /* Se o tempo de espera do comando acabou e o processo também */
                     if ((p_processo->infos[k].tempo == 0) && (p_processo->tempo_total == 0)) {
                         LIS_ExcluirElemento(fila_bloqueados);
                     }/* Se o tempo de espera do comando acabou mas não o tempo total do processo */
@@ -278,11 +281,23 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, LIS_tppLista fila_prontos, in
                         IrInicioLista(fila_prontos);
 
                         LIS_ExcluirElemento(fila_bloqueados);
+
+                        IrInicioLista(fila_bloqueados);
+
+                        if (LIS_NumeroElementos(fila_bloqueados) > 0) {
+                            goto DECREMENTA;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    if ((p_processo->infos[k].tempo > 0)) {
+                        LIS_AvancarElementoCorrente(fila_bloqueados, 1);
+                        printf("2dani\n");
                     }
 
                 }
             }
-            LIS_AvancarElementoCorrente(fila_bloqueados, 1);
         }
 
         printf("%d s\n", tempo);
@@ -533,6 +548,11 @@ ALOCA:
                             if (M->bloco[l].p_processo != NULL) {
                                 q = TRUE;
                             }
+                        }
+
+                        /* Se a memória está vazia e a fila de prontos também está */
+                        if ((q == FALSE) && (LIS_NumeroElementos(fila_prontos) == 0)) {
+                            Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
                         }
 
                         /* Se a memória está vazia e a fila de prontos não está */
@@ -912,6 +932,11 @@ ALOCA:
                             if (M->bloco[l].p_processo != NULL) {
                                 q = TRUE;
                             }
+                        }
+
+                        /* Se a memória está vazia e a fila de prontos também está */
+                        if ((q == FALSE) && (LIS_NumeroElementos(fila_prontos) == 0)) {
+                            Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
                         }
 
                         /* Se a memória está vazia e a fila de prontos não está */
@@ -1297,6 +1322,11 @@ ALOCA:
                             }
                         }
 
+                        /* Se a memória está vazia e a fila de prontos também está */
+                        if ((q == FALSE) && (LIS_NumeroElementos(fila_prontos) == 0)) {
+                            Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
+                        }
+
                         /* Se a memória está vazia e a fila de prontos não está */
                         if ((q == FALSE) && (LIS_NumeroElementos(fila_prontos) > 0)) {
 
@@ -1678,6 +1708,11 @@ ALOCA:
                             if (M->bloco[l].p_processo != NULL) {
                                 q = TRUE;
                             }
+                        }
+
+                        /* Se a memória está vazia e a fila de prontos também está */
+                        if ((q == FALSE) && (LIS_NumeroElementos(fila_prontos) == 0)) {
+                            Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
                         }
 
                         /* Se a memória está vazia e a fila de prontos não está */

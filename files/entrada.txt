@@ -1,10 +1,12 @@
 2
 Processo #1 – 4Mb
-2
-exec 5
-io 5
-Processo #2 – 4Mb
-2
+3
 exec 1
 io 5
-4
+exec 5
+Processo #2 – 4Mb
+3
+exec 1
+io 5
+exec 20
+1
