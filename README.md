@@ -34,6 +34,7 @@ $ ./main
 
 ## Sugestões ##
 * André Parente
+* Felipe Vieira Côrtes
 
 ## Copyright e Licença ##
 O código em linguagem ANSI C é licenciado sob a [GPLv3] (http://www.gnu.org/licenses/gpl-3.0.html).
