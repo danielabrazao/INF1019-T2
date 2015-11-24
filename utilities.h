@@ -293,7 +293,6 @@ DECREMENTA:
 
                     if ((p_processo->infos[k].tempo > 0)) {
                         LIS_AvancarElementoCorrente(fila_bloqueados, 1);
-                        printf("2dani\n");
                     }
 
                 }
