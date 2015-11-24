@@ -164,8 +164,7 @@ int main(void) {
             /* Se é exec */
             if ((strcmp(p_processo->infos[j].nome, "exec") == 0)) {
                 p_processo->tempo_exec = p_processo->tempo_exec + tempo;
-            }
-            else {
+            } else {
                 p_processo->tempo_io = p_processo->tempo_io + tempo;
             }
             tempo_total = tempo_total + tempo; /* Tempo total de todos os processos juntos */
@@ -246,7 +245,7 @@ int main(void) {
     }
 
     switch (id) {
-            /* First Fit */
+        /* First Fit */
         case 1:
             printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n\n");
             printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -257,7 +256,7 @@ int main(void) {
             FirstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
-            /* Next Fit */
+        /* Next Fit */
         case 2:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "N E X T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -265,10 +264,10 @@ int main(void) {
 
             AguardaLeitura(2);
 
-            //NextFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
+            NextFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
-            /* Worst Fit */
+        /* Worst Fit */
         case 3:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "W O R S T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -276,11 +275,11 @@ int main(void) {
 
             AguardaLeitura(2);
 
-            //worstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
+            WorstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
 
-            /* Best Fit */
+        /* Best Fit */
         case 4:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "B E S T  F I T" ANSI_COLOR_RESET "\n\n");
@@ -288,7 +287,7 @@ int main(void) {
 
             AguardaLeitura(2);
 
-            //BestFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
+            BestFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
     }
 
