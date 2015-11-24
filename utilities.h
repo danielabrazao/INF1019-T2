@@ -217,9 +217,9 @@ void ImprimeLista(LIS_tppLista p_lista) {
 
 /* Função que contabiliza e decrementa os tempos de execução e de espera dos processos */
 
-void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
+void Relogio(mem *M, LIS_tppLista fila_bloqueados, LIS_tppLista fila_prontos, int *tempo_total) {
 
-    int tempo = 0, i, j, k, p; /* Contadores auxiliares */
+    int tempo = 0, i, j, k, q = 0; /* Contadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
@@ -267,6 +267,17 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
                     /* Se o tempo de espera do comando acabou */
                     if ((p_processo->infos[k].tempo == 0) && (p_processo->tempo_total == 0)) {
                         LIS_ExcluirElemento(fila_bloqueados);
+                    }/* Se o tempo de espera do comando acabou mas não o tempo total do processo */
+                    else if ((p_processo->infos[k].tempo == 0) && (p_processo->tempo_total > 0)) {
+
+                        IrFinalLista(fila_prontos);
+
+                        /* Insere processo na fila de prontos */
+                        LIS_InserirElementoApos(fila_prontos, p_processo);
+
+                        IrInicioLista(fila_prontos);
+
+                        LIS_ExcluirElemento(fila_bloqueados);
                     }
 
                 }
@@ -288,7 +299,7 @@ void Relogio(mem *M, LIS_tppLista fila_bloqueados, int *tempo_total) {
 
 void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, int qtd_proc, int tempo_total) {
 
-    int i, j, k, qtd_info, c, d, f = FALSE, g; /* Contadores auxiliares */
+    int i, j, k, qtd_info, c, d, f = FALSE, g, l, q; /* Contadores auxiliares */
     int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
     processo * p_processo1; /* Ponteiro para um processo */
@@ -399,7 +410,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
 
                         M->bloco[j].p_processo->infos[k].ativo = TRUE;
 
-                        Relogio(M, fila_bloqueados, &tempo_total);
+                        Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
 
                         M->bloco[j].p_processo->infos[k].ativo = FALSE;
 
@@ -469,7 +480,7 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                             }
 
                             while (tempo_total > 0) {
-                                Relogio(M, fila_bloqueados, &tempo_total);
+                                Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
                             }
 
                             LIS_ExcluirElemento(fila_bloqueados);
@@ -509,16 +520,64 @@ void FirstFit(LIS_tppLista fila_prontos, LIS_tppLista fila_bloqueados, mem *M, i
                         if ((LIS_NumeroElementos(fila_bloqueados) == 1) && (LIS_NumeroElementos(fila_prontos) == 0)) {
 
                         }
+
                         /* Libera bloco de memória */
                         M->bloco[i].p_processo = NULL;
 
                         /* Imprime dados sobre os blocos de memória */
                         ImprimeMemoria(M);
 
+                        /* Inicializa o marcador da quantidade de processos na memória */
+                        q = FALSE;
+
+                        /* Percorre todos os blocos de memória */
+                        for (l = 0; l < QTD_BLOC; l++) {
+                            /* Se o bloco estiver alocado com um processo */
+                            if (M->bloco[l].p_processo != NULL) {
+                                q = TRUE;
+                            }
+                        }
+
+                        /* Se a memória está vazia */
+                        if (q == FALSE) {
+                            Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
+
+                            if (LIS_NumeroElementos(fila_prontos) == 0) {
+                                printf("-----------------------------------------------------------------------------------\n\n");
+                                printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+                                printf("-----------------------------------------------------------------------------------\n\n");
+                                printf("A fila de prontos está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+                            } else {
+                                printf("-----------------------------------------------------------------------------------\n\n");
+                                printf(ANSI_COLOR_MAGENTA "FILA DE PRONTOS" ANSI_COLOR_RESET ":\n\n");
+                                printf("-----------------------------------------------------------------------------------\n\n");
+
+                                /* Imprime dados sobre a fila de bloqueados */
+                                ImprimeLista(fila_prontos);
+                            }
+                            if (LIS_NumeroElementos(fila_bloqueados) == 0) {
+                                printf("-----------------------------------------------------------------------------------\n\n");
+                                printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
+                                printf("-----------------------------------------------------------------------------------\n\n");
+                                printf("A fila de bloqueados está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+                            } else {
+                                printf("-----------------------------------------------------------------------------------\n\n");
+                                printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
+                                printf("-----------------------------------------------------------------------------------\n\n");
+
+                                /* Imprime dados sobre a fila de bloqueados */
+                                ImprimeLista(fila_bloqueados);
+                            }
+
+                            ImprimeMemoria(M);
+
+                            break;
+                        }
+
                         /* Se for a última informação */
                         if ((LIS_NumeroElementos(fila_bloqueados) == 1) && (LIS_NumeroElementos(fila_prontos) == 0)) {
 
-                            Relogio(M, fila_bloqueados, &tempo_total);
+                            Relogio(M, fila_bloqueados, fila_prontos, &tempo_total);
 
                             if (LIS_NumeroElementos(fila_prontos) == 0) {
                                 printf("-----------------------------------------------------------------------------------\n\n");

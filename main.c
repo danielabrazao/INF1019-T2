@@ -63,13 +63,13 @@ int main(void) {
     mem *M; /* Memória */
 
     /* Declaração da fila de processos prontos */
-    
+
     LIS_tppLista fila_prontos;
 
     fila_prontos = LIS_CriarLista(DestroiProcesso);
-    
+
     /* Declaração da fila de processos bloqueados */
-    
+
     LIS_tppLista fila_bloqueados;
 
     fila_bloqueados = LIS_CriarLista(DestroiProcesso);
@@ -109,12 +109,12 @@ int main(void) {
     printf("-----------------------------------------------------------------------------------\n\n");
     printf(ANSI_COLOR_MAGENTA "LEITURA DO ARQUIVO DE ENTRADA:" ANSI_COLOR_RESET "\n\n");
     printf("-----------------------------------------------------------------------------------\n\n");
-    
+
     AguardaLeitura(2);
-    
+
     scanf("%d [^\n]", &qtd_processos); /* Lê a quantidade de processos */
     printf("- " ANSI_COLOR_CYAN "Número total de processos" ANSI_COLOR_RESET ": %d\n\n", qtd_processos);
-    
+
     AguardaLeitura(5);
 
     /* Percorre todos os processos */
@@ -161,6 +161,13 @@ int main(void) {
             p_processo->infos[j].tempo = tempo;
             p_processo->tempo_total = p_processo->tempo_total + tempo;
             p_processo->infos[j].ativo = FALSE;
+            /* Se é exec */
+            if ((strcmp(p_processo->infos[j].nome, "exec") == 0)) {
+                p_processo->tempo_exec = p_processo->tempo_exec + tempo;
+            }
+            else {
+                p_processo->tempo_io = p_processo->tempo_io + tempo;
+            }
             tempo_total = tempo_total + tempo; /* Tempo total de todos os processos juntos */
 
             /* Imprime dados sobre a informação do processo */
@@ -239,48 +246,48 @@ int main(void) {
     }
 
     switch (id) {
-        /* First Fit */
+            /* First Fit */
         case 1:
             printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n\n");
             printf(ANSI_COLOR_CYAN "F I R S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-\n\n");
-            
+
             AguardaLeitura(2);
-            
+
             FirstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
-        /* Next Fit */
+            /* Next Fit */
         case 2:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "N E X T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            
+
             AguardaLeitura(2);
-            
+
             //NextFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
-        /* Worst Fit */
+            /* Worst Fit */
         case 3:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "W O R S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            
+
             AguardaLeitura(2);
-            
+
             //worstFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
 
 
-        /* Best Fit */
+            /* Best Fit */
         case 4:
             printf("-----------------------------------------------------------------------------------\n\n");
             printf(ANSI_COLOR_CYAN "B E S T  F I T" ANSI_COLOR_RESET "\n\n");
             printf("-----------------------------------------------------------------------------------\n\n");
-            
+
             AguardaLeitura(2);
-            
+
             //BestFit(fila_prontos, fila_bloqueados, M, qtd_processos, tempo_total);
             break;
     }

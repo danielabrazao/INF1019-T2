@@ -113,6 +113,8 @@ typedef struct estrutura_processo {
     int qtd_info; /* Quantidade de informações do processo */
     info *infos; /* Vetor de informações do processo */
     int tempo_total; /* Tempo total do processo */
+    int tempo_exec; /* Tempo total de exec */
+    int tempo_io; /* Tempo total de io */
 } processo;
 
 /* Estrutura de um bloco (partição fixa) da memória */
