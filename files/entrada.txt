@@ -9,4 +9,4 @@ Processo #2 – 4Mb
 exec 1
 io 5
 exec 20
-1
+4
