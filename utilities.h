@@ -288,22 +288,16 @@ DECREMENTA:
                     fflush(stdin);
 
                     /* Se o tempo de espera do comando acabou e o processo também */
-                    if ((p_processo->infos[k].tempo == 0) && (p_processo->tempo_total == 0)) {
+                    if (p_processo->infos[k].tempo == 0) {
+                        p_processo->infos[k].ativo = FALSE;
                         LIS_ExcluirElemento(fila_bloqueados);
                     }/* Se o tempo de espera do comando acabou mas não o tempo total do processo */
                     else if ((p_processo->infos[k].tempo == 0) && (p_processo->tempo_total > 0)) {
 
-                        IrFinalLista(fila_prontos);
-
-                        /* Insere processo na fila de prontos */
-                        LIS_InserirElementoApos(fila_prontos, p_processo);
-
-                        IrInicioLista(fila_prontos);
-
                         LIS_ExcluirElemento(fila_bloqueados);
 
                         IrInicioLista(fila_bloqueados);
-
+                        
                         if (LIS_NumeroElementos(fila_bloqueados) > 0) {
                             goto DECREMENTA;
                         } else {
@@ -315,7 +309,7 @@ DECREMENTA:
             }
 
             LIS_AvancarElementoCorrente(fila_bloqueados, 1);
-            
+
         }
 
         printf("%d s\n", tempo);
@@ -330,7 +324,7 @@ DECREMENTA:
 
 void Relogio2(mem *M, LIS_tppLista fila_bloqueados, LIS_tppLista fila_prontos, int *tempo_total) {
 
-    int tempo = 0, i, j, k, q; /* Contadores auxiliares */
+    int tempo = 0, i, j, k, q, d = FALSE; /* Contadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
     printf("-----------------------------------------------------------------------------------\n\n");
@@ -372,6 +366,7 @@ DECREMENTA:
                     if (p_processo->infos[k].tempo == 0) {
                         p_processo->infos[k].ativo = FALSE;
                         LIS_ExcluirElemento(fila_bloqueados);
+                        d = TRUE;
                     }
                 }
             }
@@ -396,14 +391,22 @@ DECREMENTA:
             if ((p_processo->infos[k].ativo == TRUE) && (strcmp(p_processo->infos[k].nome, "io") == 0) && (p_processo->tempo_total == 0)) {
                 p_processo->infos[k].ativo = FALSE;
                 LIS_ExcluirElemento(fila_bloqueados);
+            } 
+            
+            if (d == TRUE) {
+                p_processo->infos[k].ativo = FALSE;
+                LIS_ExcluirElemento(fila_bloqueados);
             }
+            
+            printf("poia\n");
+            ImprimeLista(fila_bloqueados);
 
             LIS_AvancarElementoCorrente(fila_bloqueados, 1);
         }
     }
 
     IrInicioLista(fila_bloqueados);
-    
+
     q = LIS_NumeroElementos(fila_bloqueados);
 
     /* Percorre todos os processos da fila de bloqueados */
@@ -414,6 +417,7 @@ DECREMENTA:
         for (k = 0; k < p_processo->qtd_info; k++) {
             if ((p_processo->infos[k].ativo == TRUE) && (strcmp(p_processo->infos[k].nome, "io") == 0) && (p_processo->infos[k].tempo == 0)) {
                 LIS_ExcluirElemento(fila_bloqueados);
+                printf("doidao\n\n");
                 break;
             }
         }
@@ -637,6 +641,9 @@ PERCORRE:
                     }/* Se for io não ativo */
                     else if ((M->bloco[j].p_processo->infos[k].ativo == FALSE) && (M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0)) {
 
+                        printf("IO NAO ATIVO\n\n");
+                        fflush(stdin);
+                        
                         /* Insere processo na fila de bloqueados */
                         LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
 
@@ -680,6 +687,9 @@ PERCORRE:
                         break;
                     } else if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (M->bloco[j].p_processo->infos[k].ativo == TRUE) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0)) {
 
+                        printf("IO ATIVO\n\n");
+                        fflush(stdin);
+                        
                         Relogio2(M, fila_bloqueados, fila_prontos, &tempo_total);
 
                         if (LIS_NumeroElementos(fila_bloqueados) == 0) {
@@ -702,10 +712,12 @@ PERCORRE:
                         }
 
                         /* Percorre todos os blocos de memória */
-                        for (g = 0; g < QTD_BLOC; g++) {/* Processo finalizado */
+                        for (g = 0; g < QTD_BLOC; g++) {
+                            
+                            /* Processo finalizado */
                             if (M->bloco[g].p_processo != NULL) {
                                 if (M->bloco[g].p_processo->tempo_total == 0) {
-                                    
+
                                     /* Libera bloco de memória */
                                     M->bloco[g].p_processo = NULL;
 
