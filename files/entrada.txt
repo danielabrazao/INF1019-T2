@@ -1,21 +1,21 @@
 4
 Processo #1 – 3Mb
 4
-exec 10
-io 20
-exec 20
-io 20
+exec 0
+io 0
+exec 0
+io 0
 Processo #2 – 4Mb
 5
-exec 10
-io 20
-exec 20
-io 20
-exec 20
+exec 0
+io 0
+exec 0
+io 0
+exec 0
 Processo #3 – 6Mb
 1
-exec 10
+exec 0
 Processo #4 – 7Mb
 1
-exec 10
-1
+exec 0
+3
