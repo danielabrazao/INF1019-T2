@@ -1,6 +1,6 @@
 
     int i, j, k, qtd_info, c, d, f = FALSE, g, l, q, ultima_posicao = 0; /* Contadores auxiliares */
-    int flag, dif, worst, dif_compara; /* Marcadores auxiliares */
+    int flag, dif, best, dif_compara; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
     /* Imprime dados sobre os blocos de memória */
@@ -42,17 +42,22 @@ ALOCA:
 
         /* Procura uma posição de memória para alocar o processo */
             i = 0;
-            dif = 0;
+            dif = 1000;
 
         flag = FALSE;
 
-        while ((flag == FALSE) && (i < QTD_BLOC)) {
-            if ((M->bloco[i].tamanho >= p_processo->tamanho) && (M->bloco[i].p_processo == NULL)) {
-                flag = TRUE;
+         while (i < QTD_BLOC) {
+                if ((M->bloco[i].tamanho >= p_processo->tamanho) && (M->bloco[i].p_processo == NULL)) {
+                    dif_compara = M->bloco[i].tamanho - p_processo->tamanho;
+                    if (dif_compara <= dif) {
+                        dif = dif_compara;
+                        best = i;
+                        flag = TRUE;
+                    }
+                }
+                i++;
             }
-            i++;
-        }
-        i = worst;
+            i = best;
 
         if (flag == FALSE) {
 
