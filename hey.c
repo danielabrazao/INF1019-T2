@@ -1,6 +1,5 @@
-
     int i, j, k, qtd_info, c, d, f = FALSE, g, l, q, ultima_posicao = 0; /* Contadores auxiliares */
-    int flag, dif, best, dif_compara; /* Marcadores auxiliares */
+    int flag; /* Marcadores auxiliares */
     processo * p_processo; /* Ponteiro para um processo */
 
     /* Imprime dados sobre os blocos de memória */
@@ -10,9 +9,9 @@
     IrInicioLista(fila_prontos);
 
     l = LIS_NumeroElementos(fila_prontos);
+    
 ALOCA:
     for (d = 0; d < l; d++) {
-        printf("d = %d\n", d);
         fflush(stdin);
         printf("-----------------------------------------------------------------------------------\n\n");
         fflush(stdin);
@@ -41,23 +40,34 @@ ALOCA:
         AguardaLeitura(1);
 
         /* Procura uma posição de memória para alocar o processo */
-            i = 0;
-            dif = 1000;
+        i = ultima_posicao;
 
         flag = FALSE;
 
-         while (i < QTD_BLOC) {
-                if ((M->bloco[i].tamanho >= p_processo->tamanho) && (M->bloco[i].p_processo == NULL)) {
-                    dif_compara = M->bloco[i].tamanho - p_processo->tamanho;
-                    if (dif_compara <= dif) {
-                        dif = dif_compara;
-                        best = i;
-                        flag = TRUE;
-                    }
-                }
-                i++;
+        while ((flag == FALSE) && (i < QTD_BLOC)) {
+            if ((M->bloco[i].tamanho >= p_processo->tamanho) && (M->bloco[i].p_processo == NULL)) {
+                flag = TRUE;
             }
-            i = best;
+            i++;
+        }
+        ultima_posicao = i;
+        i = i - 1;
+        
+        if (flag == FALSE) {
+
+            /* Percorre todos os blocos de memória */
+            for (f = 0; f < QTD_BLOC; f++) {
+                /* Se o processo que não pôde ser alocado cabe em algum dos blocos de memória */
+                if ((M->bloco[f].tamanho >= p_processo->tamanho) && (M->bloco[f].p_processo == NULL)) {
+                    flag = TRUE;
+                    break;
+                }
+            }
+
+            if (flag == TRUE) {
+                i = f;
+            }
+        }
 
         if (flag == FALSE) {
 
@@ -169,12 +179,20 @@ PERCORRE:
                     /* Se for exec */
                     if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "exec") == 0)) {
 
-                        printf("entrou no exec\n");
+                        printf("-----------------------------------------------------------------------------------\n\n");
                         fflush(stdin);
-                        printf("k = %d\n", k);
+                        printf(ANSI_COLOR_MAGENTA "FILA DE BLOQUEADOS" ANSI_COLOR_RESET ":\n\n");
                         fflush(stdin);
-                        printf("j = %d\n", j);
+                        printf("-----------------------------------------------------------------------------------\n\n");
                         fflush(stdin);
+
+                        if (LIS_NumeroElementos(fila_bloqueados) == 0) {
+                            printf("A fila de bloqueados está " ANSI_COLOR_MAGENTA "vazia" ANSI_COLOR_RESET ".\n\n");
+
+                        } else {
+                            /* Imprime dados sobre a fila de prontos */
+                            ImprimeLista(fila_bloqueados);
+                        }
 
                         M->bloco[j].p_processo->infos[k].ativo = TRUE;
 
@@ -187,9 +205,6 @@ PERCORRE:
 
                         /* Processo finalizado */
                         if (M->bloco[j].p_processo->tempo_total == 0) {
-
-                            printf("milagre\n");
-                            fflush(stdin);
 
                             /* Libera bloco de memória */
                             M->bloco[j].p_processo = NULL;
@@ -204,11 +219,7 @@ PERCORRE:
 
                     }/* Se for io não ativo */
                     else if ((M->bloco[j].p_processo->infos[k].ativo == FALSE) && (M->bloco[j].p_processo->infos[k].tempo > 0) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0)) {
-
-                        printf("entrou no io\n");
-                        fflush(stdin);
-                        printf("k = %d\n", k);
-                        fflush(stdin);
+                        
                         /* Insere processo na fila de bloqueados */
                         LIS_InserirElementoApos(fila_bloqueados, M->bloco[j].p_processo);
 
@@ -249,14 +260,9 @@ PERCORRE:
                         /* Imprime dados sobre os blocos de memória */
                         ImprimeMemoria(M);
 
-                        printf("k = %d\n", k);
-                        fflush(stdin);
-
                         break;
                     } else if ((M->bloco[j].p_processo->infos[k].tempo > 0) && (M->bloco[j].p_processo->infos[k].ativo == TRUE) && (strcmp(M->bloco[j].p_processo->infos[k].nome, "io") == 0)) {
-                        printf("oi\n");
-                        fflush(stdin);
-
+                        
                         Relogio2(M, fila_bloqueados, fila_prontos, &tempo_total);
 
                         if (LIS_NumeroElementos(fila_bloqueados) == 0) {
@@ -278,16 +284,12 @@ PERCORRE:
                             ImprimeLista(fila_bloqueados);
                         }
 
-                        printf("processo %d\n", M->bloco[j].p_processo->numero);
-                        fflush(stdin);
-
                         /* Percorre todos os blocos de memória */
-                        for (g = 0; g < QTD_BLOC; g++) {/* Processo finalizado */
+                        for (g = 0; g < QTD_BLOC; g++) {
+                            
+                            /* Processo finalizado */
                             if (M->bloco[g].p_processo != NULL) {
                                 if (M->bloco[g].p_processo->tempo_total == 0) {
-
-                                    printf("milagre\n");
-                                    fflush(stdin);
 
                                     /* Libera bloco de memória */
                                     M->bloco[g].p_processo = NULL;
@@ -351,5 +353,3 @@ PERCORRE:
         }
 
     } // While
-
-}

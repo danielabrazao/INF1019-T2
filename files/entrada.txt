@@ -17,5 +17,5 @@ Processo #3 – 1Mb
 exec 20
 Processo #4 – 7Mb
 1
-exec 10
-1
+exec 20
+4
